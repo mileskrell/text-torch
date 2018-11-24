@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Who Texts First?</string>
 
+    <string name="intro">Intro</string>
     <string name="about">About</string>
 </resources>
