@@ -3,4 +3,14 @@
 
     <string name="intro">Intro</string>
     <string name="about">About</string>
+
+    <string name="time_between_conversations">Time between conversations</string>
+    <string name="go">Go!</string>
+
+    <string-array name="times">
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>1 day</item>
+        <item>2 days</item>
+    </string-array>
 </resources>
