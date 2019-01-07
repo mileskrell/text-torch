@@ -20,6 +20,10 @@ class MainFragment : Fragment() {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 main_spinner.adapter = adapter
             }
+
+        help_button.setOnClickListener {
+            showTimeExplanation()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -34,5 +38,9 @@ class MainFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showTimeExplanation() {
+        InfoDialogFragment().show(fragmentManager, null)
     }
 }
