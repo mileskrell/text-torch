@@ -5,6 +5,7 @@
     <string name="about">About</string>
 
     <string name="time_between_conversations">Time between conversations</string>
+    <string name="help">Help</string>
     <string name="go">Go!</string>
 
     <string-array name="times">
