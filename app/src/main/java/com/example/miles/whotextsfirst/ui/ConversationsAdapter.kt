@@ -3,6 +3,7 @@ package com.example.miles.whotextsfirst.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miles.whotextsfirst.R
 import com.example.miles.whotextsfirst.model.Conversation
@@ -37,8 +38,9 @@ class ConversationsAdapter : RecyclerView.Adapter<ConversationsAdapter.Conversat
             itemView.correspondent_percent_text_view.text = conversation.correspondentPercent.toString() + '%'
             itemView.you_percent_text_view.text = (100 - conversation.correspondentPercent).toString() + '%'
 
-            itemView.left_progress_bar.progress = conversation.correspondentPercent
-            itemView.right_progress_bar.progress = 100 - conversation.correspondentPercent
+            with(itemView.divider.layoutParams as ConstraintLayout.LayoutParams) {
+                horizontalBias = (conversation.correspondentPercent / 100.0).toFloat()
+            }
         }
     }
 }
