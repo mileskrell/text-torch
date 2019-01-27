@@ -25,4 +25,5 @@
 
     <!--Conversation view holder-->
     <string name="you">You</string>
+    <string name="x_percent">%1$d %%</string>
 </resources>

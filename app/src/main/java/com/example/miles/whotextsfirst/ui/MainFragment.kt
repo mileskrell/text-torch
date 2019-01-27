@@ -23,7 +23,7 @@ class MainFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default
 
-    lateinit var conversationsViewModel: ConversationsViewModel
+    private lateinit var conversationsViewModel: ConversationsViewModel
     private val conversationsAdapter = ConversationsAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
