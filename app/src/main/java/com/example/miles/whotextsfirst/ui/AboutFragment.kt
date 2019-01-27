@@ -1,10 +1,11 @@
-package com.example.miles.whotextsfirst
+package com.example.miles.whotextsfirst.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.miles.whotextsfirst.R
 
 class AboutFragment : Fragment() {
 

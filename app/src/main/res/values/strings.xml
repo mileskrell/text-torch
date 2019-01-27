@@ -5,7 +5,7 @@
     <string name="about">About</string>
 
     <!--Main fragment-->
-    <string name="time_between_conversations">Time between conversations</string>
+    <string name="time_between_conversations">Minimum time between conversations</string>
     <string name="help">Help</string>
     <string name="go">Go!</string>
     <string-array name="times">
@@ -18,8 +18,11 @@
     <!--Info dialog fragment-->
     <string name="whats_this">What\'s this?</string>
     <string name="time_explanation">
-        Whenever at least this much time passes with no texts sent, whoever breaks the silence
-        will be considered the conversation starter.
+        Whenever this much time passes with no texts sent, whoever breaks the silence
+        will be considered to have started the next conversation.
     </string>
     <string name="close">Close</string>
+
+    <!--Conversation view holder-->
+    <string name="you">You</string>
 </resources>
