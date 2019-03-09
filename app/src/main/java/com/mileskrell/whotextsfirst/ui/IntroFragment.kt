@@ -1,4 +1,4 @@
-package com.example.miles.whotextsfirst.ui
+package com.mileskrell.whotextsfirst.ui
 
 import android.Manifest
 import android.content.Context
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.miles.whotextsfirst.R
+import com.mileskrell.whotextsfirst.R
 import kotlinx.android.synthetic.main.fragment_intro.*
 
 const val REQUEST_CODE_READ_SMS = 1

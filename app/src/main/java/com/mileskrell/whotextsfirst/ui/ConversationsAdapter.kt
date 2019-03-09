@@ -1,12 +1,12 @@
-package com.example.miles.whotextsfirst.ui
+package com.mileskrell.whotextsfirst.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.miles.whotextsfirst.R
-import com.example.miles.whotextsfirst.model.Conversation
+import com.mileskrell.whotextsfirst.R
+import com.mileskrell.whotextsfirst.model.Conversation
 import kotlinx.android.synthetic.main.conversation_view_holder.view.*
 
 class ConversationsAdapter : RecyclerView.Adapter<ConversationsAdapter.ConversationViewHolder>() {

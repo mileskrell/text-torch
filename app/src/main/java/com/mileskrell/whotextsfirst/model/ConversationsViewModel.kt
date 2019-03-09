@@ -1,10 +1,10 @@
-package com.example.miles.whotextsfirst.model
+package com.mileskrell.whotextsfirst.model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.miles.whotextsfirst.repo.Repository
+import com.mileskrell.whotextsfirst.repo.Repository
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 

@@ -1,4 +1,4 @@
-package com.example.miles.whotextsfirst.ui
+package com.mileskrell.whotextsfirst.ui
 
 import android.os.Bundle
 import android.view.*
@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.miles.whotextsfirst.R
-import com.example.miles.whotextsfirst.model.ConversationsViewModel
+import com.mileskrell.whotextsfirst.R
+import com.mileskrell.whotextsfirst.model.ConversationsViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

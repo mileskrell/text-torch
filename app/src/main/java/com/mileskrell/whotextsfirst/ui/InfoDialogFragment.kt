@@ -1,10 +1,10 @@
-package com.example.miles.whotextsfirst.ui
+package com.mileskrell.whotextsfirst.ui
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.miles.whotextsfirst.R
+import com.mileskrell.whotextsfirst.R
 
 class InfoDialogFragment : DialogFragment() {
 

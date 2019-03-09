@@ -1,4 +1,4 @@
-package com.example.miles.whotextsfirst.ui
+package com.mileskrell.whotextsfirst.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.miles.whotextsfirst.R
+import com.mileskrell.whotextsfirst.R
 
 class MainActivity : AppCompatActivity() {
 

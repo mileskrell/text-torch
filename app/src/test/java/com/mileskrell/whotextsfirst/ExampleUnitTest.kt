@@ -1,4 +1,4 @@
-package com.example.miles.whotextsfirst
+package com.mileskrell.whotextsfirst
 
 import org.junit.Test
 
