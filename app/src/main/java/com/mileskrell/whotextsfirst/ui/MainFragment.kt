@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.whotextsfirst.R
-import com.mileskrell.whotextsfirst.model.ConversationsViewModel
+import com.mileskrell.whotextsfirst.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +23,8 @@ class MainFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default
 
-    private lateinit var conversationsViewModel: ConversationsViewModel
-    private val conversationsAdapter = ConversationsAdapter()
+    private lateinit var socialRecordsViewModel: SocialRecordsViewModel
+    private val socialRecordAdapter = SocialRecordAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -32,9 +32,9 @@ class MainFragment : Fragment(), CoroutineScope {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        conversationsViewModel = ViewModelProviders.of(this).get(ConversationsViewModel::class.java)
-        conversationsViewModel.conversations.observe(this, Observer {
-            conversationsAdapter.loadConversations(it)
+        socialRecordsViewModel = ViewModelProviders.of(this).get(SocialRecordsViewModel::class.java)
+        socialRecordsViewModel.socialRecords.observe(this, Observer {
+            socialRecordAdapter.loadSocialRecords(it)
             progress_bar.visibility = View.INVISIBLE
             recycler_view.visibility = View.VISIBLE
         })
@@ -50,11 +50,11 @@ class MainFragment : Fragment(), CoroutineScope {
 
         go_button.setOnClickListener {
             job?.cancel()
-            updateConversationList()
+            updateSocialRecordList()
         }
 
         recycler_view.setHasFixedSize(true)
-        recycler_view.adapter = conversationsAdapter
+        recycler_view.adapter = socialRecordAdapter
         recycler_view.layoutManager = LinearLayoutManager(context)
     }
 
@@ -76,11 +76,11 @@ class MainFragment : Fragment(), CoroutineScope {
         InfoDialogFragment().show(fragmentManager, null)
     }
 
-    private fun updateConversationList() {
+    private fun updateSocialRecordList() {
         recycler_view.visibility = View.INVISIBLE
         progress_bar.visibility = View.VISIBLE
         job = launch(Dispatchers.IO) {
-            conversationsViewModel.updateConversations(main_spinner.selectedItem.toString())
+            socialRecordsViewModel.updateSocialRecords(main_spinner.selectedItem.toString())
         }
     }
 }

@@ -15,39 +15,37 @@ import androidx.navigation.fragment.findNavController
 import com.mileskrell.whotextsfirst.R
 import kotlinx.android.synthetic.main.fragment_intro.*
 
-const val REQUEST_CODE_READ_SMS = 1
+const val MY_REQUEST_CODE = 1
 
 class IntroFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         // TODO There's probably some earlier place to put this check
-        if (readSmsGranted()) {
+        if (readSmsGranted() && readContactsGranted()) {
             findNavController().navigate(R.id.main_action)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         return inflater.inflate(R.layout.fragment_intro, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         button_intro.setOnClickListener {
-            if (!readSmsGranted()) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)) {
-                    showRationale()
-                } else {
-                    requestPermissions(arrayOf(Manifest.permission.READ_SMS), REQUEST_CODE_READ_SMS)
-                }
+            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)
+                || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
+                showRationale()
+            } else {
+                requestPermissions(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS), MY_REQUEST_CODE)
             }
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
-            REQUEST_CODE_READ_SMS -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            MY_REQUEST_CODE -> {
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED } ) {
                     findNavController().navigate(R.id.main_action)
                 }
             }
@@ -60,7 +58,7 @@ class IntroFragment : Fragment() {
             setTitle("Hey! You!")
             setMessage("Grant that permission!")
             setPositiveButton("Okay") { _, _ ->
-                requestPermissions(arrayOf(Manifest.permission.READ_SMS), REQUEST_CODE_READ_SMS)
+                requestPermissions(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS), MY_REQUEST_CODE)
             }
             setNegativeButton("No!") { _, _ ->
                 Toast.makeText(context, "Well that's just rude", Toast.LENGTH_LONG).show()
@@ -69,6 +67,9 @@ class IntroFragment : Fragment() {
         }
     }
 
-    private fun readSmsGranted(): Boolean = (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_SMS)
-            == PackageManager.PERMISSION_GRANTED)
+    private fun readSmsGranted() =
+        ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+
+    private fun readContactsGranted() =
+        ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
 }

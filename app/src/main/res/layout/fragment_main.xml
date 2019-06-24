@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_spinner"
-        tools:listitem="@layout/conversation_view_holder"
+        tools:listitem="@layout/social_record_view_holder"
         tools:visibility="visible" />
 
     <ProgressBar
