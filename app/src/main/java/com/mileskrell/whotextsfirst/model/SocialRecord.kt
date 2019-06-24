@@ -12,5 +12,6 @@ package com.mileskrell.whotextsfirst.model
  */
 data class SocialRecord(
     val correspondentName: String,
-    val correspondentPercent: Int
+    val correspondentPercent: Int,
+    val numConversations: Int
 )

@@ -16,8 +16,6 @@ import kotlin.math.roundToInt
  *  - Alphabetical
  *  - From initiates conversation least to most (or most to least)
  *
- *  TODO: Display "Based on x conversations" with the data
- *
  */
 class Repository(val context: Context) {
 
@@ -61,7 +59,7 @@ class Repository(val context: Context) {
             }
 
             val theirPercent = 100.0 * theirInits / (theirInits + ownInits)
-            socialRecords.add(SocialRecord(theirName, theirPercent.roundToInt()))
+            socialRecords.add(SocialRecord(theirName, theirPercent.roundToInt(), ownInits + theirInits))
         }
 
         return socialRecords

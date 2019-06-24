@@ -24,6 +24,7 @@
     <string name="close">Close</string>
 
     <!--Social record view holder-->
+    <string name="x_conversations">%1$d conversations</string>
     <string name="you">You</string>
     <string name="x_percent">%1$d %%</string>
 </resources>
