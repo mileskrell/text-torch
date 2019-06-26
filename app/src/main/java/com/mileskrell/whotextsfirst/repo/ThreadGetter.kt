@@ -41,9 +41,6 @@ class ThreadGetter(val context: Context) {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private val PERSON_COLUMNS = arrayOf(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY)
-    private val DISPLAY_NAME   = 0
-
     fun getThreads(): List<List<Message>> {
         /**
          * This might take a while - it seems that different devices require using different content URIs.
@@ -63,7 +60,6 @@ class ThreadGetter(val context: Context) {
 
         val threads = mutableMapOf<Int, MutableList<Message>>()
 
-        val personIdToNameCache = mutableMapOf<Int, String>()
         val addressToNameCache = mutableMapOf<String, String>()
         val nameLookupFailures = mutableMapOf<Int, Int>()
 
@@ -76,6 +72,7 @@ class ThreadGetter(val context: Context) {
         messagesCursor.moveToFirst()
 
         for (i in 0 until messagesCursor.count/*.coerceAtMost(14)*/) {
+            // TODO Remove this lookup before actual release
             val contactId = try {
                 messagesCursor.getInt(PERSON)
             } catch (e: IllegalStateException) {
@@ -101,34 +98,23 @@ class ThreadGetter(val context: Context) {
                 throw RuntimeException("Couldn't get person ID!")
             } else {
                 // If name is cached, use it
-                if (contactId in personIdToNameCache) {
-                    otherPartyName = personIdToNameCache[contactId] ?: throw RuntimeException("personIdToNameCache contains person ID $contactId, but it's somehow null")
-                } else if (otherPartyAddress in addressToNameCache) {
+                if (otherPartyAddress in addressToNameCache) {
                     otherPartyName = addressToNameCache[otherPartyAddress] ?: throw RuntimeException("addressToNameCache contains address $otherPartyAddress, but it's somehow null")
                 } else {
-                    // Otherwise, try to get name from the person ID in the message
-                    val personIdLookupCursor = context.contentResolver.query(ContactsContract.RawContacts.CONTENT_URI, PERSON_COLUMNS, "contact_id = ?", arrayOf(contactId.toString()), null)
-                    if (personIdLookupCursor != null && personIdLookupCursor.count > 0) {
-                        personIdLookupCursor.moveToFirst()
-                        otherPartyName = personIdLookupCursor.getString(DISPLAY_NAME)
-                        personIdToNameCache[contactId] = otherPartyName
-                    } else {
-                        // If that doesn't work, try to get their name from their number
-                        val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(otherPartyAddress))
-                        val phoneLookupCursor = context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY), null, null, null)
+                    // If that doesn't work, try to get their name from their number
+                    val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(otherPartyAddress))
+                    val phoneLookupCursor = context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY), null, null, null)
 
-                        if (phoneLookupCursor!= null && phoneLookupCursor.count > 0) {
-                            phoneLookupCursor.moveToFirst()
-                            otherPartyName = phoneLookupCursor.getString(0)
-                            addressToNameCache[otherPartyAddress] = otherPartyName
-                        } else {
-                            // They must not be saved as a contact at all.
-                            nameLookupFailures[contactId] = 1 + (nameLookupFailures[contactId] ?: 0)
-                            otherPartyName = null
-                        }
-                        phoneLookupCursor?.close()
+                    if (phoneLookupCursor!= null && phoneLookupCursor.count > 0) {
+                        phoneLookupCursor.moveToFirst()
+                        otherPartyName = phoneLookupCursor.getString(0)
+                        addressToNameCache[otherPartyAddress] = otherPartyName
+                    } else {
+                        // They must not be saved as a contact at all.
+                        nameLookupFailures[contactId] = 1 + (nameLookupFailures[contactId] ?: 0)
+                        otherPartyName = null
                     }
-                    personIdLookupCursor?.close()
+                    phoneLookupCursor?.close()
                 }
             }
 
@@ -171,6 +157,7 @@ class ThreadGetter(val context: Context) {
 
         messagesCursor.close()
 
+        // TODO Remove this check before actual release
         for (thread in threads) {
             val names = mutableSetOf<String?>()
             thread.value.forEach { message ->
