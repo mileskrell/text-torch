@@ -48,7 +48,7 @@
         android:layout_marginTop="8dp"
         android:background="?selectableItemBackground"
         android:contentDescription="@string/help"
-        android:src="@drawable/help_circle"
+        android:src="@drawable/ic_help_black_24dp"
         app:layout_constraintStart_toEndOf="@+id/main_spinner"
         app:layout_constraintTop_toBottomOf="@+id/spinner_label_text_view" />
 
