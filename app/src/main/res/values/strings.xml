@@ -24,7 +24,10 @@
     <string name="close">Close</string>
 
     <!--Social record view holder-->
-    <string name="x_conversations">%1$d conversations</string>
+    <plurals name="x_conversations">
+        <item quantity="one">%d conversation</item>
+        <item quantity="other">%d conversations</item>
+    </plurals>
     <string name="you">You</string>
     <string name="x_percent">%1$d%% of the time</string>
 </resources>

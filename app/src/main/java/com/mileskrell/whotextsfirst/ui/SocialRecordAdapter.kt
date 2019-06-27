@@ -36,7 +36,11 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
             itemView.correspondent_name_text_view.text = record.correspondentName
 
             itemView.number_of_conversations_text_view.text =
-                    itemView.context.getString(R.string.x_conversations, record.numConversations)
+                itemView.resources.getQuantityString(
+                    R.plurals.x_conversations,
+                    record.numConversations,
+                    record.numConversations
+                )
             itemView.correspondent_percent_text_view.text =
                     itemView.context.getString(R.string.x_percent, record.correspondentPercent)
             itemView.you_percent_text_view.text =
