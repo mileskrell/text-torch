@@ -14,7 +14,6 @@ class InfoDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        isCancelable = false
         return activity?.let {
             AlertDialog.Builder(it)
                 .setTitle(R.string.whats_this)
