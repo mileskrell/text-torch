@@ -17,7 +17,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navController = findNavController(R.id.nav_host_fragment)
-        setupActionBarWithNavController(navController, AppBarConfiguration(setOf(R.id.intro_dest, R.id.main_dest)))
+        setupActionBarWithNavController(navController, AppBarConfiguration(setOf(
+            // Don't
+            R.id.intro_dest, R.id.analyze_dest, R.id.main_dest
+        )))
     }
 
     override fun onSupportNavigateUp(): Boolean {

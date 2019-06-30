@@ -2,6 +2,8 @@ package com.mileskrell.whotextsfirst.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.AdapterView
+import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -10,18 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.whotextsfirst.R
 import com.mileskrell.whotextsfirst.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-class MainFragment : Fragment(), CoroutineScope {
+class MainFragment : Fragment() {
 
-    private var job: Job? = null
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default
+    private val TAG = "MainFragment"
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
     private val socialRecordAdapter = SocialRecordAdapter()
@@ -32,25 +26,29 @@ class MainFragment : Fragment(), CoroutineScope {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        socialRecordsViewModel = ViewModelProviders.of(this).get(SocialRecordsViewModel::class.java)
+        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         socialRecordsViewModel.socialRecords.observe(this, Observer {
             socialRecordAdapter.loadSocialRecords(it)
-            progress_bar.visibility = View.INVISIBLE
-            recycler_view.visibility = View.VISIBLE
         })
 
         setupUI()
     }
 
     private fun setupUI() {
+        period_spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // Safety check because this method gets called on start for some reason >:(
+                if (socialRecordsViewModel.socialRecords.value != null) {
+                    socialRecordsViewModel.changePeriod(period_spinner.selectedItem.toString())
+                }
+            }
+        }
 
         help_button.setOnClickListener {
             showTimeExplanation()
-        }
-
-        go_button.setOnClickListener {
-            job?.cancel()
-            updateSocialRecordList()
         }
 
         recycler_view.setHasFixedSize(true)
@@ -59,11 +57,33 @@ class MainFragment : Fragment(), CoroutineScope {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.overflow_menu, menu)
+        MenuCompat.setGroupDividerEnabled(menu, true)
+        inflater?.inflate(R.menu.main_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.groupId == R.id.menu_group_sort_type) {
+            when (item.itemId) {
+                R.id.menu_item_sort_type_most_recent -> {
+                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.MOST_RECENT)
+                }
+                R.id.menu_item_sort_type_alphabetical -> {
+                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.ALPHA)
+                }
+                R.id.menu_item_sort_type_who_texts_first -> {
+                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.WHO_TEXTS_FIRST)
+                }
+            }
+            item.isChecked = true
+            return true
+        }
+
         return when (item.itemId) {
+            R.id.menu_item_sort_reversed -> {
+                item.isChecked = !item.isChecked
+                socialRecordsViewModel.changeReversed(item.isChecked)
+                true
+            }
             R.id.menu_item_about -> {
                 findNavController().navigate(R.id.about_action)
                 true
@@ -74,13 +94,5 @@ class MainFragment : Fragment(), CoroutineScope {
 
     private fun showTimeExplanation() {
         InfoDialogFragment().show(fragmentManager, null)
-    }
-
-    private fun updateSocialRecordList() {
-        recycler_view.visibility = View.INVISIBLE
-        progress_bar.visibility = View.VISIBLE
-        job = launch(Dispatchers.IO) {
-            socialRecordsViewModel.updateSocialRecords(main_spinner.selectedItem.toString())
-        }
     }
 }

@@ -2,18 +2,23 @@
     <string name="app_name">Who Texts First?</string>
 
     <string name="intro">Intro</string>
+    <string name="sort_order">Sort order</string>
     <string name="about">About</string>
 
     <!--Main fragment-->
     <string name="time_between_conversations">Minimum time between conversations</string>
     <string name="help">Help</string>
-    <string name="go">Go!</string>
+    <string name="analyze">Analyze</string>
     <string-array name="times">
         <item>6 hours</item>
         <item>12 hours</item>
         <item>1 day</item>
         <item>2 days</item>
     </string-array>
+    <string name="most_recent">Most recent</string>
+    <string name="alphabetical">Alphabetical</string>
+    <string name="people_you_text_first">People you text first</string>
+    <string name="reversed">Reversed</string>
 
     <!--Info dialog fragment-->
     <string name="whats_this">What\'s this?</string>

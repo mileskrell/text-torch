@@ -13,5 +13,6 @@ package com.mileskrell.whotextsfirst.model
 data class SocialRecord(
     val correspondentName: String,
     val correspondentPercent: Int,
-    val numConversations: Int
+    val numConversations: Int,
+    val mostRecentMessageDate: Long // Used to sort by most recent again after sorting by something else
 )

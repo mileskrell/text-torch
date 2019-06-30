@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_fragment_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainFragment">
@@ -12,14 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="64dp"
         android:text="@string/time_between_conversations"
-        app:layout_constraintEnd_toStartOf="@+id/go_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/main_spinner"
+        android:id="@+id/period_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -27,18 +26,6 @@
         app:layout_constraintStart_toStartOf="@+id/spinner_label_text_view"
         app:layout_constraintTop_toBottomOf="@+id/spinner_label_text_view"
         tools:listitem="@android:layout/simple_spinner_item" />
-
-    <Button
-        android:id="@+id/go_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/go"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/help_button"
@@ -49,7 +36,7 @@
         android:background="?selectableItemBackground"
         android:contentDescription="@string/help"
         android:src="@drawable/ic_help_black_24dp"
-        app:layout_constraintStart_toEndOf="@+id/main_spinner"
+        app:layout_constraintStart_toEndOf="@+id/period_spinner"
         app:layout_constraintTop_toBottomOf="@+id/spinner_label_text_view" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -57,22 +44,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_spinner"
-        tools:listitem="@layout/social_record_view_holder"
-        tools:visibility="visible" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/period_spinner"
+        tools:listitem="@layout/social_record_view_holder" />
 </androidx.constraintlayout.widget.ConstraintLayout>

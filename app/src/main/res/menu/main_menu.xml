@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_item_sorting"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/sort_order"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group
+                android:id="@+id/menu_group_sort_type"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_item_sort_type_most_recent"
+                    android:checked="true"
+                    android:icon="@drawable/ic_mdn_calendar"
+                    android:title="@string/most_recent" />
+                <item
+                    android:id="@+id/menu_item_sort_type_alphabetical"
+                    android:icon="@drawable/ic_mdn_alphabetical"
+                    android:title="@string/alphabetical" />
+                <item
+                    android:id="@+id/menu_item_sort_type_who_texts_first"
+                    android:icon="@drawable/ic_mdn_numeric_1"
+                    android:title="@string/people_you_text_first" />
+            </group>
+            <group android:id="@+id/menu_group_reversed">
+                <item
+                    android:id="@+id/menu_item_sort_reversed"
+                    android:checkable="true"
+                    android:title="@string/reversed" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_item_about"
+        android:title="@string/about" />
+</menu>
