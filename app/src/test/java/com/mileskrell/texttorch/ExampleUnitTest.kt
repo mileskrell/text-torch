@@ -1,4 +1,4 @@
-package com.mileskrell.whotextsfirst
+package com.mileskrell.texttorch
 
 import org.junit.Test
 

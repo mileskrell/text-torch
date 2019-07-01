@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Who Texts First?</string>
+    <string name="app_name">Text Torch</string>
 
     <string name="intro">Intro</string>
     <string name="sort_order">Sort order</string>

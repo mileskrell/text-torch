@@ -1,4 +1,4 @@
-package com.mileskrell.whotextsfirst
+package com.mileskrell.texttorch
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.mileskrell.whotextsfirst", appContext.packageName)
+        assertEquals("com.mileskrell.texttorch", appContext.packageName)
     }
 }

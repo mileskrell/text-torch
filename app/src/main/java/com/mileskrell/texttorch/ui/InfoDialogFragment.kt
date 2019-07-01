@@ -1,10 +1,10 @@
-package com.mileskrell.whotextsfirst.ui
+package com.mileskrell.texttorch.ui
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.mileskrell.whotextsfirst.R
+import com.mileskrell.texttorch.R
 
 class InfoDialogFragment : DialogFragment() {
 

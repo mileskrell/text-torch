@@ -21,7 +21,7 @@
                     android:icon="@drawable/ic_mdn_alphabetical"
                     android:title="@string/alphabetical" />
                 <item
-                    android:id="@+id/menu_item_sort_type_who_texts_first"
+                    android:id="@+id/menu_item_sort_type_people_you_text_first"
                     android:icon="@drawable/ic_mdn_numeric_1"
                     android:title="@string/people_you_text_first" />
             </group>

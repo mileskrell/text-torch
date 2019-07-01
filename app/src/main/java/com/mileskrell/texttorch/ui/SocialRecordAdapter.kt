@@ -1,12 +1,12 @@
-package com.mileskrell.whotextsfirst.ui
+package com.mileskrell.texttorch.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.mileskrell.whotextsfirst.R
-import com.mileskrell.whotextsfirst.model.SocialRecord
+import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.model.SocialRecord
 import kotlinx.android.synthetic.main.social_record_view_holder.view.*
 
 class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {

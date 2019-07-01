@@ -1,7 +1,7 @@
-package com.mileskrell.whotextsfirst.model
+package com.mileskrell.texttorch.model
 
 /**
- * Represents a single SMS or MMS. Used during computations in [com.mileskrell.whotextsfirst.repo.Repository].
+ * Represents a single SMS or MMS. Used during computations in [com.mileskrell.texttorch.repo.Repository].
  *
  * If the [senderAddress] and [senderName] are `null`, it means the message was sent by the user.
  *

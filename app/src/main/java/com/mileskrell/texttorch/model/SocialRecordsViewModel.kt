@@ -1,10 +1,10 @@
-package com.mileskrell.whotextsfirst.model
+package com.mileskrell.texttorch.model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mileskrell.whotextsfirst.repo.Repository
+import com.mileskrell.texttorch.repo.Repository
 
 /**
  * An [AndroidViewModel] holding a [MutableLiveData] containing a list of [SocialRecord]
@@ -65,6 +65,6 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     enum class SortType {
-        MOST_RECENT, ALPHA, WHO_TEXTS_FIRST
+        MOST_RECENT, ALPHA, PEOPLE_YOU_TEXT_FIRST
     }
 }

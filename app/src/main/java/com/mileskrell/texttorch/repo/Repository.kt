@@ -1,9 +1,9 @@
-package com.mileskrell.whotextsfirst.repo
+package com.mileskrell.texttorch.repo
 
 import android.content.Context
-import com.mileskrell.whotextsfirst.model.Message
-import com.mileskrell.whotextsfirst.model.SocialRecord
-import com.mileskrell.whotextsfirst.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.model.Message
+import com.mileskrell.texttorch.model.SocialRecord
+import com.mileskrell.texttorch.model.SocialRecordsViewModel
 import kotlin.math.roundToInt
 
 /**
@@ -86,7 +86,7 @@ class Repository(val context: Context) {
                     }
                 }
             }
-            SocialRecordsViewModel.SortType.WHO_TEXTS_FIRST -> {
+            SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST -> {
                 if (reversed) {
                     socialRecords.sortedByDescending { socialRecord ->
                         socialRecord.correspondentPercent

@@ -9,7 +9,7 @@ plugins {
 android {
     compileSdkVersion(28)
     defaultConfig {
-        applicationId = "com.mileskrell.whotextsfirst"
+        applicationId = "com.mileskrell.texttorch"
         minSdkVersion(21)
         targetSdkVersion(28)
         versionCode = 1

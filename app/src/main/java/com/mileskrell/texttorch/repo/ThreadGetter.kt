@@ -1,11 +1,11 @@
-package com.mileskrell.whotextsfirst.repo
+package com.mileskrell.texttorch.repo
 
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.Telephony
 import android.util.Log
-import com.mileskrell.whotextsfirst.model.Message
+import com.mileskrell.texttorch.model.Message
 
 /**
  * Retrieves threads of conversation, as a List<List<[Message]>>

@@ -1,4 +1,4 @@
-package com.mileskrell.whotextsfirst.ui
+package com.mileskrell.texttorch.ui
 
 import android.os.Bundle
 import android.view.*
@@ -9,8 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mileskrell.whotextsfirst.R
-import com.mileskrell.whotextsfirst.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -70,8 +70,8 @@ class MainFragment : Fragment() {
                 R.id.menu_item_sort_type_alphabetical -> {
                     socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.ALPHA)
                 }
-                R.id.menu_item_sort_type_who_texts_first -> {
-                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.WHO_TEXTS_FIRST)
+                R.id.menu_item_sort_type_people_you_text_first -> {
+                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST)
                 }
             }
             item.isChecked = true
