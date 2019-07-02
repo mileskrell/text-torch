@@ -21,12 +21,19 @@ class MainFragment : Fragment() {
     private val socialRecordAdapter = SocialRecordAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
+
+        if (socialRecordsViewModel.socialRecords.value == null) {
+            // This should only happen after process death. In any case,
+            // it means that we have to go back to the "analyze" page.
+            findNavController().navigateUp()
+        }
+
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         socialRecordsViewModel.socialRecords.observe(this, Observer {
             socialRecordAdapter.loadSocialRecords(it)
         })
