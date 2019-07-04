@@ -17,8 +17,8 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     val socialRecords = _socialRecords as LiveData<List<SocialRecord>>
 
     private var period: Int = 21_600_000 // 6 hours by default
-    private var sortType = SortType.MOST_RECENT
-    private var reversed = false
+    var sortType = SortType.MOST_RECENT
+    var reversed = false
 
     private val repository = Repository(app.applicationContext)
 

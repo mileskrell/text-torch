@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.model.SocialRecordsViewModel.SortType.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -66,19 +67,28 @@ class MainFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         MenuCompat.setGroupDividerEnabled(menu, true)
         inflater?.inflate(R.menu.main_menu, menu)
+
+        // Restore menu state
+        val checkedMenuItem = when (socialRecordsViewModel.sortType) {
+            MOST_RECENT -> R.id.menu_item_sort_type_most_recent
+            ALPHA -> R.id.menu_item_sort_type_alphabetical
+            PEOPLE_YOU_TEXT_FIRST -> R.id.menu_item_sort_type_people_you_text_first
+        }
+        menu?.findItem(checkedMenuItem)?.isChecked = true
+        menu?.findItem(R.id.menu_item_sort_reversed)?.isChecked = socialRecordsViewModel.reversed
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.menu_group_sort_type) {
             when (item.itemId) {
                 R.id.menu_item_sort_type_most_recent -> {
-                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.MOST_RECENT)
+                    socialRecordsViewModel.changeSortType(MOST_RECENT)
                 }
                 R.id.menu_item_sort_type_alphabetical -> {
-                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.ALPHA)
+                    socialRecordsViewModel.changeSortType(ALPHA)
                 }
                 R.id.menu_item_sort_type_people_you_text_first -> {
-                    socialRecordsViewModel.changeSortType(SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST)
+                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_TEXT_FIRST)
                 }
             }
             item.isChecked = true
