@@ -1,5 +1,6 @@
 package com.mileskrell.texttorch.ui
 
+import android.animation.ValueAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,10 @@ import com.mileskrell.texttorch.model.SocialRecord
 import kotlinx.android.synthetic.main.social_record_view_holder.view.*
 
 class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
+
+    private var lastLoadTime = System.nanoTime()
+    private val timeElapsed
+        get() = (System.nanoTime() - lastLoadTime) / 1_000_000
 
     private var socialRecords = listOf<SocialRecord>()
 
@@ -28,6 +33,7 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
 
     fun loadSocialRecords(socialRecords: List<SocialRecord>) {
         this.socialRecords = socialRecords
+        this.lastLoadTime = System.nanoTime()
         notifyDataSetChanged()
     }
 
@@ -46,8 +52,32 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
             itemView.you_percent_text_view.text =
                     itemView.context.getString(R.string.x_percent, 100 - record.correspondentPercent)
 
-            with(itemView.divider.layoutParams as ConstraintLayout.LayoutParams) {
-                horizontalBias = (record.correspondentPercent / 100.0).toFloat()
+            val dividerLayoutParams = itemView.divider.layoutParams as ConstraintLayout.LayoutParams
+            val endPosition = (record.correspondentPercent / 100f)
+
+            val animationLength = itemView.resources.getInteger(R.integer.divider_animation_length_ms)
+
+            if (timeElapsed < animationLength) {
+                // Determine proper start position (in between 0.5 and endPosition).
+                // If all items started at 0.5, any items that weren't initially visible would animate too fast.
+                val startPosition = if (endPosition >= 0.5) {
+                    0.5f + (timeElapsed.toFloat() / animationLength * (endPosition - 0.5f))
+                } else {
+                    0.5f - (timeElapsed.toFloat() / animationLength * (0.5f - endPosition))
+                }
+
+                ValueAnimator.ofFloat(startPosition, endPosition).apply {
+                    // Only animate until lastLoadTime + animationLength
+                    duration = animationLength - timeElapsed
+                    addUpdateListener {
+                        dividerLayoutParams.horizontalBias = animatedValue as Float
+                        itemView.divider.layoutParams = dividerLayoutParams
+                    }
+                    start()
+                }
+            } else {
+                dividerLayoutParams.horizontalBias = endPosition
+                itemView.divider.layoutParams = dividerLayoutParams
             }
         }
     }
