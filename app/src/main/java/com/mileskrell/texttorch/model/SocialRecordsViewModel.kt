@@ -37,7 +37,7 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
         }
         if (this.period != period) { // If nothing has changed, ignore it
             this.period = period
-            _socialRecords.postValue(repository.getSocialRecordsFromPeriod(period))
+            sortAndSetSocialRecords(repository.getSocialRecordsFromPeriod(period))
         }
     }
 
