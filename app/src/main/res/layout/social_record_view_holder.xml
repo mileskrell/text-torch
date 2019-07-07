@@ -18,7 +18,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/correspondent_name_text_view"
+            app:layout_constraintBottom_toTopOf="@id/correspondent_name_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/left_bar"
+            app:layout_constraintBottom_toTopOf="@id/left_bar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.65"
@@ -47,7 +47,7 @@
             android:layout_marginBottom="8dp"
             android:text="@string/you"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/right_bar"
+            app:layout_constraintBottom_toTopOf="@id/right_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.65" />
@@ -61,7 +61,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/left_bar"
+            app:layout_constraintTop_toBottomOf="@id/left_bar"
             tools:text="20%" />
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/right_bar"
+            app:layout_constraintTop_toBottomOf="@id/right_bar"
             tools:text="80%" />
 
         <View
@@ -82,10 +82,10 @@
             android:layout_height="32dp"
             android:layout_margin="8dp"
             android:background="@drawable/view_holder_divider"
-            app:layout_constraintBottom_toBottomOf="@+id/left_bar"
+            app:layout_constraintBottom_toBottomOf="@id/left_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/left_bar" />
+            app:layout_constraintTop_toTopOf="@id/left_bar" />
 
         <View
             android:id="@+id/left_bar"
@@ -96,7 +96,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/view_holder_left_bar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/divider"
+            app:layout_constraintEnd_toStartOf="@id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.65" />
@@ -111,7 +111,7 @@
             android:background="@drawable/view_holder_right_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintStart_toEndOf="@id/divider"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.65" />
     </androidx.constraintlayout.widget.ConstraintLayout>
