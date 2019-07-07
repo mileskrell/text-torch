@@ -15,7 +15,9 @@ import kotlin.math.roundToInt
  */
 class Repository(val context: Context) {
 
-    private val TAG = "Repository"
+    companion object {
+        const val TAG = "Repository"
+    }
 
     lateinit var threads: List<List<Message>>
 

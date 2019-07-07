@@ -14,30 +14,32 @@ import com.mileskrell.texttorch.model.Message
  */
 class ThreadGetter(val context: Context) {
 
-    private val TAG = "ThreadGetter"
+    companion object {
+        const val TAG = "ThreadGetter"
 
-    private val MSG_COLUMNS = arrayOf(Telephony.Sms.THREAD_ID, Telephony.Sms.TYPE, Telephony.Sms.ADDRESS, Telephony.Sms.DATE, Telephony.Sms.PERSON, Telephony.Sms.BODY)
+        val MSG_COLUMNS = arrayOf(Telephony.Sms.THREAD_ID, Telephony.Sms.TYPE, Telephony.Sms.ADDRESS, Telephony.Sms.DATE, Telephony.Sms.PERSON, Telephony.Sms.BODY)
 
-    private val THREAD  = 0
+        const val THREAD  = 0
 
-    /**
-     * If this equals Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX, the message was received
-     */
-    private val TYPE    = 1
+        /**
+         * If this equals Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX, the message was received
+         */
+        const val TYPE    = 1
 
-    /**
-     * The other party's address
-     */
-    private val ADDRESS = 2
+        /**
+         * The other party's address
+         */
+        const val ADDRESS = 2
 
-    private val DATE    = 3
+        const val DATE    = 3
 
-    /**
-     * If not null, it means the sender is saved as a contact, and we can find their name
-     */
-    private val PERSON  = 4
+        /**
+         * If not null, it means the sender is saved as a contact, and we can find their name
+         */
+        const val PERSON  = 4
 
-    private val BODY    = 5
+        const val BODY    = 5
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

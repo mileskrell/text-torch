@@ -16,7 +16,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
-    private val TAG = "MainFragment"
+    companion object {
+        const val TAG = "MainFragment"
+    }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
     private val socialRecordAdapter = SocialRecordAdapter()

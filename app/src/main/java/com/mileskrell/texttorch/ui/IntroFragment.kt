@@ -15,9 +15,11 @@ import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import kotlinx.android.synthetic.main.fragment_intro.*
 
-const val MY_REQUEST_CODE = 1
-
 class IntroFragment : Fragment() {
+
+    companion object {
+        const val MY_REQUEST_CODE = 1
+    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

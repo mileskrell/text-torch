@@ -20,8 +20,10 @@ import kotlinx.coroutines.launch
  */
 class AnalyzeFragment : Fragment() {
 
-    private val TAG = "AnalyzeFragment"
-    private val CLICKED_ANALYZE = "clicked_analyze"
+    companion object {
+        const val TAG = "AnalyzeFragment"
+        const val CLICKED_ANALYZE = "clicked_analyze"
+    }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
 

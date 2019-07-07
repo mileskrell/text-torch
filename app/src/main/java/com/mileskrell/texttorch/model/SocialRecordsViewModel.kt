@@ -11,7 +11,9 @@ import com.mileskrell.texttorch.repo.Repository
  */
 class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
 
-    private val TAG = "SocialRecordViewModel"
+    companion object {
+        const val TAG = "SocialRecordViewModel"
+    }
 
     private val _socialRecords: MutableLiveData<List<SocialRecord>> = MutableLiveData()
     val socialRecords = _socialRecords as LiveData<List<SocialRecord>>
