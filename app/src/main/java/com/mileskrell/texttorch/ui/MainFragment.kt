@@ -2,7 +2,6 @@ package com.mileskrell.texttorch.ui
 
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
 import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -11,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.model.SocialRecordsViewModel.Period.*
 import com.mileskrell.texttorch.model.SocialRecordsViewModel.SortType.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -39,26 +39,6 @@ class MainFragment : Fragment() {
             socialRecordAdapter.loadSocialRecords(it)
         })
 
-        setupUI()
-    }
-
-    private fun setupUI() {
-        period_spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // Safety check because this method gets called on start for some reason >:(
-                if (socialRecordsViewModel.socialRecords.value != null) {
-                    socialRecordsViewModel.changePeriod(period_spinner.selectedItem.toString())
-                }
-            }
-        }
-
-        help_button.setOnClickListener {
-            showTimeExplanation()
-        }
-
         recycler_view.setHasFixedSize(true)
         recycler_view.adapter = socialRecordAdapter
         recycler_view.layoutManager = LinearLayoutManager(context)
@@ -79,6 +59,25 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.groupId == R.id.menu_group_period) {
+            when (item.itemId) {
+                R.id.menu_item_period_6_hours -> {
+                    socialRecordsViewModel.changePeriod(SIX_HOURS)
+                }
+                R.id.menu_item_period_12_hours -> {
+                    socialRecordsViewModel.changePeriod(TWELVE_HOURS)
+                }
+                R.id.menu_item_period_1_day -> {
+                    socialRecordsViewModel.changePeriod(ONE_DAY)
+                }
+                R.id.menu_item_period_2_days -> {
+                    socialRecordsViewModel.changePeriod(TWO_DAYS)
+                }
+            }
+            item.isChecked = true
+            return true
+        }
+
         if (item.groupId == R.id.menu_group_sort_type) {
             when (item.itemId) {
                 R.id.menu_item_sort_type_most_recent -> {
@@ -96,6 +95,10 @@ class MainFragment : Fragment() {
         }
 
         return when (item.itemId) {
+            R.id.menu_item_period_explanation -> {
+                showTimeExplanation()
+                true
+            }
             R.id.menu_item_sort_reversed -> {
                 item.isChecked = !item.isChecked
                 socialRecordsViewModel.changeReversed(item.isChecked)

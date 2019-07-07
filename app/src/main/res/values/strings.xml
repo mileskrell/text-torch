@@ -2,23 +2,20 @@
     <string name="app_name">Text Torch</string>
 
     <string name="intro">Intro</string>
-    <string name="sort_order">Sort order</string>
-    <string name="about">About</string>
-
-    <!--Main fragment-->
-    <string name="time_between_conversations">Minimum time between conversations</string>
-    <string name="help">Help</string>
     <string name="analyze">Analyze</string>
-    <string-array name="times">
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>2 days</item>
-    </string-array>
+
+    <!-- Menu items -->
+    <string name="period">Period</string>
+    <string name="six_hours">6 hours</string>
+    <string name="twelve_hours">12 hours</string>
+    <string name="one_day">1 day</string>
+    <string name="two_days">2 days</string>
+    <string name="sort_order">Sort order</string>
     <string name="most_recent">Most recent</string>
     <string name="alphabetical">Alphabetical</string>
     <string name="people_you_text_first">People you text first</string>
     <string name="reversed">Reversed</string>
+    <string name="about">About</string>
 
     <!--Info dialog fragment-->
     <string name="whats_this">What\'s this?</string>
