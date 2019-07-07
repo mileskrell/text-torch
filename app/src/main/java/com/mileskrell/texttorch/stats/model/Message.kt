@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.model
+package com.mileskrell.texttorch.stats.model
 
 /**
  * Represents a single SMS or MMS. Used during computations in [com.mileskrell.texttorch.repo.Repository].

@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.ui
+package com.mileskrell.texttorch.stats
 
 import android.app.Dialog
 import android.os.Bundle

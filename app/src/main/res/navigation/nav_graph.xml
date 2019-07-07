@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/intro_dest"
-        android:name="com.mileskrell.texttorch.ui.IntroFragment"
+        android:name="com.mileskrell.texttorch.intro.IntroFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_intro">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/analyze_dest"
-        android:name="com.mileskrell.texttorch.ui.AnalyzeFragment"
+        android:name="com.mileskrell.texttorch.analyze.AnalyzeFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_analyze">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/main_dest"
-        android:name="com.mileskrell.texttorch.ui.MainFragment"
+        android:name="com.mileskrell.texttorch.stats.MainFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_main">
         <action
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/about_dest"
-        android:name="com.mileskrell.texttorch.ui.AboutFragment"
+        android:name="com.mileskrell.texttorch.about.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_about" />
 </navigation>

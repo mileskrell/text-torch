@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.ui
+package com.mileskrell.texttorch.analyze
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_analyze.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

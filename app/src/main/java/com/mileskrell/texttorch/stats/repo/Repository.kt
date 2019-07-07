@@ -1,9 +1,9 @@
-package com.mileskrell.texttorch.repo
+package com.mileskrell.texttorch.stats.repo
 
 import android.content.Context
-import com.mileskrell.texttorch.model.Message
-import com.mileskrell.texttorch.model.SocialRecord
-import com.mileskrell.texttorch.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.stats.model.Message
+import com.mileskrell.texttorch.stats.model.SocialRecord
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import kotlin.math.roundToInt
 
 /**

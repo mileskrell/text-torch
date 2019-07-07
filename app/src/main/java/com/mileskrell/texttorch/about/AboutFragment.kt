@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.ui
+package com.mileskrell.texttorch.about
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 
 class AboutFragment : Fragment() {
 

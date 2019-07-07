@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.ui
+package com.mileskrell.texttorch.stats
 
 import android.os.Bundle
 import android.view.*
@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.model.SocialRecordsViewModel
-import com.mileskrell.texttorch.model.SocialRecordsViewModel.Period.*
-import com.mileskrell.texttorch.model.SocialRecordsViewModel.SortType.*
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.SortType.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {

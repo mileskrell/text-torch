@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.ui
+package com.mileskrell.texttorch.intro
 
 import android.Manifest
 import android.content.Context

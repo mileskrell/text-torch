@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.ui
+package com.mileskrell.texttorch.stats
 
 import android.animation.ValueAnimator
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.model.SocialRecord
+import com.mileskrell.texttorch.stats.model.SocialRecord
 import kotlinx.android.synthetic.main.social_record_view_holder.view.*
 
 class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {

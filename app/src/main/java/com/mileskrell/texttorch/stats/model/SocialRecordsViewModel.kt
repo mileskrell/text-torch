@@ -1,10 +1,10 @@
-package com.mileskrell.texttorch.model
+package com.mileskrell.texttorch.stats.model
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mileskrell.texttorch.repo.Repository
+import com.mileskrell.texttorch.stats.repo.Repository
 
 /**
  * An [AndroidViewModel] holding a [MutableLiveData] containing a list of [SocialRecord]

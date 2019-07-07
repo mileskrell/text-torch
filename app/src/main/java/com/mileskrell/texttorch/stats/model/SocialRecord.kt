@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.model
+package com.mileskrell.texttorch.stats.model
 
 /**
  * Holds data about the user's texting history with someone.

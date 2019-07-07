@@ -1,11 +1,11 @@
-package com.mileskrell.texttorch.repo
+package com.mileskrell.texttorch.stats.repo
 
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.Telephony
 import android.util.Log
-import com.mileskrell.texttorch.model.Message
+import com.mileskrell.texttorch.stats.model.Message
 
 /**
  * Retrieves threads of conversation, as a List<List<[Message]>>
