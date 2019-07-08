@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="InfoDialogTheme">
+    <style name="PeriodDialogTheme">
         <item name="android:windowEnterAnimation">@anim/dialog_slide_in_down</item>
         <item name="android:windowExitAnimation">@anim/dialog_slide_out_down</item>
     </style>

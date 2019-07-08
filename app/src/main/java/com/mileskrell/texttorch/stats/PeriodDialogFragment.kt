@@ -6,11 +6,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.mileskrell.texttorch.R
 
-class InfoDialogFragment : DialogFragment() {
+class PeriodDialogFragment : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog?.window?.attributes?.windowAnimations = R.style.InfoDialogTheme
+        dialog?.window?.attributes?.windowAnimations = R.style.PeriodDialogTheme
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

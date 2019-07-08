@@ -21,7 +21,7 @@
     <string name="reversed">Reversed</string>
     <string name="about">About</string>
 
-    <!--Info dialog fragment-->
+    <!--Period dialog fragment-->
     <string name="whats_this">What\'s this?</string>
     <string name="time_explanation">
         Whenever this much time passes with no texts sent, whoever breaks the silence

@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.stats.InfoDialogFragment
+import com.mileskrell.texttorch.stats.PeriodDialogFragment
 import com.mileskrell.texttorch.stats.SocialRecordAdapter
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
@@ -76,6 +76,6 @@ class WhoTextsFirstFragment : Fragment() {
     }
 
     private fun showTimeExplanation() {
-        InfoDialogFragment().show(fragmentManager, null)
+        PeriodDialogFragment().show(fragmentManager, null)
     }
 }
