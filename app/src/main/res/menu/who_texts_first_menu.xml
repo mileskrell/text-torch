@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_item_period"
+        android:icon="@drawable/ic_access_time_white_24dp"
+        android:orderInCategory="0"
+        android:title="@string/period"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group
+                android:id="@+id/menu_group_period"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_item_period_6_hours"
+                    android:checked="true"
+                    android:title="@string/six_hours" />
+                <item
+                    android:id="@+id/menu_item_period_12_hours"
+                    android:title="@string/twelve_hours" />
+                <item
+                    android:id="@+id/menu_item_period_1_day"
+                    android:title="@string/one_day" />
+                <item
+                    android:id="@+id/menu_item_period_2_days"
+                    android:title="@string/two_days" />
+            </group>
+            <group android:id="@+id/menu_group_period_explanation">
+                <item
+                    android:id="@+id/menu_item_period_explanation"
+                    android:icon="@drawable/ic_help_black_24dp"
+                    android:title="@string/whats_this" />
+            </group>
+        </menu>
+    </item>
+</menu>

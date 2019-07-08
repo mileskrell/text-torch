@@ -1,23 +1,22 @@
-package com.mileskrell.texttorch.stats
+package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.stats.InfoDialogFragment
+import com.mileskrell.texttorch.stats.SocialRecordAdapter
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
-import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.SortType.*
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_who_texts_first.*
 
-class MainFragment : Fragment() {
+class WhoTextsFirstFragment : Fragment() {
 
     companion object {
-        const val TAG = "MainFragment"
+        const val TAG = "WhoTextsFirstFragment"
     }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
@@ -25,15 +24,8 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
-
-        if (socialRecordsViewModel.socialRecords.value == null) {
-            // This should only happen after process death. In any case,
-            // it means that we have to go back to the "analyze" page.
-            findNavController().navigateUp()
-        }
-
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_who_texts_first, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,17 +39,11 @@ class MainFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        MenuCompat.setGroupDividerEnabled(menu, true)
-        inflater?.inflate(R.menu.main_menu, menu)
+        inflater?.inflate(R.menu.who_texts_first_menu, menu)
 
         // Restore menu state
-        val checkedMenuItem = when (socialRecordsViewModel.sortType) {
-            MOST_RECENT -> R.id.menu_item_sort_type_most_recent
-            ALPHA -> R.id.menu_item_sort_type_alphabetical
-            PEOPLE_YOU_TEXT_FIRST -> R.id.menu_item_sort_type_people_you_text_first
-        }
-        menu?.findItem(checkedMenuItem)?.isChecked = true
-        menu?.findItem(R.id.menu_item_sort_reversed)?.isChecked = socialRecordsViewModel.reversed
+        val period = socialRecordsViewModel.period.menuId
+        menu?.findItem(period)?.isChecked = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -80,34 +66,9 @@ class MainFragment : Fragment() {
             return true
         }
 
-        if (item.groupId == R.id.menu_group_sort_type) {
-            when (item.itemId) {
-                R.id.menu_item_sort_type_most_recent -> {
-                    socialRecordsViewModel.changeSortType(MOST_RECENT)
-                }
-                R.id.menu_item_sort_type_alphabetical -> {
-                    socialRecordsViewModel.changeSortType(ALPHA)
-                }
-                R.id.menu_item_sort_type_people_you_text_first -> {
-                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_TEXT_FIRST)
-                }
-            }
-            item.isChecked = true
-            return true
-        }
-
         return when (item.itemId) {
             R.id.menu_item_period_explanation -> {
                 showTimeExplanation()
-                true
-            }
-            R.id.menu_item_sort_reversed -> {
-                item.isChecked = !item.isChecked
-                socialRecordsViewModel.changeReversed(item.isChecked)
-                true
-            }
-            R.id.menu_item_about -> {
-                findNavController().navigate(R.id.about_action)
                 true
             }
             else -> super.onOptionsItemSelected(item)

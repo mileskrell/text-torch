@@ -4,6 +4,10 @@
     <string name="intro">Intro</string>
     <string name="analyze">Analyze</string>
 
+    <string name="who_texts_first">Who texts first?</string>
+    <string name="average_length">Average text length</string>
+    <string name="total_texts">Total texts</string>
+
     <!-- Menu items -->
     <string name="period">Period</string>
     <string name="six_hours">6 hours</string>

@@ -16,7 +16,7 @@ class AboutFragment : Fragment() {
         val socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
 
         if (socialRecordsViewModel.socialRecords.value == null) {
-            // Process death! Go back to MainFragment (which will in turn send us back to AnalyzeFragment).
+            // Process death! Go back to StatsFragment (which will in turn send us back to AnalyzeFragment).
             findNavController().navigateUp()
         }
 
