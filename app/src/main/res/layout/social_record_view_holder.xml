@@ -62,7 +62,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/left_bar"
-            tools:text="20%" />
+            tools:text="20% of the time" />
 
         <TextView
             android:id="@+id/you_percent_text_view"
@@ -74,7 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/right_bar"
-            tools:text="80%" />
+            tools:text="80% of the time" />
 
         <View
             android:id="@+id/divider"
