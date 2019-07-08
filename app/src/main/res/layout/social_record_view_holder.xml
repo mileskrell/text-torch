@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="15 conversations" />
+            tools:text="Based on 15 conversations" />
 
         <TextView
             android:id="@+id/correspondent_name_text_view"

@@ -43,7 +43,7 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
 
             itemView.number_of_conversations_text_view.text =
                 itemView.resources.getQuantityString(
-                    R.plurals.x_conversations,
+                    R.plurals.based_on_x_conversations,
                     record.numConversations,
                     record.numConversations
                 )

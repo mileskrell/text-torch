@@ -26,9 +26,9 @@
     <string name="close">Close</string>
 
     <!--Social record view holder-->
-    <plurals name="x_conversations">
-        <item quantity="one">%d conversation</item>
-        <item quantity="other">%d conversations</item>
+    <plurals name="based_on_x_conversations">
+        <item quantity="one">Based on %d conversation</item>
+        <item quantity="other">Based on %d conversations</item>
     </plurals>
     <string name="you">You</string>
     <string name="x_percent">%1$d%% of the time</string>
