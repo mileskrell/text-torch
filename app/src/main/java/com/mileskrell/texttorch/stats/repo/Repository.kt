@@ -64,10 +64,10 @@ class Repository(val context: Context) {
                 latestTime = message.date
             }
 
-            val theirPercent = 100.0 * theirInits / (theirInits + ownInits)
-            socialRecords.add(SocialRecord(theirName,
-                theirPercent.roundToInt(),
-                ownInits + theirInits,
+            socialRecords.add(SocialRecord(
+                theirName,
+                ownInits,
+                theirInits,
                 thread.last().date)
             )
         }

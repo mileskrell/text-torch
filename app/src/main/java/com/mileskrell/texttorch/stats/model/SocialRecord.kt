@@ -1,5 +1,7 @@
 package com.mileskrell.texttorch.stats.model
 
+import kotlin.math.roundToInt
+
 /**
  * Holds data about the user's texting history with someone.
  *
@@ -12,7 +14,10 @@ package com.mileskrell.texttorch.stats.model
  */
 data class SocialRecord(
     val correspondentName: String,
-    val correspondentInitPercent: Int,
-    val numConversations: Int,
+    val ownInits: Int,
+    val correspondentInits: Int,
     val mostRecentMessageDate: Long // Used to sort by most recent again after sorting by something else
-)
+) {
+    val numConversations = ownInits + correspondentInits
+    val correspondentInitPercent = (100.0 * correspondentInits / (correspondentInits + ownInits)).roundToInt()
+}
