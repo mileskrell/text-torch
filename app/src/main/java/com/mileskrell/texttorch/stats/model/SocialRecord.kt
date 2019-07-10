@@ -12,7 +12,7 @@ package com.mileskrell.texttorch.stats.model
  */
 data class SocialRecord(
     val correspondentName: String,
-    val correspondentPercent: Int,
+    val correspondentInitPercent: Int,
     val numConversations: Int,
     val mostRecentMessageDate: Long // Used to sort by most recent again after sorting by something else
 )

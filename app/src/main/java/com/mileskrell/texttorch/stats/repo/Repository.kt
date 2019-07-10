@@ -91,11 +91,11 @@ class Repository(val context: Context) {
             SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST -> {
                 if (reversed) {
                     socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.correspondentPercent
+                        socialRecord.correspondentInitPercent
                     }
                 } else {
                     socialRecords.sortedBy { socialRecord ->
-                        socialRecord.correspondentPercent
+                        socialRecord.correspondentInitPercent
                     }
                 }
             }
