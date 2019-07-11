@@ -48,9 +48,9 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
                     record.numConversations
                 )
             itemView.correspondent_data_text_view.text =
-                    itemView.context.getString(R.string.x_percent, record.correspondentInitPercent)
+                    itemView.context.getString(R.string.x_percent_of_the_time, record.correspondentInitPercent)
             itemView.you_data_text_view.text =
-                    itemView.context.getString(R.string.x_percent, 100 - record.correspondentInitPercent)
+                    itemView.context.getString(R.string.x_percent_of_the_time, 100 - record.correspondentInitPercent)
 
             val dividerLayoutParams = itemView.divider.layoutParams as ConstraintLayout.LayoutParams
             val endPosition = (record.correspondentInitPercent / 100f)

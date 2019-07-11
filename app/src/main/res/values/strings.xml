@@ -35,5 +35,5 @@
         <item quantity="other">Based on %d conversations</item>
     </plurals>
     <string name="you">You</string>
-    <string name="x_percent">%1$d%% of the time</string>
+    <string name="x_percent_of_the_time">%1$d%% of the time</string>
 </resources>
