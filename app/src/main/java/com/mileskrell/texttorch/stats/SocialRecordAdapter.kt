@@ -41,15 +41,15 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
         fun setupForSocialRecord(record: SocialRecord) {
             itemView.correspondent_name_text_view.text = record.correspondentName
 
-            itemView.number_of_conversations_text_view.text =
+            itemView.center_text_view.text =
                 itemView.resources.getQuantityString(
                     R.plurals.based_on_x_conversations,
                     record.numConversations,
                     record.numConversations
                 )
-            itemView.correspondent_percent_text_view.text =
+            itemView.correspondent_data_text_view.text =
                     itemView.context.getString(R.string.x_percent, record.correspondentInitPercent)
-            itemView.you_percent_text_view.text =
+            itemView.you_data_text_view.text =
                     itemView.context.getString(R.string.x_percent, 100 - record.correspondentInitPercent)
 
             val dividerLayoutParams = itemView.divider.layoutParams as ConstraintLayout.LayoutParams

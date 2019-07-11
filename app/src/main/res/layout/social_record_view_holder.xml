@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/number_of_conversations_text_view"
+            android:id="@+id/center_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -53,7 +53,7 @@
             app:layout_constraintVertical_bias="0.65" />
 
         <TextView
-            android:id="@+id/correspondent_percent_text_view"
+            android:id="@+id/correspondent_data_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -65,7 +65,7 @@
             tools:text="20% of the time" />
 
         <TextView
-            android:id="@+id/you_percent_text_view"
+            android:id="@+id/you_data_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
