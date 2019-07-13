@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.PeriodDialogFragment
-import com.mileskrell.texttorch.stats.SocialRecordAdapter
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
 import kotlinx.android.synthetic.main.fragment_stat_page.*

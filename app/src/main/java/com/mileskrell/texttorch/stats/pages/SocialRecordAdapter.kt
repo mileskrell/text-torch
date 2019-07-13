@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.stats
+package com.mileskrell.texttorch.stats.pages
 
 import android.animation.ValueAnimator
 import android.view.LayoutInflater
