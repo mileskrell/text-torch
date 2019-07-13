@@ -10,7 +10,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecord
 import kotlinx.android.synthetic.main.social_record_view_holder.view.*
 
-class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
+class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
 
     private var lastLoadTime = System.nanoTime()
     private val timeElapsed
@@ -28,7 +28,7 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
     override fun getItemCount() = socialRecords.size
 
     override fun onBindViewHolder(holder: SocialRecordViewHolder, position: Int) {
-        holder.setupForSocialRecord(socialRecords[position])
+        holder.setupForSocialRecord(type, socialRecords[position])
     }
 
     fun loadSocialRecords(socialRecords: List<SocialRecord>) {
@@ -37,23 +37,62 @@ class SocialRecordAdapter : RecyclerView.Adapter<SocialRecordAdapter.SocialRecor
         notifyDataSetChanged()
     }
 
+    enum class SocialRecordAdapterType {
+        WHO_TEXTS_FIRST,
+        TOTAL_TEXTS,
+        AVERAGE_LENGTH
+    }
+
     inner class SocialRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun setupForSocialRecord(record: SocialRecord) {
+        fun setupForSocialRecord(type: SocialRecordAdapterType, record: SocialRecord) {
             itemView.correspondent_name_text_view.text = record.correspondentName
 
-            itemView.center_text_view.text =
-                itemView.resources.getQuantityString(
-                    R.plurals.based_on_x_conversations,
-                    record.numConversations,
-                    record.numConversations
-                )
-            itemView.correspondent_data_text_view.text =
-                    itemView.context.getString(R.string.x_percent_of_the_time, record.correspondentInitPercent)
-            itemView.you_data_text_view.text =
-                    itemView.context.getString(R.string.x_percent_of_the_time, 100 - record.correspondentInitPercent)
+            val endPosition = when (type) {
+                SocialRecordAdapterType.WHO_TEXTS_FIRST -> {
+                    itemView.center_text_view.text =
+                        itemView.resources.getQuantityString(
+                            R.plurals.based_on_x_conversations,
+                            record.numConversations,
+                            record.numConversations
+                        )
+                    itemView.correspondent_data_text_view.text =
+                        itemView.context.getString(R.string.texted_first_x_percent_of_the_time, record.correspondentInitPercent)
+                    itemView.you_data_text_view.text =
+                        itemView.context.getString(R.string.texted_first_x_percent_of_the_time, 100 - record.correspondentInitPercent)
+
+                    record.correspondentInitPercent / 100f
+                }
+                SocialRecordAdapterType.TOTAL_TEXTS -> {
+                    itemView.center_text_view.text =
+                        itemView.resources.getQuantityString(
+                            R.plurals.based_on_x_texts,
+                            record.numTexts,
+                            record.numTexts
+                        )
+                    itemView.correspondent_data_text_view.text =
+                        itemView.context.getString(R.string.sent_x_percent_of_texts, record.correspondentTextPercent)
+                    itemView.you_data_text_view.text =
+                        itemView.context.getString(R.string.sent_x_percent_of_texts, 100 - record.correspondentTextPercent)
+
+                    record.correspondentTextPercent / 100f
+                }
+                SocialRecordAdapterType.AVERAGE_LENGTH -> {
+                    itemView.center_text_view.text =
+                        itemView.resources.getQuantityString(
+                            R.plurals.based_on_x_texts,
+                            record.numTexts,
+                            record.numTexts
+                        )
+                    itemView.correspondent_data_text_view.text =
+                        itemView.context.getString(R.string.x_characters_on_average, record.correspondentAvgChars)
+                    itemView.you_data_text_view.text =
+                        itemView.context.getString(R.string.x_characters_on_average, record.ownAvgChars)
+
+                    record.correspondentAvgCharsPercent / 100f
+                }
+            }
 
             val dividerLayoutParams = itemView.divider.layoutParams as ConstraintLayout.LayoutParams
-            val endPosition = (record.correspondentInitPercent / 100f)
 
             val animationLength = itemView.resources.getInteger(R.integer.divider_animation_length_ms)
 

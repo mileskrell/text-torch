@@ -34,6 +34,12 @@
         <item quantity="one">Based on %d conversation</item>
         <item quantity="other">Based on %d conversations</item>
     </plurals>
+    <plurals name="based_on_x_texts">
+        <item quantity="one">Based on %d text</item>
+        <item quantity="other">Based on %d texts</item>
+    </plurals>
     <string name="you">You</string>
-    <string name="x_percent_of_the_time">%1$d%% of the time</string>
+    <string name="texted_first_x_percent_of_the_time">texted first\n%1$d%% of the time</string>
+    <string name="sent_x_percent_of_texts">sent %1$d%%\nof texts</string>
+    <string name="x_characters_on_average">%1$d characters\non average</string>
 </resources>

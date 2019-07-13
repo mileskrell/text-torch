@@ -5,19 +5,37 @@ import kotlin.math.roundToInt
 /**
  * Holds data about the user's texting history with someone.
  *
- * This data gets displayed to the user in [com.mileskrell.texttorch.ui.MainFragment].
- *
- *  TODO Add other stats, e.g.
- *    - # of messages sent by each person
- *    - average # of characters in each person's messages
- *   These will probably be displayed on a second page, to keep the focus on the "who texts first" part.
+ * This data gets displayed to the user in [com.mileskrell.texttorch.stats.StatsFragment].
  */
 data class SocialRecord(
     val correspondentName: String,
+    // For sorting by most recent
+    val mostRecentMessageDate: Long,
+
+    // For who texts first
     val ownInits: Int,
     val correspondentInits: Int,
-    val mostRecentMessageDate: Long // Used to sort by most recent again after sorting by something else
+
+    // For total texts
+    val ownTexts: Int,
+    val correspondentTexts: Int,
+
+    // For average length
+    val ownAvgChars: Int,
+    val correspondentAvgChars: Int
 ) {
+    // These are all computed here based on the provided values,
+    // to minimize the work done by the view holder.
+
+    // For who texts first
     val numConversations = ownInits + correspondentInits
-    val correspondentInitPercent = (100.0 * correspondentInits / (correspondentInits + ownInits)).roundToInt()
+    val correspondentInitPercent = (100.0 * correspondentInits / numConversations).roundToInt()
+
+    // For total texts
+    val numTexts = ownTexts + correspondentTexts
+    val correspondentTextPercent = (100.0 * correspondentTexts / numTexts).roundToInt()
+
+    // For average length
+    val combinedAverageChars = ownAvgChars + correspondentAvgChars
+    val correspondentAvgCharsPercent = (100.0 * correspondentAvgChars / combinedAverageChars).roundToInt()
 }

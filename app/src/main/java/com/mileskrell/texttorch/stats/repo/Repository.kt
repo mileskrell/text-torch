@@ -45,31 +45,61 @@ class Repository(val context: Context) {
                 ?: throw RuntimeException("$TAG: Couldn't determine other person's name OR address")
             var ownInits = 0
             var theirInits = 0
+            var ownTexts = 0
+            var theirTexts = 0
+            var ownTotalChars = 0
+            var theirTotalChars = 0
 
             if (thread[0].senderAddress == null) {
                 ownInits++
+                ownTexts++
+                ownTotalChars += thread[0].body.length
             } else {
                 theirInits++
+                theirTexts++
+                theirTotalChars += thread[0].body.length
             }
             var latestTime = thread[0].date
 
             thread.drop(1).forEach { message ->
-                if (message.date - latestTime > period) {
-                    if (message.senderAddress == null) {
+                if (message.senderAddress == null) {
+                    ownTexts++
+                    ownTotalChars += message.body.length
+                    if (message.date - latestTime > period) {
                         ownInits++
-                    } else {
+                    }
+                } else {
+                    theirTexts++
+                    theirTotalChars += message.body.length
+                    if (message.date - latestTime > period) {
                         theirInits++
                     }
                 }
                 latestTime = message.date
             }
 
+            val ownAvgChars = if (ownTexts == 0) {
+                0
+            } else {
+                (1.0 * ownTotalChars / ownTexts).roundToInt()
+            }
+
+            val theirAvgChars = if (theirTexts == 0) {
+                0
+            } else {
+                (1.0 * theirTotalChars / theirTexts).roundToInt()
+            }
+
             socialRecords.add(SocialRecord(
                 theirName,
+                thread.last().date,
                 ownInits,
                 theirInits,
-                thread.last().date)
-            )
+                ownTexts,
+                theirTexts,
+                ownAvgChars,
+                theirAvgChars
+            ))
         }
 
         return socialRecords

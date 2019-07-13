@@ -11,7 +11,7 @@ import com.mileskrell.texttorch.stats.PeriodDialogFragment
 import com.mileskrell.texttorch.stats.SocialRecordAdapter
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
-import kotlinx.android.synthetic.main.fragment_who_texts_first.*
+import kotlinx.android.synthetic.main.fragment_stat_page.*
 
 class WhoTextsFirstFragment : Fragment() {
 
@@ -20,12 +20,12 @@ class WhoTextsFirstFragment : Fragment() {
     }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
-    private val socialRecordAdapter = SocialRecordAdapter()
+    private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_who_texts_first, container, false)
+        return inflater.inflate(R.layout.fragment_stat_page, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
