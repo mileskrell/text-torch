@@ -6,6 +6,7 @@ import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.SortType.*
@@ -18,6 +19,12 @@ class StatsFragment : Fragment() {
     }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
+
+    /**
+     * Position of the most-recently-viewed page. When the user navigates to another page,
+     * the state of this page's RecyclerView will be propagated to the other pages.
+     */
+    var lastPage = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
@@ -34,6 +41,25 @@ class StatsFragment : Fragment() {
         stats_view_pager.offscreenPageLimit = 2
         stats_tab_layout.setupWithViewPager(stats_view_pager)
         stats_view_pager.adapter = StatsPagerAdapter(context!!, childFragmentManager)
+        stats_view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                // Sync RecyclerView scroll position immediately when user drags another page into view.
+                // Otherwise, the scroll position wouldn't be updated until the page had settled.
+                (stats_view_pager.adapter as StatsPagerAdapter).onPageChanged(lastPage)
+            }
+
+            override fun onPageSelected(position: Int) {
+                // The previous callback is only called on drags, so this one is needed for tapping on tabs.
+                (stats_view_pager.adapter as StatsPagerAdapter).onPageChanged(lastPage)
+
+                // Save the new position, so that when the user moves somewhere else,
+                // we know which page's state is most recent.
+                lastPage = position
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
