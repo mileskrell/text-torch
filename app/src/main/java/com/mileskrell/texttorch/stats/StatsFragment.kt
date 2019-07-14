@@ -31,6 +31,7 @@ class StatsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        stats_view_pager.offscreenPageLimit = 2
         stats_tab_layout.setupWithViewPager(stats_view_pager)
         stats_view_pager.adapter = StatsPagerAdapter(context!!, childFragmentManager)
     }
