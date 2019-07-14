@@ -1,6 +1,8 @@
 package com.mileskrell.texttorch.stats
 
 import android.content.Context
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mileskrell.texttorch.R
@@ -14,7 +16,7 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager): FragmentPage
         const val TAG = "StatsPagerAdapter"
     }
 
-    private val pages = listOf(
+    private val pages = mutableListOf(
         WhoTextsFirstFragment(),
         TotalTextsFragment(),
         AverageLengthFragment()
@@ -30,6 +32,17 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager): FragmentPage
             1 -> context.getString(R.string.total_texts)
             2 -> context.getString(R.string.average_length)
             else -> null
+        }
+    }
+
+    /**
+     * Fix stats fragment references after configuration changes.
+     *
+     * See https://stackoverflow.com/a/17629575
+     */
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        return super.instantiateItem(container, position).also {
+            pages[position] = it as Fragment
         }
     }
 }
