@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorLeftBar">#FF5252</color>
     <color name="colorRightBar">#2196F3</color>
+
+    <!-- Must be set explicitly for TabLayout shadow to appear; see https://stackoverflow.com/a/31777078 -->
+    <color name="grey_50">#fafafa</color>
 </resources>
