@@ -1,7 +1,6 @@
 package com.mileskrell.texttorch.stats
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mileskrell.texttorch.R
@@ -15,18 +14,15 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager): FragmentPage
         const val TAG = "StatsPagerAdapter"
     }
 
-    private var whoTextsFirstFragment: WhoTextsFirstFragment = WhoTextsFirstFragment()
-    private var totalTextsFragment: TotalTextsFragment = TotalTextsFragment()
-    private var averageLengthFragment: AverageLengthFragment = AverageLengthFragment()
+    private val pages = listOf(
+        WhoTextsFirstFragment(),
+        TotalTextsFragment(),
+        AverageLengthFragment()
+    )
 
-    override fun getItem(position: Int): Fragment {
-        return when (position) {
-            0 -> whoTextsFirstFragment
-            1 -> totalTextsFragment
-            2 -> averageLengthFragment
-            else -> throw RuntimeException("$TAG: Requested fragment out of range")
-        }
-    }
+    override fun getCount() = pages.size
+
+    override fun getItem(position: Int) = pages[position]
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
@@ -36,6 +32,4 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager): FragmentPage
             else -> null
         }
     }
-
-    override fun getCount() = 3
 }
