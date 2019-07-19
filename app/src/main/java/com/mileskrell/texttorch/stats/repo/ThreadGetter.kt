@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.Telephony
 import android.util.Log
+import com.mileskrell.texttorch.analyze.AnalyzeViewModel
 import com.mileskrell.texttorch.stats.model.Message
 
 /**
@@ -43,7 +44,7 @@ class ThreadGetter(val context: Context) {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fun getThreads(): List<List<Message>> {
+    fun getThreads(analyzeViewModel: AnalyzeViewModel): List<List<Message>> {
         /**
          * This might take a while - it seems that different devices require using different content URIs.
          * See https://seap.samsung.com/faq/why-does-sdk-return-nullpointerexception-when-i-access-smsmms-content-uri-0
@@ -73,7 +74,12 @@ class ThreadGetter(val context: Context) {
 
         messagesCursor.moveToFirst()
 
+        analyzeViewModel.threadsTotal.postValue(messagesCursor.count)
+
         for (i in 0 until messagesCursor.count/*.coerceAtMost(14)*/) {
+            // Relay progress
+            analyzeViewModel.threadsCompleted.postValue(i)
+
             // TODO Remove this lookup before actual release
             val contactId = try {
                 messagesCursor.getInt(PERSON)

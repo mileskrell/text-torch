@@ -17,6 +17,12 @@ import kotlinx.coroutines.launch
 
 /**
  * A [Fragment] containing an "analyze" button, which will prepare the data needed for the main fragment.
+ *
+ * This fragment also has its own ViewModel, [AnalyzeViewModel]. This is used to relay info from
+ * [com.mileskrell.texttorch.stats.repo.ThreadGetter] back here, so we can display the progress to the user.
+ *
+ * This initially just used a simple callback, but I found that this crashed on configuration changes.
+ * With ViewModel and LiveData, we can handle these events.
  */
 class AnalyzeFragment : Fragment() {
 
@@ -26,11 +32,13 @@ class AnalyzeFragment : Fragment() {
     }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
+    private lateinit var analyzeViewModel: AnalyzeViewModel
 
     private var clickedAnalyze = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
+        analyzeViewModel = ViewModelProviders.of(this).get(AnalyzeViewModel::class.java)
         return inflater.inflate(R.layout.fragment_analyze, container, false)
     }
 
@@ -41,15 +49,13 @@ class AnalyzeFragment : Fragment() {
 
         clickedAnalyze = savedInstanceState?.getBoolean(CLICKED_ANALYZE) ?: false
         if (clickedAnalyze) {
-            analyze_button.visibility = View.INVISIBLE
-            progress_bar.visibility = View.VISIBLE
+            enterProgressDisplayingMode()
         }
 
         analyze_button.setOnClickListener {
             clickedAnalyze = true
-            analyze_button.visibility = View.INVISIBLE
-            progress_bar.visibility = View.VISIBLE
-            initializeSocialRecordList()
+            enterProgressDisplayingMode()
+            initializeSocialRecordList(analyzeViewModel)
         }
     }
 
@@ -57,9 +63,29 @@ class AnalyzeFragment : Fragment() {
         outState.putBoolean(CLICKED_ANALYZE, clickedAnalyze)
     }
 
-    private fun initializeSocialRecordList() {
+    private fun enterProgressDisplayingMode() {
+        analyze_button.visibility = View.INVISIBLE
+        progress_bar.visibility = View.VISIBLE
+        progress_text_view.visibility = View.VISIBLE
+
+        var threadsTotal = 10_000
+        analyzeViewModel.threadsTotal.observe(this, Observer { newThreadsTotal ->
+            activity?.runOnUiThread {
+                threadsTotal = newThreadsTotal
+                progress_bar.max = threadsTotal
+            }
+        })
+        analyzeViewModel.threadsCompleted.observe(this, Observer { newThreadsCompleted ->
+            activity?.runOnUiThread {
+                progress_bar.progress = newThreadsCompleted
+                progress_text_view.text = "$newThreadsCompleted/$threadsTotal"
+            }
+        })
+    }
+
+    private fun initializeSocialRecordList(analyzeViewModel: AnalyzeViewModel) {
         socialRecordsViewModel.viewModelScope.launch(Dispatchers.IO) {
-            socialRecordsViewModel.initializeSocialRecords()
+            socialRecordsViewModel.initializeSocialRecords(analyzeViewModel)
         }
     }
 }
