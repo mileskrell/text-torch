@@ -23,8 +23,13 @@
                     android:title="@string/alphabetical" />
                 <item
                     android:id="@+id/menu_item_sort_type_people_you_text_first"
-                    android:icon="@drawable/ic_mdn_numeric_1"
                     android:title="@string/people_you_text_first" />
+                <item
+                    android:id="@+id/menu_item_sort_type_people_you_text_more"
+                    android:title="@string/people_you_text_more" />
+                <item
+                    android:id="@+id/menu_item_sort_type_people_you_send_longer_texts"
+                    android:title="@string/people_you_send_longer_texts" />
             </group>
             <group android:id="@+id/menu_group_reversed">
                 <item

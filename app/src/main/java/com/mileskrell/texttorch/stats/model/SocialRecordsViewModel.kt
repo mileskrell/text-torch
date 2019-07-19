@@ -70,6 +70,8 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     enum class SortType(val menuId: Int) {
         MOST_RECENT(R.id.menu_item_sort_type_most_recent),
         ALPHA(R.id.menu_item_sort_type_alphabetical),
-        PEOPLE_YOU_TEXT_FIRST(R.id.menu_item_sort_type_people_you_text_first)
+        PEOPLE_YOU_TEXT_FIRST(R.id.menu_item_sort_type_people_you_text_first),
+        PEOPLE_YOU_TEXT_MORE(R.id.menu_item_sort_type_people_you_text_more),
+        PEOPLE_YOU_SEND_LONGER_TEXTS(R.id.menu_item_sort_type_people_you_send_longer_texts)
     }
 }

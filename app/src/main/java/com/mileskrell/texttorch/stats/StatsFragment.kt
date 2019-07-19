@@ -84,6 +84,12 @@ class StatsFragment : Fragment() {
                 R.id.menu_item_sort_type_people_you_text_first -> {
                     socialRecordsViewModel.changeSortType(PEOPLE_YOU_TEXT_FIRST)
                 }
+                R.id.menu_item_sort_type_people_you_text_more -> {
+                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_TEXT_MORE)
+                }
+                R.id.menu_item_sort_type_people_you_send_longer_texts -> {
+                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_SEND_LONGER_TEXTS)
+                }
             }
             item.isChecked = true
             return true

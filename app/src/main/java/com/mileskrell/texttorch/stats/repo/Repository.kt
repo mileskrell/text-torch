@@ -107,6 +107,17 @@ class Repository(val context: Context) {
 
     fun sortSocialRecords(socialRecords: List<SocialRecord>, sortType: SocialRecordsViewModel.SortType, reversed: Boolean = false): List<SocialRecord> {
         return when (sortType) {
+            SocialRecordsViewModel.SortType.MOST_RECENT -> {
+                if (reversed) {
+                    socialRecords.sortedBy { socialRecord ->
+                        socialRecord.mostRecentMessageDate
+                    }
+                } else {
+                    socialRecords.sortedByDescending { socialRecord ->
+                        socialRecord.mostRecentMessageDate
+                    }
+                }
+            }
             SocialRecordsViewModel.SortType.ALPHA -> {
                 if (reversed) {
                     socialRecords.sortedByDescending { socialRecord ->
@@ -129,14 +140,25 @@ class Repository(val context: Context) {
                     }
                 }
             }
-            SocialRecordsViewModel.SortType.MOST_RECENT -> {
+            SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_MORE -> {
                 if (reversed) {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.mostRecentMessageDate
+                    socialRecords.sortedByDescending { socialRecord ->
+                        socialRecord.correspondentTextPercent
                     }
                 } else {
+                    socialRecords.sortedBy { socialRecord ->
+                        socialRecord.correspondentTextPercent
+                    }
+                }
+            }
+            SocialRecordsViewModel.SortType.PEOPLE_YOU_SEND_LONGER_TEXTS -> {
+                if (reversed) {
                     socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.mostRecentMessageDate
+                        socialRecord.correspondentAvgCharsPercent
+                    }
+                } else {
+                    socialRecords.sortedBy { socialRecord ->
+                        socialRecord.correspondentAvgCharsPercent
                     }
                 }
             }

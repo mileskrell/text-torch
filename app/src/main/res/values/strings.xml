@@ -18,6 +18,8 @@
     <string name="most_recent">Most recent</string>
     <string name="alphabetical">Alphabetical</string>
     <string name="people_you_text_first">People you text first</string>
+    <string name="people_you_text_more">People you text more</string>
+    <string name="people_you_send_longer_texts">People you send longer texts</string>
     <string name="reversed">Reversed</string>
     <string name="about">About</string>
 
