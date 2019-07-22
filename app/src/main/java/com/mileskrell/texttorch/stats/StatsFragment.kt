@@ -1,15 +1,14 @@
 package com.mileskrell.texttorch.stats
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
-import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.SortType.*
 import kotlinx.android.synthetic.main.fragment_stats.*
 
 class StatsFragment : Fragment() {
@@ -63,42 +62,15 @@ class StatsFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        MenuCompat.setGroupDividerEnabled(menu, true)
         inflater?.inflate(R.menu.stats_menu, menu)
-
-        // Restore menu state
-        val sortType = socialRecordsViewModel.sortType.menuId
-        menu?.findItem(sortType)?.isChecked = true
-        menu?.findItem(R.id.menu_item_sort_reversed)?.isChecked = socialRecordsViewModel.reversed
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.groupId == R.id.menu_group_sort_type) {
-            when (item.itemId) {
-                R.id.menu_item_sort_type_most_recent -> {
-                    socialRecordsViewModel.changeSortType(MOST_RECENT)
-                }
-                R.id.menu_item_sort_type_alphabetical -> {
-                    socialRecordsViewModel.changeSortType(ALPHA)
-                }
-                R.id.menu_item_sort_type_people_you_text_first -> {
-                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_TEXT_FIRST)
-                }
-                R.id.menu_item_sort_type_people_you_text_more -> {
-                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_TEXT_MORE)
-                }
-                R.id.menu_item_sort_type_people_you_send_longer_texts -> {
-                    socialRecordsViewModel.changeSortType(PEOPLE_YOU_SEND_LONGER_TEXTS)
-                }
-            }
-            item.isChecked = true
-            return true
-        }
-
         return when (item.itemId) {
-            R.id.menu_item_sort_reversed -> {
-                item.isChecked = !item.isChecked
-                socialRecordsViewModel.changeReversed(item.isChecked)
+            R.id.menu_item_sorting -> {
+                SortTypeDialogFragment(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
+                    .apply { setTargetFragment(this@StatsFragment, SortTypeDialogFragment.REQUEST_CODE) }
+                    .show(fragmentManager, null)
                 true
             }
             R.id.menu_item_about -> {
@@ -106,6 +78,21 @@ class StatsFragment : Fragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * Called by [SortTypeDialogFragment] when user presses the "update" button
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SortTypeDialogFragment.REQUEST_CODE && resultCode == SortTypeDialogFragment.RESULT_CODE) {
+            val checkedRadioButtonId = data?.getIntExtra(SortTypeDialogFragment.SORT_TYPE_ID_KEY, -1)
+            val reversed = data?.getBooleanExtra(SortTypeDialogFragment.REVERSED_KEY, false)!!
+
+            val newSortType = SocialRecordsViewModel.SortType.values()
+                .first { it.radioButtonId == checkedRadioButtonId }
+
+            socialRecordsViewModel.changeSortTypeAndReversed(newSortType, reversed)
         }
     }
 }

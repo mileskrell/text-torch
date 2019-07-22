@@ -31,6 +31,10 @@
     </string>
     <string name="close">Close</string>
 
+    <!--Sort type dialog fragment-->
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+
     <!--Social record view holder-->
     <plurals name="based_on_x_conversations">
         <item quantity="one">Based on %d conversation</item>

@@ -38,15 +38,14 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun changeSortType(sortType: SortType) {
-        if (this.sortType != sortType) { // If nothing has changed, ignore it
+    /**
+     * These are both changed within one method because both are set in
+     * [com.mileskrell.texttorch.stats.SortTypeDialogFragment], and the changes are seen simultaneously
+     * when the dialog is dismissed.
+     */
+    fun changeSortTypeAndReversed(sortType: SortType, reversed: Boolean) {
+        if (this.sortType != sortType || this.reversed != reversed) { // If nothing has changed, ignore it
             this.sortType = sortType
-            sortAndSetSocialRecords(socialRecords.value ?: return)
-        }
-    }
-
-    fun changeReversed(reversed: Boolean) {
-        if (this.reversed != reversed) { // If nothing has changed, ignore it
             this.reversed = reversed
             sortAndSetSocialRecords(socialRecords.value ?: return)
         }
@@ -68,11 +67,11 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
         TWO_DAYS(172_800_000, R.id.menu_item_period_2_days)
     }
 
-    enum class SortType(val menuId: Int) {
-        MOST_RECENT(R.id.menu_item_sort_type_most_recent),
-        ALPHA(R.id.menu_item_sort_type_alphabetical),
-        PEOPLE_YOU_TEXT_FIRST(R.id.menu_item_sort_type_people_you_text_first),
-        PEOPLE_YOU_TEXT_MORE(R.id.menu_item_sort_type_people_you_text_more),
-        PEOPLE_YOU_SEND_LONGER_TEXTS(R.id.menu_item_sort_type_people_you_send_longer_texts)
+    enum class SortType(val radioButtonId: Int) {
+        MOST_RECENT(R.id.radio_button_sort_type_most_recent),
+        ALPHA(R.id.radio_button_sort_type_alphabetical),
+        PEOPLE_YOU_TEXT_FIRST(R.id.radio_button_sort_type_people_you_text_first),
+        PEOPLE_YOU_TEXT_MORE(R.id.radio_button_sort_type_people_you_text_more),
+        PEOPLE_YOU_SEND_LONGER_TEXTS(R.id.radio_button_sort_type_people_you_send_longer_texts)
     }
 }
