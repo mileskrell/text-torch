@@ -1,5 +1,6 @@
 package com.mileskrell.texttorch.stats
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -46,6 +47,7 @@ class SortTypeDialogFragment() : DialogFragment() {
         dialog?.window?.attributes?.windowAnimations = R.style.PeriodDialogTheme
     }
 
+    @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         if (savedInstanceState != null) {
@@ -56,6 +58,8 @@ class SortTypeDialogFragment() : DialogFragment() {
         /**
          * It's okay that we don't provide the view root in this line, since we don't use any important layout_*
          * properties on the root of the inflated layout.
+         *
+         * The [SuppressLint] annotation above is for this line.
          */
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_sort_type, null)
 
