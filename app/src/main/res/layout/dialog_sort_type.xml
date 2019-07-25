@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:paddingStart="20dp"
     android:paddingTop="16dp"
-    android:paddingEnd="20dp">
+    android:paddingEnd="20dp"
+    android:scrollbarStyle="insideInset">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
