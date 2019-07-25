@@ -44,7 +44,7 @@
                 android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/people_you_text_first"
+                android:text="@string/percentage_of_the_time_youve_texted_first"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <RadioButton
@@ -54,7 +54,7 @@
                 android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/people_you_text_more"
+                android:text="@string/percentage_of_the_texts_youve_sent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <RadioButton
@@ -64,7 +64,7 @@
                 android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/people_you_send_longer_texts"
+                android:text="@string/percentage_of_total_characters_youve_sent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </RadioGroup>
 

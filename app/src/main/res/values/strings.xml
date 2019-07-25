@@ -15,12 +15,6 @@
     <string name="one_day">1 day</string>
     <string name="two_days">2 days</string>
     <string name="sort_order">Sort order</string>
-    <string name="most_recent">Most recent</string>
-    <string name="alphabetical">Alphabetical</string>
-    <string name="people_you_text_first">People you text first</string>
-    <string name="people_you_text_more">People you text more</string>
-    <string name="people_you_send_longer_texts">People you send longer texts</string>
-    <string name="reversed">Reversed</string>
     <string name="about">About</string>
 
     <!--Period dialog fragment-->
@@ -32,8 +26,16 @@
     <string name="close">Close</string>
 
     <!--Sort type dialog fragment-->
+    <string name="order_by">Order by…</string>
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
+
+    <string name="most_recent">Most recent</string>
+    <string name="alphabetical">Alphabetical</string>
+    <string name="percentage_of_the_time_youve_texted_first">Percentage of the time you\'ve texted first</string>
+    <string name="percentage_of_the_texts_youve_sent">Percentage of the texts you\'ve sent</string>
+    <string name="percentage_of_total_characters_youve_sent">Percentage of total characters you\'ve sent</string>
+    <string name="reversed">Reversed</string>
 
     <!--Social record view holder-->
     <plurals name="based_on_x_conversations">

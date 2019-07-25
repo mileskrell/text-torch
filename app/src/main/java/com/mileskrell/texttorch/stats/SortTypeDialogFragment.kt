@@ -75,7 +75,7 @@ class SortTypeDialogFragment() : DialogFragment() {
             }
 
         val alertDialog = AlertDialog.Builder(activity!!)
-            .setTitle(R.string.sort_order)
+            .setTitle(R.string.order_by)
             .setView(dialogView)
             .setNegativeButton(getString(R.string.cancel)) { _, _ -> }
             .setPositiveButton(getString(R.string.update)) { _, _ ->
