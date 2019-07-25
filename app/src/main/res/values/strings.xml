@@ -32,6 +32,8 @@
 
     <string name="most_recent">Most recent</string>
     <string name="alphabetical">Alphabetical</string>
+    <string name="number_of_conversations">Number of conversations</string>
+    <string name="number_of_total_texts">Number of total texts</string>
     <string name="percentage_of_the_time_youve_texted_first">Percentage of the time you\'ve texted first</string>
     <string name="percentage_of_the_texts_youve_sent">Percentage of the texts you\'ve sent</string>
     <string name="percentage_of_total_characters_youve_sent">Percentage of total characters you\'ve sent</string>

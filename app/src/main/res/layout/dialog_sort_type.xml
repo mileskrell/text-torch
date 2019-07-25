@@ -37,11 +37,45 @@
                 android:text="@string/alphabetical"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider" />
+
+            <RadioButton
+                android:id="@+id/radio_button_sort_type_number_of_conversations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/number_of_conversations"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <RadioButton
+                android:id="@+id/radio_button_sort_type_number_of_total_texts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/number_of_total_texts"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider" />
+
             <RadioButton
                 android:id="@+id/radio_button_sort_type_percentage_of_the_time_youve_texted_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/percentage_of_the_time_youve_texted_first"
@@ -68,17 +102,27 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </RadioGroup>
 
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group_sort_type" />
+
         <CheckBox
             android:id="@+id/check_box_reversed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/reversed"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="@id/radio_group_sort_type"
             app:layout_constraintStart_toStartOf="@id/radio_group_sort_type"
-            app:layout_constraintTop_toBottomOf="@id/radio_group_sort_type" />
+            app:layout_constraintTop_toBottomOf="@id/divider3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

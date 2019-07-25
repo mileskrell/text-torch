@@ -130,6 +130,28 @@ class Repository(val context: Context) {
                     }
                 }
             }
+            SocialRecordsViewModel.SortType.NUMBER_OF_CONVERSATIONS -> {
+                if (reversed) {
+                    socialRecords.sortedBy { socialRecord ->
+                        socialRecord.numConversations
+                    }
+                } else {
+                    socialRecords.sortedByDescending { socialRecord ->
+                        socialRecord.numConversations
+                    }
+                }
+            }
+            SocialRecordsViewModel.SortType.NUMBER_OF_TOTAL_TEXTS -> {
+                if (reversed) {
+                    socialRecords.sortedBy { socialRecord ->
+                        socialRecord.numTexts
+                    }
+                } else {
+                    socialRecords.sortedByDescending { socialRecord ->
+                        socialRecord.numTexts
+                    }
+                }
+            }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST -> {
                 if (reversed) {
                     socialRecords.sortedByDescending { socialRecord ->
