@@ -38,7 +38,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <RadioButton
-                android:id="@+id/radio_button_sort_type_people_you_text_first"
+                android:id="@+id/radio_button_sort_type_percentage_of_the_time_youve_texted_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -48,7 +48,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <RadioButton
-                android:id="@+id/radio_button_sort_type_people_you_text_more"
+                android:id="@+id/radio_button_sort_type_percentage_of_the_texts_youve_sent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -58,7 +58,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <RadioButton
-                android:id="@+id/radio_button_sort_type_people_you_send_longer_texts"
+                android:id="@+id/radio_button_sort_type_percentage_of_total_characters_youve_sent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
