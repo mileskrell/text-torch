@@ -14,6 +14,7 @@ import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_analyze.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 /**
  * A [Fragment] containing an "analyze" button, which will prepare the data needed for the main fragment.
@@ -66,7 +67,8 @@ class AnalyzeFragment : Fragment() {
     private fun enterProgressDisplayingMode() {
         analyze_button.visibility = View.INVISIBLE
         progress_bar.visibility = View.VISIBLE
-        progress_text_view.visibility = View.VISIBLE
+        progress_fraction_text_view.visibility = View.VISIBLE
+        progress_percentage_text_view.visibility = View.VISIBLE
 
         var threadsTotal = 10_000
         analyzeViewModel.threadsTotal.observe(this, Observer { newThreadsTotal ->
@@ -78,7 +80,9 @@ class AnalyzeFragment : Fragment() {
         analyzeViewModel.threadsCompleted.observe(this, Observer { newThreadsCompleted ->
             activity?.runOnUiThread {
                 progress_bar.progress = newThreadsCompleted
-                progress_text_view.text = "$newThreadsCompleted/$threadsTotal"
+                progress_fraction_text_view.text = "$newThreadsCompleted/$threadsTotal"
+                val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
+                progress_percentage_text_view.text = "$percentDone%"
             }
         })
     }
