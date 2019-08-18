@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.4.1")
+        classpath("com.android.tools.build:gradle:3.4.2")
         classpath(kotlin("gradle-plugin", "1.3.40"))
 
         val navigationVersion by extra("2.0.0")
