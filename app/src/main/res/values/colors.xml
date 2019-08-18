@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!-- deep orange 900 -->
+    <color name="colorPrimary">#bf360c</color>
+    <!-- deep orange 900 dark -->
+    <color name="colorPrimaryDark">#870000</color>
+    <!-- amber a700 -->
+    <color name="colorAccent">#ffab00</color>
+
     <color name="colorLeftBar">#FF5252</color>
     <color name="colorRightBar">#2196F3</color>
 
