@@ -52,4 +52,14 @@
     <string name="texted_first_x_percent_of_the_time">texted first\n%1$d%% of the time</string>
     <string name="sent_x_percent_of_texts">sent %1$d%%\nof texts</string>
     <string name="x_characters_on_average">%1$d characters\non average</string>
+
+    <!--About fragment-->
+    <string name="about_description">An open-source project by Miles Krell</string>
+    <string name="about_github_title">See the code or file an issue on GitHub</string>
+    <string name="about_github_url">https://github.com/mileskrell/text-torch</string>
+    <string name="about_email_title">Don\'t have a GitHub account? Email me directly with feedback</string>
+    <string name="about_email_email">text.torch.feedback@mileskrell.com</string>
+    <string name="about_donate_title">Donate if you like the app</string>
+    <string name="about_donate_url">https://paypal.me/mileskrell</string>
+    <string name="version">Version</string>
 </resources>

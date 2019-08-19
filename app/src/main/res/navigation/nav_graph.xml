@@ -51,6 +51,5 @@
     <fragment
         android:id="@+id/about_dest"
         android:name="com.mileskrell.texttorch.about.AboutFragment"
-        android:label="@string/about"
-        tools:layout="@layout/fragment_about" />
+        android:label="@string/about" />
 </navigation>

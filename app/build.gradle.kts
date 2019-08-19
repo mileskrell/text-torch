@@ -36,6 +36,8 @@ dependencies {
 
     implementation("androidx.cardview:cardview:1.0.0")
 
+    implementation("com.github.medyo:android-about-page:1.2.5")
+
     // ViewModel and LiveData
     val lifecycleVersion = "2.1.0-beta01"
     implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion") // Provides ViewModelProviders
