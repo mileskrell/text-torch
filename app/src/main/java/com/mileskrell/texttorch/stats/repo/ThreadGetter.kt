@@ -1,50 +1,47 @@
 package com.mileskrell.texttorch.stats.repo
 
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.Telephony
 import android.util.Log
 import com.mileskrell.texttorch.analyze.AnalyzeViewModel
 import com.mileskrell.texttorch.stats.model.Message
+import com.mileskrell.texttorch.stats.model.MessageThread
 
 /**
- * Retrieves threads of conversation, as a List<List<[Message]>>
+ * Retrieves threads of conversation, as a List<[MessageThread]>.
  *
- * TODO: Get MMS messages too. Ignore group MMS by checking if there's more than one ADDRESS within a single thread.
+ * Big thanks to QKSMS for helping me figure out how to get some of this data!
+ * Specifically, the following file was a big help:
+ * https://github.com/moezbhatti/qksms/blob/master/data/src/main/java/com/moez/QKSMS/mapper/CursorToMessageImpl.kt
  */
 class ThreadGetter(val context: Context) {
 
     companion object {
         const val TAG = "ThreadGetter"
 
-        val MSG_COLUMNS = arrayOf(Telephony.Sms.THREAD_ID, Telephony.Sms.TYPE, Telephony.Sms.ADDRESS, Telephony.Sms.DATE, Telephony.Sms.PERSON, Telephony.Sms.BODY)
+        val threadsUri: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
+        val threadsProjection = arrayOf(
+            Telephony.Threads._ID,
+            Telephony.Threads.RECIPIENT_IDS
+        )
 
-        const val THREAD  = 0
+        val singleThreadUri: Uri = Uri.parse("content://mms-sms/complete-conversations")
+        val singleThreadProjection = arrayOf(
+            Telephony.MmsSms._ID,
+            Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN,
+            Telephony.Mms.DATE,
 
-        /**
-         * If this equals Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX, the message was received
-         */
-        const val TYPE    = 1
+            Telephony.Sms.BODY,
+            Telephony.Sms.TYPE, // indicates whether message was sent or received
 
-        /**
-         * The other party's address
-         */
-        const val ADDRESS = 2
-
-        const val DATE    = 3
-
-        /**
-         * If not null, it means the sender is saved as a contact, and we can find their name
-         */
-        const val PERSON  = 4
-
-        const val BODY    = 5
+            Telephony.Mms.MESSAGE_BOX // indicates whether message was sent or received
+        )
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    fun getThreads(analyzeViewModel: AnalyzeViewModel): List<List<Message>> {
+    fun getThreads(analyzeViewModel: AnalyzeViewModel): List<MessageThread> {
         /**
          * This might take a while - it seems that different devices require using different content URIs.
          * See https://seap.samsung.com/faq/why-does-sdk-return-nullpointerexception-when-i-access-smsmms-content-uri-0
@@ -61,137 +58,163 @@ class ThreadGetter(val context: Context) {
          * TODO: Lots of testing with different devices
          */
 
-        val threads = mutableMapOf<Int, MutableList<Message>>()
+        val oneRecipientMessageThreads = mutableListOf<MessageThread>()
+        val threadsCursor = context.contentResolver.query(
+            threadsUri,
+            threadsProjection,
+            // Filter out threads with spaces in the "recipients" string,
+            // as that indicates multiple recipients
+            "${Telephony.Threads.RECIPIENT_IDS} NOT LIKE '% %'",
+            null,
+            null
+        )
+            ?: throw RuntimeException("ThreadGetter: threadsCursor is null")
 
-        val addressToNameCache = mutableMapOf<String, String>()
-        val nameLookupFailures = mutableMapOf<Int, Int>()
+        analyzeViewModel.threadsTotal.postValue(threadsCursor.count)
 
-        val messagesCursor = context.contentResolver.query(Telephony.Sms.CONTENT_URI, MSG_COLUMNS, null, null, "${Telephony.Sms.THREAD_ID}, ${Telephony.Sms.DATE}")
-            ?: throw RuntimeException("ThreadGetter: messagesCursor is null")
-//        PrintStream(FileOutputStream(File("/sdcard", "cursor_dump.txt"))).use {
-//            DatabaseUtils.dumpCursor(messagesCursor, it)
-//        }
+        while (threadsCursor.moveToNext()) {
+            val threadId = threadsCursor.getLong(Telephony.Threads._ID)
+                ?: throw RuntimeException("Couldn't get thread ID")
+            val recipients = threadsCursor.getString(Telephony.Threads.RECIPIENT_IDS)
+                ?: throw RuntimeException("Couldn't get recipients for thread $threadId")
 
-        messagesCursor.moveToFirst()
-
-        analyzeViewModel.threadsTotal.postValue(messagesCursor.count)
-
-        for (i in 0 until messagesCursor.count/*.coerceAtMost(14)*/) {
-            // Relay progress
-            analyzeViewModel.threadsCompleted.postValue(i)
-
-            // TODO Remove this lookup before actual release
-            val contactId = try {
-                messagesCursor.getInt(PERSON)
-            } catch (e: IllegalStateException) {
+            //////////////////////////////////////////////////////////////// Get name and address
+            val addressCursor = context.contentResolver.query(
+                Uri.parse("content://mms-sms/canonical-addresses"),
+                null,
+                "${Telephony.CanonicalAddressesColumns._ID} = $recipients",
+                null,
                 null
-            }
-//            if (contactId == 0) {
-//                // These are messages I sent
-//                Log.d(TAG, "From me:")
-//                DatabaseUtils.dumpCurrentRow(messagesCursor)
-//            }
+            )
+                ?: throw RuntimeException("Address cursor was null when trying to get other party address for thread $threadId")
+            addressCursor.moveToFirst()
+            val address = addressCursor.getString(Telephony.CanonicalAddressesColumns.ADDRESS)
+                ?: throw RuntimeException("Could not get address for recipient $recipients in thread $threadId")
+            addressCursor.close()
 
-//            if (contactId == -1) {
-//                // These are messages I've received from non-contacts
-//                Log.d(TAG, "From non-contact:")
-//                DatabaseUtils.dumpCurrentRow(messagesCursor)
-//            }
+            val name = getNameFromAddress(address)
 
-            val otherPartyName: String?
-            val otherPartyAddress = messagesCursor.getString(ADDRESS) ?: throw RuntimeException("Other party's address is null")
+            //////////////////////////////////////////////////////////////// Get messages
+            val messages = mutableListOf<Message>()
 
-            if (contactId == null) {
-                // In the real version, I guess we'll just log this and move on...
-                throw RuntimeException("Couldn't get person ID!")
-            } else {
-                // If name is cached, use it
-                if (otherPartyAddress in addressToNameCache) {
-                    otherPartyName = addressToNameCache[otherPartyAddress] ?: throw RuntimeException("addressToNameCache contains address $otherPartyAddress, but it's somehow null")
-                } else {
-                    // If that doesn't work, try to get their name from their number
-                    val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(otherPartyAddress))
-                    val phoneLookupCursor = context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY), null, null, null)
+            val messagesCursor = context.contentResolver.query(
+                singleThreadUri,
+                singleThreadProjection,
+                "${Telephony.Mms.THREAD_ID} == $threadId",
+                null,
+                Telephony.Sms.DATE
+            ) ?: throw RuntimeException("ThreadGetter: messagesCursor is null")
 
-                    if (phoneLookupCursor!= null && phoneLookupCursor.count > 0) {
-                        phoneLookupCursor.moveToFirst()
-                        otherPartyName = phoneLookupCursor.getString(0)
-                        addressToNameCache[otherPartyAddress] = otherPartyName
-                    } else {
-                        // They must not be saved as a contact at all.
-                        nameLookupFailures[contactId] = 1 + (nameLookupFailures[contactId] ?: 0)
-                        otherPartyName = null
+            while (messagesCursor.moveToNext()) {
+                val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
+                    ?: throw RuntimeException("Message ID is null")
+
+                val messageType =
+                    messagesCursor.getString(Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN)
+                val sentByUser: Boolean
+                var date = messagesCursor.getLong(Telephony.Mms.DATE)
+                    ?: throw RuntimeException("Date is null for message $messageId in thread $threadId")
+                var body: String? = null
+
+                when (messageType) {
+                    "sms" -> {
+                        val type = messagesCursor.getInt(Telephony.Sms.TYPE)
+                        sentByUser = type != Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX
+
+                        body = messagesCursor.getString(Telephony.Sms.BODY)
+                            ?: throw RuntimeException("Null body for message $messageId in thread $threadId")
                     }
-                    phoneLookupCursor?.close()
+                    "mms" -> {
+                        date *= 1000L
+
+                        val type = messagesCursor.getInt(Telephony.Mms.MESSAGE_BOX)
+                        sentByUser = type != Telephony.Mms.MESSAGE_BOX_INBOX
+
+                        val partsCursor = context.contentResolver.query(
+                            Uri.parse("content://mms/part"), null,
+                            "${Telephony.Mms.Part.MSG_ID} = $messageId", null, null
+                        )
+                            ?: throw RuntimeException("MMS parts cursor null for thread $threadId")
+
+                        while (partsCursor.moveToNext()) {
+                            val contentType = partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
+                                ?: throw RuntimeException("Could not get content type for message $messageId in thread $threadId")
+                            if (contentType.startsWith("text/")) {
+                                body = partsCursor.getString(Telephony.Mms.Part.TEXT)
+                                    ?: throw RuntimeException("MMS part text is null, even though content type begins with \"text/\"")
+                                break
+                            }
+                        }
+                        partsCursor.close()
+                    }
+                    else -> {
+                        throw RuntimeException("Unknown message type $messageType")
+                    }
                 }
+
+                messages.add(Message(messageType, sentByUser, date, body))
             }
 
-            val senderName: String?
-            val senderAddress: String?
-            val recipientName: String?
-            val recipientAddress: String?
-
-            if (messagesCursor.getInt(TYPE) == Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX) {
-                // We received this message, so the other party's name is the sender's name
-                senderName = otherPartyName
-                senderAddress = otherPartyAddress
-                recipientName = null
-                recipientAddress = null
-            } else {
-                // We sent this message, and there's no point trying to get our own name
-                senderName = null
-                senderAddress = null
-                recipientName = otherPartyName
-                recipientAddress = otherPartyAddress
+            messagesCursor.close()
+            analyzeViewModel.threadsCompleted.run {
+                postValue(1 + (value ?: 0))
             }
 
-            val date = messagesCursor.getLong(DATE)
-            val body = messagesCursor.getString(BODY)
-            val threadId = messagesCursor.getInt(THREAD)
-
-            if (threadId !in threads) {
-                threads[threadId] = mutableListOf()
-            }
-            threads[threadId]?.add(Message(threadId, date, senderName, senderAddress, recipientName, recipientAddress, body))
-            messagesCursor.moveToNext()
+            oneRecipientMessageThreads.add(MessageThread(address, name, messages))
         }
+        threadsCursor.close()
 
-        Log.d(TAG, "Got ${messagesCursor.count} messages")
-
-        Log.d(TAG, "---\nName lookup failed for the following:")
-        nameLookupFailures.forEach {
-            Log.d(TAG, "ID was ${it.key} in ${it.value} messages")
+        return oneRecipientMessageThreads.filter { messageThread ->
+            messageThread.messages.isNotEmpty()
+            // So there will probably be fewer threads returned than we had told the user
+            // there would be, but whatever
         }
+    }
 
-        messagesCursor.close()
-
-        // TODO Remove this check before actual release
-        for (thread in threads) {
-            val names = mutableSetOf<String?>()
-            thread.value.forEach { message ->
-                names.add(message.senderName)
-                names.add(message.recipientName)
-            }
-            if (names.size > 2) {
-                throw RuntimeException("$TAG: More than 2 names in a thread: $names")
-            }
+    private fun getNameFromAddress(address: String): String? {
+        val uri = Uri.withAppendedPath(
+            ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+            Uri.encode(address)
+        )
+        val phoneLookupCursor = context.contentResolver.query(
+            uri,
+            arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY),
+            null,
+            null,
+            null
+        )
+        val name = if (phoneLookupCursor != null && phoneLookupCursor.count > 0) {
+            phoneLookupCursor.moveToFirst()
+            phoneLookupCursor.getString(0)
+        } else {
+            Log.d(TAG, "Name lookup failed for address $address")
+            null
         }
+        phoneLookupCursor?.close()
+        return name
+    }
+}
 
-        // Return the threads, sorted like in a normal SMS app.
+fun Cursor.getString(name: String): String? {
+    return try {
+        getString(getColumnIndex(name))
+    } catch (e: IllegalStateException) {
+        null
+    }
+}
 
-        // First make sure each thread is sorted by date,
-        // then sort the whole list of threads by the date of the last message.
+fun Cursor.getInt(name: String): Int? {
+    return try {
+        getInt(getColumnIndex(name))
+    } catch (e: IllegalStateException) {
+        null
+    }
+}
 
-        return threads.values.run {
-            forEach { thread ->
-                // TODO Is this part needed? Can we change one of our queries above so they're already sorted this way?
-                thread.sortBy { message ->
-                    message.date
-                }
-            }
-            sortedByDescending { thread ->
-                thread.last().date
-            }
-        }
+fun Cursor.getLong(name: String): Long? {
+    return try {
+        getLong(getColumnIndex(name))
+    } catch (e: IllegalStateException) {
+        null
     }
 }

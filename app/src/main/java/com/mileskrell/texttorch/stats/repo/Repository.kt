@@ -2,7 +2,7 @@ package com.mileskrell.texttorch.stats.repo
 
 import android.content.Context
 import com.mileskrell.texttorch.analyze.AnalyzeViewModel
-import com.mileskrell.texttorch.stats.model.Message
+import com.mileskrell.texttorch.stats.model.MessageThread
 import com.mileskrell.texttorch.stats.model.SocialRecord
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import kotlin.math.roundToInt
@@ -20,7 +20,7 @@ class Repository(val context: Context) {
         const val TAG = "Repository"
     }
 
-    lateinit var threads: List<List<Message>>
+    lateinit var threads: List<MessageThread>
 
     /**
      * Returns a list of [SocialRecord], based on the provided [period]
@@ -39,39 +39,51 @@ class Repository(val context: Context) {
         val socialRecords = mutableListOf<SocialRecord>()
 
         threads.forEach { thread ->
-            val theirName = thread[0].senderName
-                ?: thread[0].recipientName
-                ?: thread[0].senderAddress
-                ?: thread[0].recipientAddress
-                ?: throw RuntimeException("$TAG: Couldn't determine other person's name OR address")
+            val theirName = thread.otherPartyName ?: thread.otherPartyAddress
             var ownInits = 0
             var theirInits = 0
             var ownTexts = 0
             var theirTexts = 0
+            var ownTextsWithBody = 0
+            var theirTextsWithBody = 0
             var ownTotalChars = 0
             var theirTotalChars = 0
 
-            if (thread[0].senderAddress == null) {
+            val firstMessageBody = thread.messages[0].body
+
+            if (thread.messages[0].sentByUser) {
                 ownInits++
                 ownTexts++
-                ownTotalChars += thread[0].body.length
+                if (firstMessageBody != null) {
+                    ownTextsWithBody++
+                    ownTotalChars += firstMessageBody.length
+                }
             } else {
                 theirInits++
                 theirTexts++
-                theirTotalChars += thread[0].body.length
+                if (firstMessageBody != null) {
+                    theirTextsWithBody++
+                    theirTotalChars += firstMessageBody.length
+                }
             }
-            var latestTime = thread[0].date
+            var latestTime = thread.messages[0].date
 
-            thread.drop(1).forEach { message ->
-                if (message.senderAddress == null) {
+            thread.messages.drop(1).forEach { message ->
+                if (message.sentByUser) {
                     ownTexts++
-                    ownTotalChars += message.body.length
+                    if (message.body != null) {
+                        ownTextsWithBody++
+                        ownTotalChars += message.body.length
+                    }
                     if (message.date - latestTime > period) {
                         ownInits++
                     }
                 } else {
                     theirTexts++
-                    theirTotalChars += message.body.length
+                    if (message.body != null) {
+                        theirTextsWithBody++
+                        theirTotalChars += message.body.length
+                    }
                     if (message.date - latestTime > period) {
                         theirInits++
                     }
@@ -79,21 +91,21 @@ class Repository(val context: Context) {
                 latestTime = message.date
             }
 
-            val ownAvgChars = if (ownTexts == 0) {
+            val ownAvgChars = if (ownTextsWithBody == 0) {
                 0
             } else {
-                (1.0 * ownTotalChars / ownTexts).roundToInt()
+                (1.0 * ownTotalChars / ownTextsWithBody).roundToInt()
             }
 
-            val theirAvgChars = if (theirTexts == 0) {
+            val theirAvgChars = if (theirTextsWithBody == 0) {
                 0
             } else {
-                (1.0 * theirTotalChars / theirTexts).roundToInt()
+                (1.0 * theirTotalChars / theirTextsWithBody).roundToInt()
             }
 
             socialRecords.add(SocialRecord(
                 theirName,
-                thread.last().date,
+                thread.messages.last().date,
                 ownInits,
                 theirInits,
                 ownTexts,
