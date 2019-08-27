@@ -4,7 +4,7 @@
     <string name="intro">Intro</string>
     <string name="analyze">Analyze</string>
 
-    <string name="who_texts_first">Who texts first?</string>
+    <string name="who_texts_first">Who texts first\?</string>
     <string name="average_length">Average text length</string>
     <string name="total_texts">Total texts</string>
 
@@ -21,7 +21,7 @@
     <string name="no_texts_found">No texts were found.\n\nCome back to Text Torch once you\'ve texted some people!</string>
 
     <!--Period dialog fragment-->
-    <string name="whats_this">What\'s this?</string>
+    <string name="whats_this">What\'s this\?</string>
     <string name="time_explanation">
         Whenever this much time passes with no texts sent, whoever breaks the silence
         will be considered to have started the next conversation.
@@ -60,8 +60,8 @@
     <string name="about_description">An open-source project by Miles Krell</string>
     <string name="about_github_title">See the code or file an issue on GitHub</string>
     <string name="about_github_url">https://github.com/mileskrell/text-torch</string>
-    <string name="about_email_title">Don\'t have a GitHub account? Email me directly with feedback</string>
-    <string name="about_email_email">text.torch.feedback@mileskrell.com</string>
+    <string name="about_email_title">Don\'t have a GitHub account\? Email me directly with feedback</string>
+    <string name="about_email_email">text.torch.feedback\@mileskrell.com</string>
     <string name="about_donate_title">Donate if you like the app</string>
     <string name="about_donate_url">https://paypal.me/mileskrell</string>
     <string name="version">Version</string>
