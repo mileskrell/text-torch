@@ -21,8 +21,6 @@ import com.mileskrell.texttorch.R
  * dialog, which feels over-the-top.
  *
  * TODO: Add descriptions to sort orders
- *
- * TODO: Add "by number of conversations" and "by combined total texts" sort orders
  */
 class SortTypeDialogFragment() : DialogFragment() {
 
