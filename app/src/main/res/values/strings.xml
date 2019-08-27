@@ -5,6 +5,7 @@
 
     <!-- Analyze fragment -->
     <string name="analyze">Analyze</string>
+    <string name="analyzing_message_threads">Analyzing message threads…</string>
     <string name="x_percent">%d%%</string>
     <string name="x_out_of_y">%d/%s</string>
 

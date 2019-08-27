@@ -1,5 +1,6 @@
 package com.mileskrell.texttorch.analyze
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class AnalyzeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         socialRecordsViewModel.socialRecords.observe(this, Observer {
+            analyzeViewModel.valueAnimator?.cancel() // TODO: Not sure this line is really needed
             findNavController().navigate(R.id.main_action)
         })
 
@@ -71,6 +73,19 @@ class AnalyzeFragment : Fragment() {
         progress_percentage_text_view.visibility = View.VISIBLE
         progress_fraction_text_view.text = getString(R.string.x_out_of_y, 0, "?")
         progress_percentage_text_view.text = getString(R.string.x_percent, 0)
+        analyzing_message_threads_text_view.visibility = View.VISIBLE
+
+        if (analyzeViewModel.valueAnimator == null) {
+            analyzeViewModel.valueAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+                duration = 1000
+                repeatCount = ValueAnimator.INFINITE
+                repeatMode = ValueAnimator.REVERSE
+                addUpdateListener {
+                    analyzing_message_threads_text_view.alpha = it.animatedValue as Float
+                }
+                start()
+            }
+        }
 
         var threadsTotal = 10_000
         analyzeViewModel.threadsTotal.observe(this, Observer { newThreadsTotal ->
@@ -94,5 +109,10 @@ class AnalyzeFragment : Fragment() {
         socialRecordsViewModel.viewModelScope.launch(Dispatchers.IO) {
             socialRecordsViewModel.initializeSocialRecords(analyzeViewModel)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        analyzeViewModel.valueAnimator?.cancel()
     }
 }
