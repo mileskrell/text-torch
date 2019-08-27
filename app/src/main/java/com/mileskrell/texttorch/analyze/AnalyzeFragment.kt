@@ -69,6 +69,8 @@ class AnalyzeFragment : Fragment() {
         progress_bar.visibility = View.VISIBLE
         progress_fraction_text_view.visibility = View.VISIBLE
         progress_percentage_text_view.visibility = View.VISIBLE
+        progress_fraction_text_view.text = getString(R.string.x_out_of_y, 0, "?")
+        progress_percentage_text_view.text = getString(R.string.x_percent, 0)
 
         var threadsTotal = 10_000
         analyzeViewModel.threadsTotal.observe(this, Observer { newThreadsTotal ->
@@ -81,7 +83,7 @@ class AnalyzeFragment : Fragment() {
             activity?.runOnUiThread {
                 progress_bar.progress = newThreadsCompleted
                 progress_fraction_text_view.text =
-                    getString(R.string.x_out_of_y, newThreadsCompleted, threadsTotal)
+                    getString(R.string.x_out_of_y, newThreadsCompleted, threadsTotal.toString())
                 val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
                 progress_percentage_text_view.text = getString(R.string.x_percent, percentDone)
             }
