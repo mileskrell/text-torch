@@ -16,6 +16,9 @@
     <string name="two_days">2 days</string>
     <string name="sort_order">Sort order</string>
     <string name="about">About</string>
+    
+    <!-- Stats fragment -->
+    <string name="no_texts_found">No texts were found.\n\nCome back to Text Torch once you\'ve texted some people!</string>
 
     <!--Period dialog fragment-->
     <string name="whats_this">What\'s this?</string>

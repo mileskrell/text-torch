@@ -37,6 +37,11 @@ class StatsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
+            stats_view_pager.visibility = View.GONE
+            stats_no_records_text_view.visibility = View.VISIBLE
+            return
+        }
         stats_view_pager.offscreenPageLimit = 2
         stats_tab_layout.setupWithViewPager(stats_view_pager)
         stats_view_pager.adapter = StatsPagerAdapter(context!!, childFragmentManager)
@@ -63,6 +68,12 @@ class StatsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.stats_menu, menu)
+        if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
+            menu?.findItem(R.id.menu_item_sorting)?.isVisible = false
+            // The alternative would be splitting the stats menu into 2 files and only inflating
+            // the one with the sorting action if the list isn't empty.
+            // But I don't think there's any real advantage to doing that.
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
