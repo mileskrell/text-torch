@@ -80,9 +80,10 @@ class AnalyzeFragment : Fragment() {
         analyzeViewModel.threadsCompleted.observe(this, Observer { newThreadsCompleted ->
             activity?.runOnUiThread {
                 progress_bar.progress = newThreadsCompleted
-                progress_fraction_text_view.text = "$newThreadsCompleted/$threadsTotal"
+                progress_fraction_text_view.text =
+                    getString(R.string.x_out_of_y, newThreadsCompleted, threadsTotal)
                 val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
-                progress_percentage_text_view.text = "$percentDone%"
+                progress_percentage_text_view.text = getString(R.string.x_percent, percentDone)
             }
         })
     }

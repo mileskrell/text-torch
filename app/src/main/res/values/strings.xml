@@ -2,7 +2,11 @@
     <string name="app_name">Text Torch</string>
 
     <string name="intro">Intro</string>
+
+    <!-- Analyze fragment -->
     <string name="analyze">Analyze</string>
+    <string name="x_percent">%d%%</string>
+    <string name="x_out_of_y">%d/%d</string>
 
     <string name="who_texts_first">Who texts first\?</string>
     <string name="average_length">Average text length</string>
