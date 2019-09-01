@@ -25,7 +25,7 @@ class IntroFragment : Fragment() {
         super.onAttach(context)
         // TODO There's probably some earlier place to put this check
         if (readSmsGranted() && readContactsGranted()) {
-            findNavController().navigate(R.id.analyze_action)
+            findNavController().navigate(R.id.intro_to_analyze_action)
         }
     }
 
@@ -48,7 +48,7 @@ class IntroFragment : Fragment() {
         when (requestCode) {
             MY_REQUEST_CODE -> {
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED } ) {
-                    findNavController().navigate(R.id.analyze_action)
+                    findNavController().navigate(R.id.intro_to_analyze_action)
                 }
             }
         }
