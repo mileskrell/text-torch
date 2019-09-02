@@ -3,6 +3,14 @@
 
     <string name="intro">Intro</string>
 
+    <!-- Permission-related strings used in multiple places -->
+    <string name="app_settings_explanation">Because you\'ve prevented Text Torch from asking you for the needed permissions itself, you must now manually grant them from the app\'s settings page.</string>
+    <string name="open_app_settings">Open app settings</string>
+
+    <!-- Regain permissions fragment -->
+    <string name="regrant_explanation">Text Torch needs to access your texts and contacts to work, but it looks like you revoked one or both of those permissions at some point.\n\nRemember, Text Torch will never send any of your texts or contacts anywhere.</string>
+    <string name="regrant_needed_permissions">Regrant needed permissions</string>
+
     <!-- Analyze fragment -->
     <string name="analyze">Analyze</string>
     <string name="analyzing_message_threads">Analyzing message threads…</string>

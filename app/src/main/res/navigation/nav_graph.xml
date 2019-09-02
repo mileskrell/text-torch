@@ -13,11 +13,12 @@
         <action
             android:id="@+id/intro_to_analyze_action"
             app:destination="@id/analyze_dest"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/intro_dest"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/intro_to_regain_action"
+            app:destination="@id/regain_dest"
+            app:popUpTo="@+id/intro_dest"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -52,4 +53,19 @@
         android:id="@+id/about_dest"
         android:name="com.mileskrell.texttorch.about.AboutFragment"
         android:label="@string/about" />
+    <fragment
+        android:id="@+id/regain_dest"
+        android:name="com.mileskrell.texttorch.regain.RegainPermissionsFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_regain_permissions">
+        <action
+            android:id="@+id/regain_to_analyze_action"
+            app:destination="@id/analyze_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/regain_dest"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

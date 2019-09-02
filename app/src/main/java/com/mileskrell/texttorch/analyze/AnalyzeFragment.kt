@@ -12,6 +12,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.util.readContactsGranted
+import com.mileskrell.texttorch.util.readSmsGranted
 import kotlinx.android.synthetic.main.fragment_analyze.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +41,18 @@ class AnalyzeFragment : Fragment() {
     private var clickedAnalyze = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // AnalyzeFragment is the only page where these permissions are used, so this is the only
+        // page where we only need to check if permissions were lost while running.
+
+        if (!readSmsGranted() || !readContactsGranted()) {
+            // Since we've been clearing the stack as we navigate (to prevent the user from going
+            // back), this will result in IntroFragment opening, which will in turn immediately open
+            // RegainPermissionsFragment.
+            // TODO: If the user denies a permission while on e.g. AboutFragment, we still return to
+            //  RegainPermissionsFragment. This is fine, but I should understand why it's happening.
+            findNavController().navigateUp()
+        }
+
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         analyzeViewModel = ViewModelProviders.of(this).get(AnalyzeViewModel::class.java)
         return inflater.inflate(R.layout.fragment_analyze, container, false)

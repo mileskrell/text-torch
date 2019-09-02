@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController, AppBarConfiguration(setOf(
             // These are considered "top level destinations"
-            R.id.intro_dest, R.id.analyze_dest, R.id.stats_dest
+            R.id.intro_dest, R.id.regain_dest, R.id.analyze_dest, R.id.stats_dest
         )))
     }
 

@@ -36,6 +36,9 @@ dependencies {
 
     implementation("androidx.cardview:cardview:1.0.0")
 
+    // Android KTX core extensions
+    implementation("androidx.core:core-ktx:1.0.2")
+
     implementation("com.github.medyo:android-about-page:1.2.5")
 
     // ViewModel and LiveData
