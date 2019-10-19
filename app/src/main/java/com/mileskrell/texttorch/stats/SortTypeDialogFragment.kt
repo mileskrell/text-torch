@@ -76,7 +76,7 @@ class SortTypeDialogFragment() : DialogFragment() {
                 }
             }
 
-        val alertDialog = AlertDialog.Builder(activity!!)
+        return AlertDialog.Builder(activity!!)
             .setTitle(R.string.order_by)
             .setView(dialogView)
             .setNegativeButton(getString(R.string.cancel)) { _, _ -> }
@@ -90,8 +90,6 @@ class SortTypeDialogFragment() : DialogFragment() {
                 )
             }
             .create()
-
-        return alertDialog ?: throw IllegalStateException("$TAG: Dialog is null")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -27,7 +27,7 @@ class IntroFragment : Fragment() {
         const val KEY_HAS_SEEN_TUTORIAL = "has_seen_tutorial"
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         // TODO There's probably some earlier place to put this check
         val hasSeenTutorial = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(

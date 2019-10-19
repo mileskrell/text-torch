@@ -66,10 +66,10 @@ class StatsFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.stats_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.stats_menu, menu)
         if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
-            menu?.findItem(R.id.menu_item_sorting)?.isVisible = false
+            menu.findItem(R.id.menu_item_sorting)?.isVisible = false
             // The alternative would be splitting the stats menu into 2 files and only inflating
             // the one with the sorting action if the list isn't empty.
             // But I don't think there's any real advantage to doing that.
@@ -79,9 +79,11 @@ class StatsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_sorting -> {
-                SortTypeDialogFragment(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
+                val sortTypeDialogFragment = SortTypeDialogFragment(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
                     .apply { setTargetFragment(this@StatsFragment, SortTypeDialogFragment.REQUEST_CODE) }
-                    .show(fragmentManager, null)
+                fragmentManager?.let { fm ->
+                    sortTypeDialogFragment.show(fm, null)
+                }
                 true
             }
             R.id.menu_item_about -> {

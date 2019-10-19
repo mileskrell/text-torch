@@ -11,7 +11,8 @@ import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
 import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
 import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
 
-class StatsPagerAdapter(val context: Context, fm: FragmentManager): FragmentPagerAdapter(fm) {
+class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
         const val TAG = "StatsPagerAdapter"

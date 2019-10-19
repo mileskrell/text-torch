@@ -37,12 +37,12 @@ class WhoTextsFirstFragment : Fragment() {
         recycler_view.layoutManager = LinearLayoutManager(context)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.who_texts_first_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.who_texts_first_menu, menu)
 
         // Restore menu state
         val period = socialRecordsViewModel.period.menuId
-        menu?.findItem(period)?.isChecked = true
+        menu.findItem(period)?.isChecked = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -75,6 +75,8 @@ class WhoTextsFirstFragment : Fragment() {
     }
 
     private fun showTimeExplanation() {
-        PeriodDialogFragment().show(fragmentManager, null)
+        fragmentManager?.let { fm ->
+            PeriodDialogFragment().show(fm, null)
+        }
     }
 }
