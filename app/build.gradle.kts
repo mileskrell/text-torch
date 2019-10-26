@@ -22,6 +22,13 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+    // This appears to be required starting with androidx.navigation 2.1.0. Found here:
+    // https://stackoverflow.com/questions/48988778/cannot-inline-bytecode-built-with-jvm-target-1-8-into-bytecode-that-is-being-bui/48988779#comment93879366_50991772
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+    }
 }
 
 dependencies {

@@ -9,7 +9,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:3.5.1")
         classpath(kotlin("gradle-plugin", "1.3.50"))
 
-        val navigationVersion by extra("2.0.0")
+        val navigationVersion by extra("2.1.0")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
