@@ -42,7 +42,7 @@ dependencies {
     implementation("com.github.medyo:android-about-page:1.2.5")
 
     // ViewModel and LiveData
-    val lifecycleVersion = "2.1.0-beta01"
+    val lifecycleVersion = "2.1.0"
     implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion") // Provides ViewModelProviders
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion") // Provides ViewModel.viewModelScope
 
