@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.analyze.AnalyzeViewModel
 import com.mileskrell.texttorch.stats.repo.Repository
 
 /**
@@ -26,8 +25,8 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val repository = Repository(app.applicationContext)
 
-    fun initializeSocialRecords(analyzeViewModel: AnalyzeViewModel) {
-        val initialSocialRecords = repository.initializeSocialRecords(period.ms, analyzeViewModel)
+    fun initializeSocialRecords(threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>) {
+        val initialSocialRecords = repository.initializeSocialRecords(period.ms, threadsTotal, threadsCompleted)
         sortAndSetSocialRecords(initialSocialRecords)
     }
 

@@ -1,8 +1,11 @@
 package com.mileskrell.texttorch.analyze
 
-import android.animation.ValueAnimator
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AnalyzeViewModel : ViewModel() {
 
@@ -10,8 +13,11 @@ class AnalyzeViewModel : ViewModel() {
 
     val threadsTotal = MutableLiveData<Int>()
 
-    /**
-     * Used to animate "Analyzing message threads…" TextView
-     */
-    var valueAnimator: ValueAnimator? = null
+    var clickedAnalyze = false
+
+    fun initializeSocialRecordList(socialRecordsViewModel: SocialRecordsViewModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            socialRecordsViewModel.initializeSocialRecords(threadsTotal, threadsCompleted)
+        }
+    }
 }

@@ -6,15 +6,12 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import kotlinx.android.synthetic.main.fragment_analyze.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 /**
@@ -30,13 +27,11 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
 
     companion object {
         const val TAG = "AnalyzeFragment"
-        const val CLICKED_ANALYZE = "clicked_analyze"
     }
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
     private lateinit var analyzeViewModel: AnalyzeViewModel
-
-    private var clickedAnalyze = false
+    var valueAnimator: ValueAnimator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // AnalyzeFragment is the only page where these permissions are used, so this is the only
@@ -52,27 +47,21 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         }
 
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
-        analyzeViewModel = ViewModelProviders.of(this).get(AnalyzeViewModel::class.java)
+        analyzeViewModel = ViewModelProviders.of(activity!!).get(AnalyzeViewModel::class.java)
 
         socialRecordsViewModel.socialRecords.observe(this, Observer {
-            analyzeViewModel.valueAnimator?.cancel() // TODO: Not sure this line is really needed
             findNavController().navigate(R.id.main_action)
         })
 
-        clickedAnalyze = savedInstanceState?.getBoolean(CLICKED_ANALYZE) ?: false
-        if (clickedAnalyze) {
+        if (analyzeViewModel.clickedAnalyze) {
             enterProgressDisplayingMode()
         }
 
         analyze_button.setOnClickListener {
-            clickedAnalyze = true
+            analyzeViewModel.clickedAnalyze = true
             enterProgressDisplayingMode()
-            initializeSocialRecordList(analyzeViewModel)
+            analyzeViewModel.initializeSocialRecordList(socialRecordsViewModel)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(CLICKED_ANALYZE, clickedAnalyze)
     }
 
     private fun enterProgressDisplayingMode() {
@@ -84,16 +73,14 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         progress_percentage_text_view.text = getString(R.string.x_percent, 0)
         analyzing_message_threads_text_view.visibility = View.VISIBLE
 
-        if (analyzeViewModel.valueAnimator == null) {
-            analyzeViewModel.valueAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-                duration = 1000
-                repeatCount = ValueAnimator.INFINITE
-                repeatMode = ValueAnimator.REVERSE
-                addUpdateListener {
-                    analyzing_message_threads_text_view.alpha = it.animatedValue as Float
-                }
-                start()
+        valueAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1000
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            addUpdateListener {
+                analyzing_message_threads_text_view.alpha = it.animatedValue as Float
             }
+            start()
         }
 
         var threadsTotal = 10_000
@@ -114,14 +101,8 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         })
     }
 
-    private fun initializeSocialRecordList(analyzeViewModel: AnalyzeViewModel) {
-        socialRecordsViewModel.viewModelScope.launch(Dispatchers.IO) {
-            socialRecordsViewModel.initializeSocialRecords(analyzeViewModel)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        analyzeViewModel.valueAnimator?.cancel()
+    override fun onDestroyView() {
+        valueAnimator?.cancel()
+        super.onDestroyView()
     }
 }

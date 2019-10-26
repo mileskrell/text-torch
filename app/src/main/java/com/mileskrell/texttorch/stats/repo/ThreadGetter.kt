@@ -6,7 +6,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.Telephony
 import android.util.Log
-import com.mileskrell.texttorch.analyze.AnalyzeViewModel
+import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.Message
 import com.mileskrell.texttorch.stats.model.MessageThread
 
@@ -41,7 +41,7 @@ class ThreadGetter(val context: Context) {
         )
     }
 
-    fun getThreads(analyzeViewModel: AnalyzeViewModel): List<MessageThread> {
+    fun getThreads(threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>): List<MessageThread> {
         /**
          * This might take a while - it seems that different devices require using different content URIs.
          * See https://seap.samsung.com/faq/why-does-sdk-return-nullpointerexception-when-i-access-smsmms-content-uri-0
@@ -70,7 +70,7 @@ class ThreadGetter(val context: Context) {
         )
             ?: throw RuntimeException("ThreadGetter: threadsCursor is null")
 
-        analyzeViewModel.threadsTotal.postValue(threadsCursor.count)
+        threadsTotal.postValue(threadsCursor.count)
 
         while (threadsCursor.moveToNext()) {
             val threadId = threadsCursor.getLong(Telephony.Threads._ID)
@@ -156,7 +156,7 @@ class ThreadGetter(val context: Context) {
             }
 
             messagesCursor.close()
-            analyzeViewModel.threadsCompleted.run {
+            threadsCompleted.run {
                 postValue(1 + (value ?: 0))
             }
 

@@ -1,7 +1,7 @@
 package com.mileskrell.texttorch.stats.repo
 
 import android.content.Context
-import com.mileskrell.texttorch.analyze.AnalyzeViewModel
+import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.MessageThread
 import com.mileskrell.texttorch.stats.model.SocialRecord
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
@@ -27,9 +27,9 @@ class Repository(val context: Context) {
      *
      * @param period: Number of milliseconds of silence required until the next conversation has officially started
      */
-    fun initializeSocialRecords(period: Int, analyzeViewModel: AnalyzeViewModel): List<SocialRecord> {
+    fun initializeSocialRecords(period: Int, threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>): List<SocialRecord> {
         if (!::threads.isInitialized) {
-            threads = ThreadGetter(context).getThreads(analyzeViewModel)
+            threads = ThreadGetter(context).getThreads(threadsTotal, threadsCompleted)
         }
 
         return getSocialRecordsFromPeriod(period)
