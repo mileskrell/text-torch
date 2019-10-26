@@ -1,7 +1,7 @@
 package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,17 +13,14 @@ import kotlinx.android.synthetic.main.fragment_stat_page.*
 /**
  * TODO: Add a disclaimer somewhere explaining how emoji (and other chars?) can mess with this
  */
-class AverageLengthFragment : Fragment() {
+class AverageLengthFragment : Fragment(R.layout.fragment_stat_page) {
 
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.AVERAGE_LENGTH)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
-        return inflater.inflate(R.layout.fragment_stat_page, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
+
         socialRecordsViewModel.socialRecords.observe(this, Observer {
             socialRecordAdapter.loadSocialRecords(it)
         })

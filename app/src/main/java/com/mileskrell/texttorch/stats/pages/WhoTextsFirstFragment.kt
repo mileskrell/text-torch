@@ -1,7 +1,10 @@
 package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,7 +15,7 @@ import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
 import kotlinx.android.synthetic.main.fragment_stat_page.*
 
-class WhoTextsFirstFragment : Fragment() {
+class WhoTextsFirstFragment : Fragment(R.layout.fragment_stat_page) {
 
     companion object {
         const val TAG = "WhoTextsFirstFragment"
@@ -21,13 +24,10 @@ class WhoTextsFirstFragment : Fragment() {
     private lateinit var socialRecordsViewModel: SocialRecordsViewModel
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_stat_page, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         socialRecordsViewModel.socialRecords.observe(this, Observer {
             socialRecordAdapter.loadSocialRecords(it)
         })

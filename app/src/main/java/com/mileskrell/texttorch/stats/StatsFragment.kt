@@ -2,7 +2,10 @@ package com.mileskrell.texttorch.stats
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -11,7 +14,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_stats.*
 
-class StatsFragment : Fragment() {
+class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     companion object {
         const val TAG = "StatsFragment"
@@ -25,7 +28,7 @@ class StatsFragment : Fragment() {
      */
     var lastPage = 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         if (socialRecordsViewModel.socialRecords.value == null) {
             // This should only happen after process death. In any case,
@@ -33,10 +36,7 @@ class StatsFragment : Fragment() {
             findNavController().navigateUp()
         }
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_stats, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
             stats_view_pager.visibility = View.GONE
             stats_no_records_text_view.visibility = View.VISIBLE

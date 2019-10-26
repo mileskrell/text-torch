@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -21,7 +19,7 @@ import com.mileskrell.texttorch.util.readSmsGranted
 import com.mileskrell.texttorch.util.showAppSettingsDialog
 import kotlinx.android.synthetic.main.fragment_intro.*
 
-class IntroFragment : Fragment() {
+class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     companion object {
         const val KEY_HAS_SEEN_TUTORIAL = "has_seen_tutorial"
@@ -45,10 +43,6 @@ class IntroFragment : Fragment() {
                 findNavController().navigate(R.id.intro_to_regain_action)
             }
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_intro, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -2,9 +2,7 @@ package com.mileskrell.texttorch.analyze
 
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,7 +26,7 @@ import kotlin.math.roundToInt
  * This initially just used a simple callback, but I found that this crashed on configuration changes.
  * With ViewModel and LiveData, we can handle these events.
  */
-class AnalyzeFragment : Fragment() {
+class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
 
     companion object {
         const val TAG = "AnalyzeFragment"
@@ -40,7 +38,7 @@ class AnalyzeFragment : Fragment() {
 
     private var clickedAnalyze = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // AnalyzeFragment is the only page where these permissions are used, so this is the only
         // page where we only need to check if permissions were lost while running.
 
@@ -55,10 +53,7 @@ class AnalyzeFragment : Fragment() {
 
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         analyzeViewModel = ViewModelProviders.of(this).get(AnalyzeViewModel::class.java)
-        return inflater.inflate(R.layout.fragment_analyze, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         socialRecordsViewModel.socialRecords.observe(this, Observer {
             analyzeViewModel.valueAnimator?.cancel() // TODO: Not sure this line is really needed
             findNavController().navigate(R.id.main_action)

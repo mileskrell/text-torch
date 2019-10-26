@@ -3,9 +3,7 @@ package com.mileskrell.texttorch.regain
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
@@ -25,11 +23,7 @@ import kotlinx.android.synthetic.main.fragment_regain_permissions.*
  * This page can be opened either on app start (by IntroFragment) or in AnalyzeFragment's
  * onCreateView.
  */
-class RegainPermissionsFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_regain_permissions, container, false)
-    }
+class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         regain_button.setOnClickListener {
