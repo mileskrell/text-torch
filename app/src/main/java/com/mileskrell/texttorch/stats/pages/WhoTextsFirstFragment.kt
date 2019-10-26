@@ -79,4 +79,9 @@ class WhoTextsFirstFragment : Fragment(R.layout.fragment_stat_page) {
             PeriodDialogFragment().show(fm, null)
         }
     }
+
+    override fun onDestroyView() {
+        recycler_view.adapter = null
+        super.onDestroyView()
+    }
 }

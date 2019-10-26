@@ -26,4 +26,9 @@ class TotalTextsFragment : Fragment(R.layout.fragment_stat_page) {
         recycler_view.adapter = socialRecordAdapter
         recycler_view.layoutManager = LinearLayoutManager(context)
     }
+
+    override fun onDestroyView() {
+        recycler_view.adapter = null
+        super.onDestroyView()
+    }
 }
