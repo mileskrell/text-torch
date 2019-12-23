@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.MessageThread
 import com.mileskrell.texttorch.stats.model.SocialRecord
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import java.util.Locale
 import kotlin.math.roundToInt
 
 /**
@@ -18,6 +19,10 @@ class Repository(val context: Context) {
 
     companion object {
         const val TAG = "Repository"
+    }
+
+    private val getNameLowerCase = { socialRecord: SocialRecord ->
+        socialRecord.correspondentName.toLowerCase(Locale.getDefault())
     }
 
     lateinit var threads: List<MessageThread>
@@ -36,6 +41,7 @@ class Repository(val context: Context) {
     }
 
     fun getSocialRecordsFromPeriod(period: Int): List<SocialRecord> {
+        // TODO: I think this is the method where I should identify duplicate names and set some boolean flag on them that will make them display their addresses
         val socialRecords = mutableListOf<SocialRecord>()
 
         threads.forEach { thread ->
@@ -118,84 +124,76 @@ class Repository(val context: Context) {
         return socialRecords
     }
 
+    /*
+    Notes on sorting:
+    1. "Reversed" only reverses the primary level of sorting; further levels remain unchanged.
+        For example, when using alphabetical as a secondary sort, we always sort A-Z, never Z-A.
+    2. In theory, after sorting by name (case-insensitive), we could sort by name (case-sensitive).
+       But that would only matter if there were multiple people with the same name, which is rather
+       unlikely, so I don't think we need to bother.
+     */
     fun sortSocialRecords(socialRecords: List<SocialRecord>, sortType: SocialRecordsViewModel.SortType, reversed: Boolean = false): List<SocialRecord> {
         return when (sortType) {
             SocialRecordsViewModel.SortType.MOST_RECENT -> {
+                // These dates are ms since epoch, so it's almost impossible that any two will be
+                // equal. Because of that, we don't bother sorting further.
                 if (reversed) {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.mostRecentMessageDate
-                    }
+                    socialRecords.sortedBy { it.mostRecentMessageDate }
                 } else {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.mostRecentMessageDate
-                    }
+                    socialRecords.sortedByDescending { it.mostRecentMessageDate }
                 }
             }
             SocialRecordsViewModel.SortType.ALPHA -> {
                 if (reversed) {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.correspondentName.toLowerCase()
-                    }
+                    socialRecords.sortedByDescending(getNameLowerCase)
                 } else {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.correspondentName.toLowerCase()
-                    }
-                }
+                    socialRecords.sortedBy(getNameLowerCase)
+                } // TODO: Then by address
             }
             SocialRecordsViewModel.SortType.NUMBER_OF_CONVERSATIONS -> {
-                if (reversed) {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.numConversations
-                    }
-                } else {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.numConversations
-                    }
-                }
+                socialRecords.sortedWith(
+                    if (reversed) {
+                        compareBy<SocialRecord> { it.numConversations }
+                    } else {
+                        compareByDescending { it.numConversations }
+                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                )
             }
             SocialRecordsViewModel.SortType.NUMBER_OF_TOTAL_TEXTS -> {
-                if (reversed) {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.numTexts
-                    }
-                } else {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.numTexts
-                    }
-                }
+                socialRecords.sortedWith(
+                    if (reversed) {
+                        compareBy<SocialRecord> { it.numTexts }
+                    } else {
+                        compareByDescending { it.numTexts }
+                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                )
             }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST -> {
-                if (reversed) {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.correspondentInitPercent
-                    }
-                } else {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.correspondentInitPercent
-                    }
-                }
+                socialRecords.sortedWith(
+                    if (reversed) {
+                        compareByDescending<SocialRecord> { it.correspondentInitPercent }
+                    } else {
+                        compareBy { it.correspondentInitPercent }
+                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                )
             }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_MORE -> {
-                if (reversed) {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.correspondentTextPercent
-                    }
-                } else {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.correspondentTextPercent
-                    }
-                }
+                socialRecords.sortedWith(
+                    if (reversed) {
+                        compareByDescending<SocialRecord> { it.correspondentTextPercent }
+                    } else {
+                        compareBy { it.correspondentTextPercent }
+                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                )
             }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_SEND_LONGER_TEXTS -> {
-                if (reversed) {
-                    socialRecords.sortedByDescending { socialRecord ->
-                        socialRecord.correspondentAvgCharsPercent
-                    }
-                } else {
-                    socialRecords.sortedBy { socialRecord ->
-                        socialRecord.correspondentAvgCharsPercent
-                    }
-                }
+                socialRecords.sortedWith(
+                    if (reversed) {
+                        compareByDescending<SocialRecord> { it.correspondentAvgCharsPercent }
+                    } else {
+                        compareBy { it.correspondentAvgCharsPercent }
+                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                )
             }
         }
     }
