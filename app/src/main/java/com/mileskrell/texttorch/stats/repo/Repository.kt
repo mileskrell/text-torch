@@ -21,8 +21,10 @@ class Repository(val context: Context) {
         const val TAG = "Repository"
     }
 
-    private val getNameLowerCase = { socialRecord: SocialRecord ->
-        (socialRecord.correspondentName ?: socialRecord.correspondentAddress).toLowerCase(Locale.getDefault())
+    // Used to sort by name, followed by address (phone number/email address)
+    private val getNameAddressString = { socialRecord: SocialRecord ->
+        ((socialRecord.correspondentName ?: "") + socialRecord.correspondentAddress)
+            .toLowerCase(Locale.getDefault())
     }
 
     lateinit var threads: List<MessageThread>
@@ -145,10 +147,10 @@ class Repository(val context: Context) {
             }
             SocialRecordsViewModel.SortType.ALPHA -> {
                 if (reversed) {
-                    socialRecords.sortedByDescending(getNameLowerCase)
+                    socialRecords.sortedByDescending(getNameAddressString)
                 } else {
-                    socialRecords.sortedBy(getNameLowerCase)
-                } // TODO: Then by address
+                    socialRecords.sortedBy(getNameAddressString)
+                }
             }
             SocialRecordsViewModel.SortType.NUMBER_OF_CONVERSATIONS -> {
                 socialRecords.sortedWith(
@@ -156,7 +158,7 @@ class Repository(val context: Context) {
                         compareBy<SocialRecord> { it.numConversations }
                     } else {
                         compareByDescending { it.numConversations }
-                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                    }.thenBy(getNameAddressString)
                 )
             }
             SocialRecordsViewModel.SortType.NUMBER_OF_TOTAL_TEXTS -> {
@@ -165,7 +167,7 @@ class Repository(val context: Context) {
                         compareBy<SocialRecord> { it.numTexts }
                     } else {
                         compareByDescending { it.numTexts }
-                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                    }.thenBy(getNameAddressString)
                 )
             }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_FIRST -> {
@@ -174,7 +176,7 @@ class Repository(val context: Context) {
                         compareByDescending<SocialRecord> { it.correspondentInitPercent }
                     } else {
                         compareBy { it.correspondentInitPercent }
-                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                    }.thenBy(getNameAddressString)
                 )
             }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_TEXT_MORE -> {
@@ -183,7 +185,7 @@ class Repository(val context: Context) {
                         compareByDescending<SocialRecord> { it.correspondentTextPercent }
                     } else {
                         compareBy { it.correspondentTextPercent }
-                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                    }.thenBy(getNameAddressString)
                 )
             }
             SocialRecordsViewModel.SortType.PEOPLE_YOU_SEND_LONGER_TEXTS -> {
@@ -192,7 +194,7 @@ class Repository(val context: Context) {
                         compareByDescending<SocialRecord> { it.correspondentAvgCharsPercent }
                     } else {
                         compareBy { it.correspondentAvgCharsPercent }
-                    }.thenBy(getNameLowerCase) // TODO: Then by address
+                    }.thenBy(getNameAddressString)
                 )
             }
         }
