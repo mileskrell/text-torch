@@ -8,7 +8,8 @@ import kotlin.math.roundToInt
  * This data gets displayed to the user in [com.mileskrell.texttorch.stats.StatsFragment].
  */
 data class SocialRecord(
-    val correspondentName: String,
+    val correspondentName: String?,
+    val correspondentAddress: String,
     // For sorting by most recent
     val mostRecentMessageDate: Long,
 

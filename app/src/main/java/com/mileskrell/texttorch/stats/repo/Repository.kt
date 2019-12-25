@@ -22,7 +22,7 @@ class Repository(val context: Context) {
     }
 
     private val getNameLowerCase = { socialRecord: SocialRecord ->
-        socialRecord.correspondentName.toLowerCase(Locale.getDefault())
+        (socialRecord.correspondentName ?: socialRecord.correspondentAddress).toLowerCase(Locale.getDefault())
     }
 
     lateinit var threads: List<MessageThread>
@@ -45,7 +45,6 @@ class Repository(val context: Context) {
         val socialRecords = mutableListOf<SocialRecord>()
 
         threads.forEach { thread ->
-            val theirName = thread.otherPartyName ?: thread.otherPartyAddress
             var ownInits = 0
             var theirInits = 0
             var ownTexts = 0
@@ -110,7 +109,8 @@ class Repository(val context: Context) {
             }
 
             socialRecords.add(SocialRecord(
-                theirName,
+                thread.otherPartyName,
+                thread.otherPartyAddress,
                 thread.messages.last().date,
                 ownInits,
                 theirInits,

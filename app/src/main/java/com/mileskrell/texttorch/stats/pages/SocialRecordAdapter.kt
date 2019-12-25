@@ -45,7 +45,7 @@ class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adap
 
     inner class SocialRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setupForSocialRecord(type: SocialRecordAdapterType, record: SocialRecord) {
-            itemView.correspondent_name_text_view.text = record.correspondentName
+            itemView.correspondent_name_text_view.text = record.correspondentName ?: record.correspondentAddress
 
             val endPosition = when (type) {
                 SocialRecordAdapterType.WHO_TEXTS_FIRST -> {
