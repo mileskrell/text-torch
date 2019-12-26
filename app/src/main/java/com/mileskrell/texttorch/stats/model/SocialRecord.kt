@@ -13,6 +13,12 @@ data class SocialRecord(
     // For sorting by most recent
     val mostRecentMessageDate: Long,
 
+    /**
+     * If true, this record should also display the correspondent's address for clarity.
+     * See [MessageThread.nonUniqueName]
+     */
+    val nonUniqueName: Boolean,
+
     // For who texts first
     val ownInits: Int,
     val correspondentInits: Int,

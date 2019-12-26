@@ -164,11 +164,26 @@ class ThreadGetter(val context: Context) {
         }
         threadsCursor.close()
 
-        return oneRecipientMessageThreads.filter { messageThread ->
+        val nonEmptyMessageThreads = oneRecipientMessageThreads.filter { messageThread ->
             messageThread.messages.isNotEmpty()
             // So there will probably be fewer threads returned than we had told the user
             // there would be, but whatever
         }
+
+        // Lastly, we'll set a flag in each MessageThread indicating whether there are multiple
+        // threads sharing the same name
+        nonEmptyMessageThreads.filter { it.otherPartyName != null }
+            .groupBy { it.otherPartyName }.forEach {
+            // If there's more than one thread with this name...
+            if (it.value.size > 1) {
+                // In each thread with this name, mark the name as non-unique
+                it.value.forEach {
+                    it.nonUniqueName = true
+                }
+            }
+        }
+
+        return nonEmptyMessageThreads
     }
 
     private fun getNameFromAddress(address: String): String? {

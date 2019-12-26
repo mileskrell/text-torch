@@ -43,7 +43,6 @@ class Repository(val context: Context) {
     }
 
     fun getSocialRecordsFromPeriod(period: Int): List<SocialRecord> {
-        // TODO: I think this is the method where I should identify duplicate names and set some boolean flag on them that will make them display their addresses
         val socialRecords = mutableListOf<SocialRecord>()
 
         threads.forEach { thread ->
@@ -114,6 +113,7 @@ class Repository(val context: Context) {
                 thread.otherPartyName,
                 thread.otherPartyAddress,
                 thread.messages.last().date,
+                thread.nonUniqueName,
                 ownInits,
                 theirInits,
                 ownTexts,

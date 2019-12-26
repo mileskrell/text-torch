@@ -7,4 +7,7 @@ data class MessageThread(
     val otherPartyAddress: String,
     val otherPartyName: String?,
     val messages: List<Message>
-)
+) {
+    // If true, there exist multiple threads with people of this name
+    var nonUniqueName = false
+}

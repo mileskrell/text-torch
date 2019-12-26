@@ -1,6 +1,10 @@
 package com.mileskrell.texttorch.stats.pages
 
 import android.animation.ValueAnimator
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +49,23 @@ class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adap
 
     inner class SocialRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setupForSocialRecord(type: SocialRecordAdapterType, record: SocialRecord) {
-            itemView.correspondent_name_text_view.text = record.correspondentName ?: record.correspondentAddress
+            // Make the whole TextView bold in case part of it is still italicized
+            itemView.correspondent_name_text_view.setTypeface(null, Typeface.BOLD)
+            if (record.nonUniqueName) {
+                // The name is guaranteed to be non-null here
+                itemView.correspondent_name_text_view.text = SpannableStringBuilder("${record.correspondentName} (${record.correspondentAddress})")
+                    .apply {
+                        // Make the number and surrounding parentheses also italic
+                        setSpan(
+                            StyleSpan(Typeface.BOLD_ITALIC),
+                            record.correspondentName!!.length,
+                            length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+            } else {
+                itemView.correspondent_name_text_view.text = record.correspondentName ?: record.correspondentAddress
+            }
 
             val endPosition = when (type) {
                 SocialRecordAdapterType.WHO_TEXTS_FIRST -> {
