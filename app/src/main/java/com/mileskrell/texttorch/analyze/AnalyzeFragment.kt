@@ -50,7 +50,7 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         analyzeViewModel = ViewModelProviders.of(activity!!).get(AnalyzeViewModel::class.java)
 
         socialRecordsViewModel.socialRecords.observe(this, Observer {
-            findNavController().navigate(R.id.main_action)
+            findNavController().navigate(R.id.analyze_to_stats_action)
         })
 
         if (analyzeViewModel.clickedAnalyze) {

@@ -18,7 +18,7 @@
         <action
             android:id="@+id/intro_to_regain_action"
             app:destination="@id/regain_dest"
-            app:popUpTo="@+id/intro_dest"
+            app:popUpTo="@id/intro_dest"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_analyze">
         <action
-            android:id="@+id/main_action"
+            android:id="@+id/analyze_to_stats_action"
             app:destination="@id/stats_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -42,7 +42,7 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_stats">
         <action
-            android:id="@+id/about_action"
+            android:id="@+id/stats_to_about_action"
             app:destination="@id/about_dest"
             app:enterAnim="@anim/slide_in_up"
             app:exitAnim="@anim/slide_out_down"
@@ -65,7 +65,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/regain_dest"
+            app:popUpTo="@id/regain_dest"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

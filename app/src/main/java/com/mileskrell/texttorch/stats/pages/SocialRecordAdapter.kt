@@ -50,10 +50,10 @@ class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adap
     inner class SocialRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setupForSocialRecord(type: SocialRecordAdapterType, record: SocialRecord) {
             // Make the whole TextView bold in case part of it is still italicized
-            itemView.correspondent_name_text_view.setTypeface(null, Typeface.BOLD)
+            itemView.correspondent_name_address_text_view.setTypeface(null, Typeface.BOLD)
             if (record.nonUniqueName) {
                 // The name is guaranteed to be non-null here
-                itemView.correspondent_name_text_view.text = SpannableStringBuilder("${record.correspondentName} (${record.correspondentAddress})")
+                itemView.correspondent_name_address_text_view.text = SpannableStringBuilder("${record.correspondentName} (${record.correspondentAddress})")
                     .apply {
                         // Make the number and surrounding parentheses also italic
                         setSpan(
@@ -64,7 +64,7 @@ class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adap
                         )
                     }
             } else {
-                itemView.correspondent_name_text_view.text = record.correspondentName ?: record.correspondentAddress
+                itemView.correspondent_name_address_text_view.text = record.correspondentName ?: record.correspondentAddress
             }
 
             val endPosition = when (type) {

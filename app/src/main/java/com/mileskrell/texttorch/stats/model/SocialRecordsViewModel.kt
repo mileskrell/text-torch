@@ -16,7 +16,7 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
         const val TAG = "SocialRecordViewModel"
     }
 
-    private val _socialRecords: MutableLiveData<List<SocialRecord>> = MutableLiveData()
+    private val _socialRecords = MutableLiveData<List<SocialRecord>>()
     val socialRecords = _socialRecords as LiveData<List<SocialRecord>>
 
     var period = Period.SIX_HOURS

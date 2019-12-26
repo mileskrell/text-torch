@@ -87,7 +87,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 true
             }
             R.id.menu_item_about -> {
-                findNavController().navigate(R.id.about_action)
+                findNavController().navigate(R.id.stats_to_about_action)
                 true
             }
             else -> super.onOptionsItemSelected(item)

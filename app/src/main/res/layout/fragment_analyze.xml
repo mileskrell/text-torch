@@ -26,9 +26,9 @@
         android:textAlignment="center"
         android:textSize="22sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/analyze_button"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+        app:layout_constraintBottom_toTopOf="@id/analyze_button"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
@@ -62,8 +62,8 @@
         android:layout_marginTop="8dp"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/progress_bar"
-        app:layout_constraintTop_toBottomOf="@+id/progress_bar"
+        app:layout_constraintStart_toStartOf="@id/progress_bar"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar"
         tools:text="17%" />
 
     <TextView
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/progress_bar"
+        app:layout_constraintEnd_toEndOf="@id/progress_bar"
         app:layout_constraintTop_toBottomOf="@id/progress_bar"
         tools:text="128/3000" />
 </androidx.constraintlayout.widget.ConstraintLayout>
