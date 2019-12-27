@@ -61,4 +61,6 @@ dependencies {
     val coroutinesVersion = "1.3.2"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.0")
 }
