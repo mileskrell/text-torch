@@ -37,10 +37,16 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
         setHasOptionsMenu(true)
 
-        if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
-            stats_view_pager.visibility = View.GONE
-            stats_no_records_text_view.visibility = View.VISIBLE
-            return
+        socialRecordsViewModel.run {
+            // If list is totally empty
+            if (socialRecords.value!!.isEmpty()
+                // OR if only showing contacts, but the list contains no contacts
+                || !showNonContacts && socialRecords.value!!.none { it.correspondentName != null }
+            ) {
+                stats_view_pager.visibility = View.GONE
+                stats_no_records_text_view.visibility = View.VISIBLE
+                return
+            }
         }
         stats_view_pager.offscreenPageLimit = 2
         stats_tab_layout.setupWithViewPager(stats_view_pager)
