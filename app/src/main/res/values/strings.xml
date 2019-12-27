@@ -28,6 +28,7 @@
     <string name="one_day">1 day</string>
     <string name="two_days">2 days</string>
     <string name="sort_order">Sort order</string>
+    <string name="settings">Settings</string>
     <string name="about">About</string>
 
     <!-- Stats fragment -->
@@ -68,6 +69,11 @@
     <string name="texted_first_x_percent_of_the_time">texted first\n%1$d%% of the time</string>
     <string name="sent_x_percent_of_texts">sent %1$d%%\nof texts</string>
     <string name="x_characters_on_average">%1$d characters\non average</string>
+
+    <!--Settings fragment-->
+    <string name="show_non_contacts_key">show_non_contacts</string>
+    <string name="show_non_contacts_title">Also list non-contacts</string>
+    <string name="show_non_contacts_summary">You probably won\'t be interested in this data</string>
 
     <!--About fragment-->
     <string name="about_description">An open-source project by Miles Krell</string>

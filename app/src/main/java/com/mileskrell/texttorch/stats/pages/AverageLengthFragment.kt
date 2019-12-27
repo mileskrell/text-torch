@@ -22,7 +22,13 @@ class AverageLengthFragment : Fragment(R.layout.fragment_stat_page) {
         socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
 
         socialRecordsViewModel.socialRecords.observe(this, Observer {
-            socialRecordAdapter.loadSocialRecords(it)
+            if (socialRecordsViewModel.showNonContacts) {
+                socialRecordAdapter.loadSocialRecords(it)
+            } else {
+                socialRecordAdapter.loadSocialRecords(it.filter { socialRecord ->
+                    socialRecord.correspondentName != null
+                })
+            }
         })
 
         recycler_view.setHasFixedSize(true)

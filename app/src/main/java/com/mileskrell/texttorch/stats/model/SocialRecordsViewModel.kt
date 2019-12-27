@@ -1,6 +1,8 @@
 package com.mileskrell.texttorch.stats.model
 
 import android.app.Application
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,8 +24,28 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     var period = Period.SIX_HOURS
     var sortType = SortType.MOST_RECENT
     var reversed = false
+    var showNonContacts = PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+        .getBoolean(app.getString(R.string.show_non_contacts_key), false)
+
+    private val onSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+        if (key == app.getString(R.string.show_non_contacts_key)) {
+            showNonContacts =
+                sharedPreferences.getBoolean(app.getString(R.string.show_non_contacts_key), false)
+            // Let the stats fragments know about the change. Their parent fragments will check the
+            // value of showNonContacts when they reload the data.
+            _socialRecords.value = _socialRecords.value
+        }
+    }
 
     private val repository = Repository(app.applicationContext)
+
+    init {
+        PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+            .registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
+    }
+
+    override fun onCleared() = PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+        .unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
 
     fun initializeSocialRecords(threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>) {
         val initialSocialRecords = repository.initializeSocialRecords(period.ms, threadsTotal, threadsCompleted)
