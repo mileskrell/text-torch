@@ -48,6 +48,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.1.0")
 
     implementation("com.github.medyo:android-about-page:1.2.5")
+    implementation("com.romandanylyk:pageindicatorview:1.0.3")
 
     // ViewModel and LiveData
     val lifecycleVersion = "2.1.0"

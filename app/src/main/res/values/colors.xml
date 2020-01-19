@@ -7,9 +7,33 @@
     <!-- amber a700 -->
     <color name="colorAccent">#ffab00</color>
 
+    <string-array name="intro_background_colors">
+        <item>#4DB6AC</item>
+        <item>#81C784</item>
+        <item>#8198c7</item>
+    </string-array>
+
+    <string-array name="intro_logo_colors">
+        <item>#48A9A0</item>
+        <item>#79BA7B</item>
+        <item>#798eba</item>
+        <!-- TODO: To make things more interesting, have the last slide's colors break the trend set by the other slides -->
+    </string-array>
+
+    <string name="intro_slide_2_link_color">#0988C9</string>
+
     <color name="colorLeftBar">#FF5252</color>
     <color name="colorRightBar">#2196F3</color>
 
     <!-- Must be set explicitly for TabLayout shadow to appear; see https://stackoverflow.com/a/31777078 -->
     <color name="grey_50">#fafafa</color>
+
+    <!-- This color is used so that intro_view_pager_background contains a ColorDrawable.
+         We then change the color as the ViewPager scrolls, so the initial value doesn't matter.
+
+         SUPER IMPORTANT/INTERESTING NOTE: Don't use a value of #fafafa! Doing so and then modifying
+         the color of the ColorDrawable will affect the background color of fragments we open later!
+
+         Of course, this begs the question: are there any other color values we MUST NOT USE? -->
+    <color name="view_pager_background_dummy_color">#000000</color>
 </resources>

@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">Text Torch</string>
 
-    <string name="intro">Intro</string>
+    <!-- Intro -->
+    <string name="welcome_to_text_torch">Welcome to Text Torch!</string>
+    <string name="a_world_of_texting_insight_awaits">A world of texting insight awaits.</string>
+
+    <string name="before_we_can_get_started">Before we can get started, Text Torch will need access to your text messages and contacts.</string>
+    <string name="dont_worry">Don\'t worry - none of this information will ever leave your device.</string>
+    <string name="intro_verify_pre_text">Text Torch is open-source, so you can</string>
+    <string name="intro_verify_link_text">see the code</string>
+    <string name="intro_verify_post_text">and verify this for yourself if you like.</string>
+    <string name="grant_needed_permissions">Grant needed permissions</string>
 
     <!-- Permission-related strings used in multiple places -->
     <string name="app_settings_explanation">Because you\'ve prevented Text Torch from asking you for the needed permissions itself, you must now manually grant them from the app\'s settings page.</string>
