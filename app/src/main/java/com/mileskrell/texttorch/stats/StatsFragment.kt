@@ -7,7 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.R
@@ -20,7 +20,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         const val TAG = "StatsFragment"
     }
 
-    private lateinit var socialRecordsViewModel: SocialRecordsViewModel
+    private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
 
     /**
      * Position of the most-recently-viewed page. When the user navigates to another page,
@@ -29,7 +29,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     var lastPage = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
         if (socialRecordsViewModel.socialRecords.value == null) {
             // This should only happen after process death. In any case,
             // it means that we have to go back to the "analyze" page.

@@ -52,7 +52,6 @@ dependencies {
 
     // ViewModel and LiveData
     val lifecycleVersion = "2.2.0"
-    implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion") // Provides ViewModelProviders
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion") // Provides ViewModel.viewModelScope
 
     val navigationVersion: String by rootProject.extra

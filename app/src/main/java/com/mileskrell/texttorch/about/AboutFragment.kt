@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
@@ -18,7 +18,7 @@ import mehdi.sakout.aboutpage.Element
 class AboutFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
+        val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
 
         if (socialRecordsViewModel.socialRecords.value == null) {
             // Process death! Go back to StatsFragment (which will in turn send us back to AnalyzeFragment).

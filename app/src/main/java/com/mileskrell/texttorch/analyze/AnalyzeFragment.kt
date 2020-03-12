@@ -4,8 +4,8 @@ import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
@@ -29,8 +29,8 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         const val TAG = "AnalyzeFragment"
     }
 
-    private lateinit var socialRecordsViewModel: SocialRecordsViewModel
-    private lateinit var analyzeViewModel: AnalyzeViewModel
+    private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
+    private val analyzeViewModel: AnalyzeViewModel by activityViewModels()
     var valueAnimator: ValueAnimator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,10 +46,7 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
             findNavController().navigateUp()
         }
 
-        socialRecordsViewModel = ViewModelProviders.of(activity!!).get(SocialRecordsViewModel::class.java)
-        analyzeViewModel = ViewModelProviders.of(activity!!).get(AnalyzeViewModel::class.java)
-
-        socialRecordsViewModel.socialRecords.observe(this, Observer {
+        socialRecordsViewModel.socialRecords.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(R.id.analyze_to_stats_action)
         })
 
@@ -84,13 +81,13 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         }
 
         var threadsTotal = 10_000
-        analyzeViewModel.threadsTotal.observe(this, Observer { newThreadsTotal ->
+        analyzeViewModel.threadsTotal.observe(viewLifecycleOwner, Observer { newThreadsTotal ->
             activity?.runOnUiThread {
                 threadsTotal = newThreadsTotal
                 progress_bar.max = threadsTotal
             }
         })
-        analyzeViewModel.threadsCompleted.observe(this, Observer { newThreadsCompleted ->
+        analyzeViewModel.threadsCompleted.observe(viewLifecycleOwner, Observer { newThreadsCompleted ->
             activity?.runOnUiThread {
                 progress_bar.progress = newThreadsCompleted
                 progress_fraction_text_view.text =
