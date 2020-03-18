@@ -30,10 +30,10 @@
     <string name="regrant_needed_permissions">Regrant needed permissions</string>
 
     <!-- Analyze fragment -->
-    <string name="analyze">Analyze</string>
-    <string name="analyzing_message_threads">Analyzing message threads…</string>
+    <string name="analyze_my_texts">Analyze my texts!</string>
+    <string name="analyzing">Analyzing…</string>
     <string name="x_percent">%d%%</string>
-    <string name="x_out_of_y">%d/%s</string>
+    <string name="x_out_of_y_threads">%d/%s threads</string>
 
     <string name="who_texts_first">Who texts first\?</string>
     <string name="average_length">Average text length</string>
