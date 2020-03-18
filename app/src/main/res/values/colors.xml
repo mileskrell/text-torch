@@ -8,23 +8,23 @@
     <color name="colorAccent">#ffab00</color>
 
     <string-array name="intro_background_colors">
-        <item>#4DB6AC</item>
-        <item>#81C784</item>
+        <item>#4db6ac</item>
+        <item>#81c784</item>
         <item>#8198c7</item>
         <item>#ffab00</item>
     </string-array>
 
     <string-array name="intro_logo_colors">
-        <item>#48A9A0</item>
-        <item>#79BA7B</item>
+        <item>#48a9a0</item>
+        <item>#79ba7b</item>
         <item>#798eba</item>
         <item>#ffab00</item>
     </string-array>
 
     <string name="intro_slide_2_link_color">#0988C9</string>
 
-    <color name="colorLeftBar">#FF5252</color>
-    <color name="colorRightBar">#2196F3</color>
+    <color name="colorLeftBar">#ff5252</color>
+    <color name="colorRightBar">#2196f3</color>
 
     <!-- Must be set explicitly for TabLayout shadow to appear; see https://stackoverflow.com/a/31777078 -->
     <color name="grey_50">#fafafa</color>
