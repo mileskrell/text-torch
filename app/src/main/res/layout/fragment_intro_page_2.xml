@@ -77,5 +77,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro_page_2_text_view_3" />
 
+        <TextView
+            android:id="@+id/intro_text_view_permissions_granted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/permissions_granted"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/intro_permissions_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/intro_permissions_button" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

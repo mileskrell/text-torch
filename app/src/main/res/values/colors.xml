@@ -11,13 +11,14 @@
         <item>#4DB6AC</item>
         <item>#81C784</item>
         <item>#8198c7</item>
+        <item>#ffab00</item>
     </string-array>
 
     <string-array name="intro_logo_colors">
         <item>#48A9A0</item>
         <item>#79BA7B</item>
         <item>#798eba</item>
-        <!-- TODO: To make things more interesting, have the last slide's colors break the trend set by the other slides -->
+        <item>#ffab00</item>
     </string-array>
 
     <string name="intro_slide_2_link_color">#0988C9</string>
