@@ -19,7 +19,8 @@
     <string name="enable_analytics">Enable analytics</string>
     <string name="disable_analytics">Disable analytics</string>
 
-    <string name="enter_app">Enter app</string>
+    <string name="all_set">You\'re all set!</string>
+    <string name="take_a_look">Take a look</string>
 
     <!-- Permission-related strings used in multiple places -->
     <string name="app_settings_explanation">Because you\'ve prevented Text Torch from asking you for the needed permissions itself, you must now manually grant them from the app\'s settings page.</string>
