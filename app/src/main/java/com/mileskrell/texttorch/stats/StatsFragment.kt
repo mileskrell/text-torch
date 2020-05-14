@@ -49,7 +49,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
         stats_view_pager.offscreenPageLimit = 2
         stats_tab_layout.setupWithViewPager(stats_view_pager)
-        stats_view_pager.adapter = StatsPagerAdapter(context!!, childFragmentManager)
+        stats_view_pager.adapter = StatsPagerAdapter(requireContext(), childFragmentManager)
         stats_view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }

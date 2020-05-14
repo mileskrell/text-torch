@@ -76,7 +76,7 @@ class SortTypeDialogFragment() : DialogFragment() {
                 }
             }
 
-        return AlertDialog.Builder(activity!!)
+        return AlertDialog.Builder(requireContext())
             .setTitle(R.string.order_by)
             .setView(dialogView)
             .setNegativeButton(getString(R.string.cancel)) { _, _ -> }

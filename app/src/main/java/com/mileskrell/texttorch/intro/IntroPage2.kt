@@ -82,7 +82,7 @@ class IntroPage2 : Fragment(R.layout.fragment_intro_page_2) {
 
         // TODO: Do we actually need to show this additional rationale, only after the user has
         //  denied the permission? We should probably just make the initial rationale really clear.
-        AlertDialog.Builder(context!!).apply {
+        AlertDialog.Builder(requireContext()).apply {
             setTitle("Hey! You!")
             setMessage("Grant that permission!")
             setPositiveButton("Okay") { _, _ ->

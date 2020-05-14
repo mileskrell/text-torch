@@ -70,7 +70,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     private fun exitAlmostFullscreen() {
         (activity as? MainActivity)?.supportActionBar?.show()
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.colorPrimaryDark)
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -17,13 +17,13 @@ import com.mileskrell.texttorch.R
 const val PERMISSIONS_REQUEST_CODE = 1
 
 fun Fragment.readSmsGranted() =
-    ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+    ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
 
 fun Fragment.readContactsGranted() =
-    ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
+    ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
 
 fun Fragment.showAppSettingsDialog() {
-    AlertDialog.Builder(context!!).apply {
+    AlertDialog.Builder(requireContext()).apply {
         setMessage(R.string.app_settings_explanation)
         setPositiveButton(R.string.open_app_settings) { _, _ ->
             val appSettingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
