@@ -34,33 +34,27 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
+
+    val navigationVersion = "2.2.2"
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("androidx.preference:preference-ktx:1.1.1")
-
-    testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
-
     implementation("androidx.cardview:cardview:1.0.0")
-
-    // Android KTX core extensions
+    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("androidx.core:core-ktx:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation("androidx.preference:preference-ktx:1.1.1")
 
     implementation("com.github.medyo:android-about-page:1.2.5")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
-
-    // ViewModel and LiveData
-    val lifecycleVersion = "2.2.0"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion") // Provides ViewModel.viewModelScope
-
-    val navigationVersion: String by rootProject.extra
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
 
     val coroutinesVersion = "1.3.6"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.2")
+
+    testImplementation("junit:junit:4.12")
+    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }
