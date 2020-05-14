@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class AnalyzeViewModel : ViewModel() {
 
-    val threadsCompleted = MutableLiveData<Int>()
+    val threadsCompleted = MutableLiveData(0)
 
     val threadsTotal = MutableLiveData<Int>()
 

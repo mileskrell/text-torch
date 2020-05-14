@@ -99,7 +99,7 @@ class ThreadGetter(val context: Context) {
                 // TODO: Analytics: Log that an address was empty
                 Log.d(TAG, "Skipping empty address")
                 threadsCompleted.run {
-                    postValue(1 + (value ?: 0))
+                    postValue(1 + value!!)
                 }
                 continue
             }
@@ -168,7 +168,7 @@ class ThreadGetter(val context: Context) {
 
             messagesCursor.close()
             threadsCompleted.run {
-                postValue(1 + (value ?: 0))
+                postValue(1 + value!!)
             }
 
             oneRecipientMessageThreads.add(MessageThread(address, name, messages))
