@@ -92,6 +92,17 @@ class ThreadGetter(val context: Context) {
                 ?: throw RuntimeException("Could not get address for recipient $recipients in thread $threadId")
             addressCursor.close()
 
+            if (address.isEmpty()) {
+                // I experienced this at one point; it makes the name lookup throw an
+                // IllegalArgumentException. Unfortunately, with no address or name to identify the
+                // person by, we can't really show this to the user.
+                // TODO: Analytics: Log that an address was empty
+                Log.d(TAG, "Skipping empty address")
+                threadsCompleted.run {
+                    postValue(1 + (value ?: 0))
+                }
+                continue
+            }
             val name = getNameFromAddress(address)
 
             //////////////////////////////////////////////////////////////// Get messages
@@ -199,9 +210,11 @@ class ThreadGetter(val context: Context) {
             null
         )
         val name = if (phoneLookupCursor != null && phoneLookupCursor.count > 0) {
+            // TODO: Analytics: Log that a name lookup was successful
             phoneLookupCursor.moveToFirst()
             phoneLookupCursor.getString(0)
         } else {
+            // TODO: Analytics: Log that a name lookup failed
             Log.d(TAG, "Name lookup failed for address $address")
             null
         }
