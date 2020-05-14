@@ -14,30 +14,28 @@ import com.mileskrell.texttorch.R
 /**
  * The dialog that appears when the user attempts to change the sort order.
  *
- * The reason this is a bit complicated is that it needs some way to save and restore its state.
- *
- * If we provided a callback as an argument, we would need somewhere to store it across configuration changes, but it
- * wouldn't be able to be saved in [onSaveInstanceState]. So it would require creating a ViewModel just for this
- * dialog, which feels over-the-top.
- *
  * TODO: Add descriptions to sort orders
  */
-class SortTypeDialogFragment() : DialogFragment() {
-
-    private var currentlyCheckedRadioButtonId: Int? = null
-    private var currentlyReversed: Boolean? = null
-
-    constructor(radioButtonId: Int, reversed: Boolean) : this() {
-        this.currentlyCheckedRadioButtonId = radioButtonId
-        this.currentlyReversed = reversed
-    }
+class SortTypeDialogFragment : DialogFragment() {
 
     companion object {
         const val TAG = "SortTypeDialogFragment"
-        const val REVERSED_KEY = "reversed"
-        const val SORT_TYPE_ID_KEY = "sort_type_id"
+
+        // Used for both fragment arguments and extras
+        const val SORT_TYPE_ID = "sort type ID"
+        const val REVERSED = "reversed"
+
         const val REQUEST_CODE = 0
         const val RESULT_CODE = 0
+
+        @JvmStatic
+        fun newInstance(checkedRadioButtonId: Int, reversed: Boolean) =
+            SortTypeDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(SORT_TYPE_ID, checkedRadioButtonId)
+                    putBoolean(REVERSED, reversed)
+                }
+            }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -47,33 +45,24 @@ class SortTypeDialogFragment() : DialogFragment() {
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        if (savedInstanceState != null) {
-            currentlyCheckedRadioButtonId = savedInstanceState.getInt(SORT_TYPE_ID_KEY)
-            currentlyReversed = savedInstanceState.getBoolean(REVERSED_KEY)
-        }
-
         /**
-         * It's okay that we don't provide the view root in this line, since we don't use any important layout_*
-         * properties on the root of the inflated layout.
+         * It's okay that we don't provide the view root in this line, since we don't use any
+         * important layout_* properties on the root of the inflated layout.
          *
          * The [SuppressLint] annotation above is for this line.
          */
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_sort_type, null)
 
+        // Even though we're always setting the checked state of these to their *initial* values,
+        // they're set to their *latest* values immediately after, so I guess it must be persisted
+        // automatically by these widgets. This is nice because it lets this file be a lot shorter.
         dialogView.findViewById<RadioGroup>(R.id.radio_group_sort_type)!!
-            .apply {
-                check(currentlyCheckedRadioButtonId!!)
-                setOnCheckedChangeListener { _, checkedId ->
-                    currentlyCheckedRadioButtonId = checkedId
-                }
+            .run {
+                check(requireArguments().getInt(SORT_TYPE_ID))
             }
         dialogView.findViewById<CheckBox>(R.id.check_box_reversed)!!
-            .apply {
-                isChecked = currentlyReversed!!
-                setOnCheckedChangeListener { _, isChecked ->
-                    currentlyReversed = isChecked
-                }
+            .run {
+                isChecked = requireArguments().getBoolean(REVERSED)
             }
 
         return AlertDialog.Builder(requireContext())
@@ -85,16 +74,16 @@ class SortTypeDialogFragment() : DialogFragment() {
                     REQUEST_CODE,
                     RESULT_CODE,
                     Intent()
-                        .putExtra(SORT_TYPE_ID_KEY, currentlyCheckedRadioButtonId)
-                        .putExtra(REVERSED_KEY, currentlyReversed)
+                        .putExtra(
+                            SORT_TYPE_ID,
+                            dialogView.findViewById<RadioGroup>(R.id.radio_group_sort_type)!!.checkedRadioButtonId
+                        )
+                        .putExtra(
+                            REVERSED,
+                            dialogView.findViewById<CheckBox>(R.id.check_box_reversed)!!.isChecked
+                        )
                 )
             }
             .create()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SORT_TYPE_ID_KEY, currentlyCheckedRadioButtonId!!)
-        outState.putBoolean(REVERSED_KEY, currentlyReversed!!)
     }
 }

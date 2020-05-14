@@ -84,7 +84,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_sorting -> {
-                val sortTypeDialogFragment = SortTypeDialogFragment(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
+                val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
                     .apply { setTargetFragment(this@StatsFragment, SortTypeDialogFragment.REQUEST_CODE) }
                 fragmentManager?.let { fm ->
                     sortTypeDialogFragment.show(fm, null)
@@ -108,8 +108,8 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == SortTypeDialogFragment.REQUEST_CODE && resultCode == SortTypeDialogFragment.RESULT_CODE) {
-            val checkedRadioButtonId = data?.getIntExtra(SortTypeDialogFragment.SORT_TYPE_ID_KEY, -1)
-            val reversed = data?.getBooleanExtra(SortTypeDialogFragment.REVERSED_KEY, false)!!
+            val checkedRadioButtonId = data?.getIntExtra(SortTypeDialogFragment.SORT_TYPE_ID, -1)
+            val reversed = data?.getBooleanExtra(SortTypeDialogFragment.REVERSED, false)!!
 
             val newSortType = SocialRecordsViewModel.SortType.values()
                 .first { it.radioButtonId == checkedRadioButtonId }
