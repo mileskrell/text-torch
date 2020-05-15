@@ -4,27 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".intro.pages.IntroPage4">
+    tools:context=".intro.pages.IntroPageWelcome">
 
     <TextView
-        android:id="@+id/intro_page_4_text_view_1"
+        android:id="@+id/intro_page_1_text_view_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/all_set"
+        android:breakStrategy="balanced"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/welcome_to_text_torch"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@id/intro_button_enter_app"
+        app:layout_constraintBottom_toTopOf="@id/intro_page_1_text_view_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintVertical_bias="0.86" />
 
-    <Button
-        android:id="@+id/intro_button_enter_app"
+    <TextView
+        android:id="@+id/intro_page_1_text_view_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/take_a_look"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:breakStrategy="balanced"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/a_world_of_texting_insight_awaits"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"

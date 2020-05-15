@@ -5,9 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.intro.IntroFragment
-import kotlinx.android.synthetic.main.fragment_intro_page_3.*
+import kotlinx.android.synthetic.main.fragment_intro_page_analytics.*
 
-class IntroPage3 : Fragment(R.layout.fragment_intro_page_3) {
+class IntroPageAnalytics : Fragment(R.layout.fragment_intro_page_analytics) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         intro_analytics_radio_group.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {

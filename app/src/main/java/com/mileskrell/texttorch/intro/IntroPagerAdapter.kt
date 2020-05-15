@@ -5,26 +5,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.*
-import com.mileskrell.texttorch.intro.pages.IntroPage1
-import com.mileskrell.texttorch.intro.pages.IntroPage2
-import com.mileskrell.texttorch.intro.pages.IntroPage3
-import com.mileskrell.texttorch.intro.pages.IntroPage4
+import com.mileskrell.texttorch.intro.pages.IntroPageAnalytics
+import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
+import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
+import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
 
 class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val pages = mutableListOf(
-        IntroPage1(),
-        IntroPage2()
+        IntroPageWelcome(),
+        IntroPagePermissions()
     ).apply {
-        if (introViewModel.lastPageVisible.ordinal >= ANALYTICS.ordinal) add(IntroPage3())
-        if (introViewModel.lastPageVisible.ordinal >= ENTER_APP.ordinal) add(IntroPage4())
+        if (introViewModel.lastPageVisible.ordinal >= ANALYTICS.ordinal) add(IntroPageAnalytics())
+        if (introViewModel.lastPageVisible.ordinal >= ENTER_APP.ordinal) add(IntroPageEnterApp())
     }
 
     fun addAnalyticsPage() {
         if (introViewModel.lastPageVisible.ordinal < ANALYTICS.ordinal) {
             introViewModel.lastPageVisible = ANALYTICS
-            pages.add(IntroPage3())
+            pages.add(IntroPageAnalytics())
             notifyDataSetChanged()
         }
     }
@@ -32,7 +32,7 @@ class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager)
     fun addEnterAppPage() {
         if (introViewModel.lastPageVisible.ordinal < ENTER_APP.ordinal) {
             introViewModel.lastPageVisible = ENTER_APP
-            pages.add(IntroPage4())
+            pages.add(IntroPageEnterApp())
             notifyDataSetChanged()
         }
     }

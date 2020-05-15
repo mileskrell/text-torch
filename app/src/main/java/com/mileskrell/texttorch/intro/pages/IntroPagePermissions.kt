@@ -16,9 +16,9 @@ import com.mileskrell.texttorch.util.PERMISSIONS_REQUEST_CODE
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import com.mileskrell.texttorch.util.showAppSettingsDialog
-import kotlinx.android.synthetic.main.fragment_intro_page_2.*
+import kotlinx.android.synthetic.main.fragment_intro_page_permissions.*
 
-class IntroPage2 : Fragment(R.layout.fragment_intro_page_2) {
+class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val preText = getString(R.string.intro_verify_pre_text)
         val postText = getString(R.string.intro_verify_post_text)

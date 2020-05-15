@@ -121,7 +121,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
     }
 
     /**
-     * Called when the "enter app" button in [IntroPage4] is clicked
+     * Called when the "enter app" button in [IntroPageEnterApp] is clicked
      */
     fun onClickEnterAppButton() {
         exitAlmostFullscreen()
