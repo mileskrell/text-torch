@@ -82,27 +82,21 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
 
         var threadsTotal = -1
         analyzeViewModel.threadsTotal.observe(viewLifecycleOwner, Observer { newThreadsTotal ->
-            activity?.runOnUiThread {
-                threadsTotal = newThreadsTotal
-                progress_bar.max = threadsTotal
-            }
+            threadsTotal = newThreadsTotal
+            progress_bar.max = threadsTotal
         })
         analyzeViewModel.threadsCompleted.observe(
             viewLifecycleOwner,
             Observer { newThreadsCompleted ->
                 if (threadsTotal != -1) {
-                    activity?.runOnUiThread {
-                        progress_bar.progress = newThreadsCompleted
-                        progress_fraction_text_view.text =
-                            getString(
-                                R.string.x_out_of_y_threads,
-                                newThreadsCompleted,
-                                threadsTotal.toString()
-                            )
-                        val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
-                        progress_percentage_text_view.text =
-                            getString(R.string.x_percent, percentDone)
-                    }
+                    progress_bar.progress = newThreadsCompleted
+                    progress_fraction_text_view.text = getString(
+                        R.string.x_out_of_y_threads,
+                        newThreadsCompleted,
+                        threadsTotal.toString()
+                    )
+                    val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
+                    progress_percentage_text_view.text = getString(R.string.x_percent, percentDone)
                 }
             }
         )
