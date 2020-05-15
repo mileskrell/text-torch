@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.MainActivity
 import com.mileskrell.texttorch.R

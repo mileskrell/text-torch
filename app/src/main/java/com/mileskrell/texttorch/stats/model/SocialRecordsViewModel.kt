@@ -2,10 +2,10 @@ package com.mileskrell.texttorch.stats.model
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.repo.Repository
 
