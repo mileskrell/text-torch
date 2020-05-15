@@ -2,13 +2,13 @@ package com.mileskrell.texttorch.intro
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.util.PERMISSIONS_REQUEST_CODE
@@ -23,7 +23,7 @@ class IntroPage2 : Fragment(R.layout.fragment_intro_page_2) {
         val postText = getString(R.string.intro_verify_post_text)
         val linkText = getString(R.string.intro_verify_link_text)
         val url = getString(R.string.about_github_url)
-        val linkColor = Color.parseColor(getString(R.string.intro_slide_2_link_color))
+        val linkColor = ContextCompat.getColor(requireContext(), R.color.intro_slide_2_link_color)
 
         intro_page_2_text_view_3.run {
             movementMethod = LinkMovementMethod.getInstance()
