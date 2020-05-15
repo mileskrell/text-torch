@@ -75,7 +75,7 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
     private fun onPermissionsGranted() {
         intro_permissions_button.visibility = View.INVISIBLE
         intro_text_view_permissions_granted.visibility = View.VISIBLE
-        (parentFragment as IntroFragment).introPagerAdapter.addAnalyticsPage()
+        (parentFragment as IntroFragment).introPagerAdapter.addEnterAppPage()
     }
 
     private fun showRationale() {
