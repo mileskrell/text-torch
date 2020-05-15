@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.PeriodDialogFragment
@@ -27,7 +26,7 @@ class WhoTextsFirstFragment : Fragment(R.layout.fragment_stat_page) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
 
-        socialRecordsViewModel.socialRecords.observe(viewLifecycleOwner, Observer {
+        socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.loadSocialRecords(it)
             } else {
@@ -35,7 +34,7 @@ class WhoTextsFirstFragment : Fragment(R.layout.fragment_stat_page) {
                     socialRecord.correspondentName != null
                 })
             }
-        })
+        }
 
         recycler_view.setHasFixedSize(true)
         recycler_view.adapter = socialRecordAdapter

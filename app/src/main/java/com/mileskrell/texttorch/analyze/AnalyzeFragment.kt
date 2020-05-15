@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
@@ -46,9 +45,9 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
             findNavController().navigateUp()
         }
 
-        socialRecordsViewModel.socialRecords.observe(viewLifecycleOwner, Observer {
+        socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
             findNavController().navigate(R.id.analyze_to_stats_action)
-        })
+        }
 
         if (analyzeViewModel.clickedAnalyze) {
             enterProgressDisplayingMode()
@@ -81,25 +80,22 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         }
 
         var threadsTotal = -1
-        analyzeViewModel.threadsTotal.observe(viewLifecycleOwner, Observer { newThreadsTotal ->
+        analyzeViewModel.threadsTotal.observe({ lifecycle }) { newThreadsTotal ->
             threadsTotal = newThreadsTotal
             progress_bar.max = threadsTotal
-        })
-        analyzeViewModel.threadsCompleted.observe(
-            viewLifecycleOwner,
-            Observer { newThreadsCompleted ->
-                if (threadsTotal != -1) {
-                    progress_bar.progress = newThreadsCompleted
-                    progress_fraction_text_view.text = getString(
-                        R.string.x_out_of_y_threads,
-                        newThreadsCompleted,
-                        threadsTotal.toString()
-                    )
-                    val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
-                    progress_percentage_text_view.text = getString(R.string.x_percent, percentDone)
-                }
+        }
+        analyzeViewModel.threadsCompleted.observe({ lifecycle }) { newThreadsCompleted ->
+            if (threadsTotal != -1) {
+                progress_bar.progress = newThreadsCompleted
+                progress_fraction_text_view.text = getString(
+                    R.string.x_out_of_y_threads,
+                    newThreadsCompleted,
+                    threadsTotal.toString()
+                )
+                val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
+                progress_percentage_text_view.text = getString(R.string.x_percent, percentDone)
             }
-        )
+        }
     }
 
     override fun onDestroyView() {

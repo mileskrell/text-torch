@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
@@ -19,7 +18,7 @@ class AverageLengthFragment : Fragment(R.layout.fragment_stat_page) {
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.AVERAGE_LENGTH)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        socialRecordsViewModel.socialRecords.observe(viewLifecycleOwner, Observer {
+        socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.loadSocialRecords(it)
             } else {
@@ -27,7 +26,7 @@ class AverageLengthFragment : Fragment(R.layout.fragment_stat_page) {
                     socialRecord.correspondentName != null
                 })
             }
-        })
+        }
 
         recycler_view.setHasFixedSize(true)
         recycler_view.adapter = socialRecordAdapter
