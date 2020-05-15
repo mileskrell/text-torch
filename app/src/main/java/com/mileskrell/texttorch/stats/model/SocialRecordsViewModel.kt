@@ -25,12 +25,11 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     var sortType = SortType.MOST_RECENT
     var reversed = false
     var showNonContacts = PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
-        .getBoolean(app.getString(R.string.show_non_contacts_key), false)
+        .getBoolean(app.getString(R.string.key_show_non_contacts), false)
 
     private val onSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-        if (key == app.getString(R.string.show_non_contacts_key)) {
-            showNonContacts =
-                sharedPreferences.getBoolean(app.getString(R.string.show_non_contacts_key), false)
+        if (key == app.getString(R.string.key_show_non_contacts)) {
+            showNonContacts = sharedPreferences.getBoolean(key, false)
             // Let the stats fragments know about the change. Their parent fragments will check the
             // value of showNonContacts when they reload the data.
             _socialRecords.value = _socialRecords.value

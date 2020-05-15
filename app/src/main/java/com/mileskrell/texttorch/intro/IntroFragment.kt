@@ -26,10 +26,6 @@ import kotlinx.android.synthetic.main.fragment_intro.*
 
 class IntroFragment : Fragment(R.layout.fragment_intro) {
 
-    companion object {
-        const val KEY_HAS_SEEN_TUTORIAL = "has_seen_tutorial"
-    }
-
     lateinit var introPagerAdapter: IntroPagerAdapter
 
     private val introViewModel: IntroViewModel by activityViewModels()
@@ -43,7 +39,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
         super.onAttach(context)
         // TODO There's probably some earlier place to put this check
         hasSeenTutorial = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-            KEY_HAS_SEEN_TUTORIAL, false
+            getString(R.string.key_has_seen_tutorial), false
         )
 
         if (hasSeenTutorial == true) {
@@ -132,7 +128,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
         // Save that tutorial has been seen
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putBoolean(KEY_HAS_SEEN_TUTORIAL, true)
+            putBoolean(getString(R.string.key_has_seen_tutorial), true)
         }
 
         // Animated navigation to AnalyzeFragment

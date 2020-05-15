@@ -90,7 +90,6 @@
     <string name="x_characters_on_average">%1$d characters\non average</string>
 
     <!--Settings fragment-->
-    <string name="show_non_contacts_key">show_non_contacts</string>
     <string name="show_non_contacts_title">Also list non-contacts</string>
     <string name="show_non_contacts_summary">You probably won\'t be interested in this data</string>
 
@@ -103,4 +102,8 @@
     <string name="about_donate_title">Donate if you like the app</string>
     <string name="about_donate_url">https://paypal.me/mileskrell</string>
     <string name="version">Version</string>
+
+    <!-- Keys -->
+    <string name="key_has_seen_tutorial">has_seen_tutorial</string>
+    <string name="key_show_non_contacts">show_non_contacts</string>
 </resources>
