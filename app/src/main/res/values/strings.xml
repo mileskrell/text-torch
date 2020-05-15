@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Text Torch</string>
+    <string name="app_name" translatable="false">Text Torch</string>
 
     <!-- Intro -->
     <string name="welcome_to_text_torch">Welcome to Text Torch!</string>
@@ -96,14 +96,14 @@
     <!--About fragment-->
     <string name="about_description">An open-source project by Miles Krell</string>
     <string name="about_github_title">See the code or file an issue on GitHub</string>
-    <string name="about_github_url">https://github.com/mileskrell/text-torch</string>
+    <string name="about_github_url" translatable="false">https://github.com/mileskrell/text-torch</string>
     <string name="about_email_title">Don\'t have a GitHub account\? Email me directly with feedback</string>
-    <string name="about_email_email">text.torch.feedback\@mileskrell.com</string>
+    <string name="about_email_email" translatable="false">text.torch.feedback\@mileskrell.com</string>
     <string name="about_donate_title">Donate if you like the app</string>
-    <string name="about_donate_url">https://paypal.me/mileskrell</string>
+    <string name="about_donate_url" translatable="false">https://paypal.me/mileskrell</string>
     <string name="version">Version</string>
 
     <!-- Keys -->
-    <string name="key_has_seen_tutorial">has_seen_tutorial</string>
-    <string name="key_show_non_contacts">show_non_contacts</string>
+    <string name="key_has_seen_tutorial" translatable="false">has_seen_tutorial</string>
+    <string name="key_show_non_contacts" translatable="false">show_non_contacts</string>
 </resources>
