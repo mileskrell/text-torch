@@ -44,8 +44,10 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
             .registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
     }
 
-    override fun onCleared() = PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
-        .unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
+    override fun onCleared() {
+        PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+            .unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
+    }
 
     fun initializeSocialRecords(threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>) {
         val initialSocialRecords = repository.initializeSocialRecords(period.ms, threadsTotal, threadsCompleted)
