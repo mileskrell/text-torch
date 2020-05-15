@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.intro
+package com.mileskrell.texttorch.intro.pages
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.PERMISSIONS_REQUEST_CODE
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted

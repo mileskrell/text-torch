@@ -1,9 +1,10 @@
-package com.mileskrell.texttorch.intro
+package com.mileskrell.texttorch.intro.pages
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.intro.IntroFragment
 import kotlinx.android.synthetic.main.fragment_intro_page_3.*
 
 class IntroPage3 : Fragment(R.layout.fragment_intro_page_3) {

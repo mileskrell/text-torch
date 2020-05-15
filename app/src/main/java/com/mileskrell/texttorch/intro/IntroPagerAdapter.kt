@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.*
+import com.mileskrell.texttorch.intro.pages.IntroPage1
+import com.mileskrell.texttorch.intro.pages.IntroPage2
+import com.mileskrell.texttorch.intro.pages.IntroPage3
+import com.mileskrell.texttorch.intro.pages.IntroPage4
 
 class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

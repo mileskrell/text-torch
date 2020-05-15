@@ -1,4 +1,4 @@
-package com.mileskrell.texttorch.intro
+package com.mileskrell.texttorch.intro.pages
 
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
