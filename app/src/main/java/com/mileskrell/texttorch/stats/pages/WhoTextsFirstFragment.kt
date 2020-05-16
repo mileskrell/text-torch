@@ -79,9 +79,7 @@ class WhoTextsFirstFragment : Fragment(R.layout.fragment_stat_page) {
     }
 
     private fun showTimeExplanation() {
-        fragmentManager?.let { fm ->
-            PeriodDialogFragment().show(fm, null)
-        }
+        PeriodDialogFragment().show(parentFragmentManager, null)
     }
 
     override fun onDestroyView() {

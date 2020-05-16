@@ -104,9 +104,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             R.id.menu_item_sorting -> {
                 val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
                     .apply { setTargetFragment(this@StatsFragment, SortTypeDialogFragment.REQUEST_CODE) }
-                fragmentManager?.let { fm ->
-                    sortTypeDialogFragment.show(fm, null)
-                }
+                sortTypeDialogFragment.show(parentFragmentManager, null)
                 true
             }
             R.id.menu_item_settings -> {
