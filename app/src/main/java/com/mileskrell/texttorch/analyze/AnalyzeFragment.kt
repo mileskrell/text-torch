@@ -11,6 +11,7 @@ import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import kotlinx.android.synthetic.main.fragment_analyze.*
+import ly.count.android.sdk.Countly
 import kotlin.math.roundToInt
 
 /**
@@ -58,6 +59,11 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
             enterProgressDisplayingMode()
             analyzeViewModel.initializeSocialRecordList(socialRecordsViewModel)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Countly.sharedInstance().views().recordView(TAG)
     }
 
     private fun enterProgressDisplayingMode() {

@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# For Countly
+-keep class org.openudid.** { *; }
+-keep class ly.count.android.sdk.** { *; }

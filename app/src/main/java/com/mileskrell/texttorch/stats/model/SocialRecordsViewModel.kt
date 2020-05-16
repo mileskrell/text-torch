@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.repo.Repository
+import ly.count.android.sdk.Countly
 
 /**
  * An [AndroidViewModel] holding a [MutableLiveData] containing a list of [SocialRecord]
@@ -30,6 +31,10 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     private val onSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
         if (key == app.getString(R.string.key_show_non_contacts)) {
             showNonContacts = sharedPreferences.getBoolean(key, false)
+            Countly.sharedInstance().events().recordEvent(
+                "change show/hide non-contacts setting",
+                mapOf("show" to showNonContacts)
+            )
             // Let the stats fragments know about the change. Their parent fragments will check the
             // value of showNonContacts when they reload the data.
             _socialRecords.value = _socialRecords.value

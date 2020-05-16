@@ -17,6 +17,7 @@ import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import com.mileskrell.texttorch.util.showAppSettingsDialog
 import kotlinx.android.synthetic.main.fragment_intro_page_permissions.*
+import ly.count.android.sdk.Countly
 
 class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,6 +58,13 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
+                Countly.sharedInstance().events().recordEvent(
+                    "received permission results",
+                    mapOf(
+                        "READ_SMS" to readSmsGranted(),
+                        "READ_CONTACTS" to readContactsGranted()
+                    )
+                )
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     onPermissionsGranted()
                 } else {
@@ -64,6 +72,7 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
                     val canAskAgain = (readSmsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS))
                             && (readContactsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
                     if (!canAskAgain) {
+                        Countly.sharedInstance().events().recordEvent("showed app settings dialog")
                         // User checked "Never ask again", so open app settings page
                         showAppSettingsDialog()
                     }

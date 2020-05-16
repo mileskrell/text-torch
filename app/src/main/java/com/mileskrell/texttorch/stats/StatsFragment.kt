@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import kotlinx.android.synthetic.main.fragment_stats.*
+import ly.count.android.sdk.Countly
 
 class StatsFragment : Fragment(R.layout.fragment_stats) {
 
@@ -67,8 +68,23 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 // Save the new position, so that when the user moves somewhere else,
                 // we know which page's state is most recent.
                 lastPage = position
+                Countly.sharedInstance().events().recordEvent(
+                    "switched stats page", mapOf(
+                        "page" to when (position) {
+                            0 -> "who texts first"
+                            1 -> "total texts"
+                            2 -> "average length"
+                            else -> "invalid position $position"
+                        }
+                    )
+                )
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Countly.sharedInstance().views().recordView(TAG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -82,6 +98,8 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Countly.sharedInstance().events()
+            .recordEvent("menu item selected", mapOf("item" to item.title))
         return when (item.itemId) {
             R.id.menu_item_sorting -> {
                 val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
@@ -114,6 +132,9 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             val newSortType = SocialRecordsViewModel.SortType.values()
                 .first { it.radioButtonId == checkedRadioButtonId }
 
+            Countly.sharedInstance().events().recordEvent("changed sort type",
+                mapOf("type" to newSortType.name, "reversed" to reversed)
+            )
             socialRecordsViewModel.changeSortTypeAndReversed(newSortType, reversed)
         }
     }

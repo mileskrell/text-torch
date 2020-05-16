@@ -12,10 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import ly.count.android.sdk.Countly
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
 
 class AboutFragment : Fragment() {
+
+    companion object {
+        const val TAG = "AboutFragment"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
@@ -60,5 +65,10 @@ class AboutFragment : Fragment() {
             .addItem(emailItem)
             .addItem(donateItem)
             .create()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Countly.sharedInstance().views().recordView(TAG)
     }
 }

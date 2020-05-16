@@ -47,6 +47,7 @@ dependencies {
 
     implementation("com.github.medyo:android-about-page:1.2.5")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
+    implementation("ly.count.android:sdk:20.04.1")
 
     val coroutinesVersion = "1.3.6"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")

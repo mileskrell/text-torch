@@ -12,6 +12,7 @@ import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import com.mileskrell.texttorch.util.showAppSettingsDialog
 import kotlinx.android.synthetic.main.fragment_regain_permissions.*
+import ly.count.android.sdk.Countly
 
 /**
  * This page is opened if the user has completed the tutorial, but we don't have all the permissions
@@ -24,6 +25,10 @@ import kotlinx.android.synthetic.main.fragment_regain_permissions.*
  * onCreateView.
  */
 class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions) {
+
+    companion object {
+        const val TAG = "RegainPermissionsFragment"
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         regain_button.setOnClickListener {
@@ -58,6 +63,7 @@ class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions)
      */
     override fun onResume() {
         super.onResume()
+        Countly.sharedInstance().views().recordView(TAG)
         if (readSmsGranted() && readContactsGranted()) {
             // The user finally granted the permissions! Continue to AnalyzeFragment.
             findNavController().navigate(R.id.regain_to_analyze_action)

@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.Message
 import com.mileskrell.texttorch.stats.model.MessageThread
+import ly.count.android.sdk.Countly
 
 /**
  * Retrieves threads of conversation, as a List<[MessageThread]>.
@@ -41,7 +42,15 @@ class ThreadGetter(val context: Context) {
         )
     }
 
-    fun getThreads(threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>): List<MessageThread> {
+    var numEmptyAddresses = 0
+    var numFailedNameLookups = 0
+    var numSuccessfulNameLookups = 0
+
+    fun getThreads(
+        threadsTotal: MutableLiveData<Int>,
+        threadsCompleted: MutableLiveData<Int>
+    ): List<MessageThread> {
+        Countly.sharedInstance().events().startEvent("getThreads()")
         /**
          * This might take a while - it seems that different devices require using different content URIs.
          * See https://seap.samsung.com/faq/why-does-sdk-return-nullpointerexception-when-i-access-smsmms-content-uri-0
@@ -96,7 +105,7 @@ class ThreadGetter(val context: Context) {
                 // I experienced this at one point; it makes the name lookup throw an
                 // IllegalArgumentException. Unfortunately, with no address or name to identify the
                 // person by, we can't really show this to the user.
-                // TODO: Analytics: Log that an address was empty
+                numEmptyAddresses++
                 Log.d(TAG, "Skipping empty address")
                 threadsCompleted.run {
                     postValue(1 + value!!)
@@ -185,15 +194,30 @@ class ThreadGetter(val context: Context) {
         // threads sharing the same name
         nonEmptyMessageThreads.filter { it.otherPartyName != null }
             .groupBy { it.otherPartyName }.forEach {
-            // If there's more than one thread with this name...
-            if (it.value.size > 1) {
-                // In each thread with this name, mark the name as non-unique
-                it.value.forEach {
-                    it.nonUniqueName = true
+                // If there's more than one thread with this name...
+                if (it.value.size > 1) {
+                    // In each thread with this name, mark the name as non-unique
+                    it.value.forEach {
+                        it.nonUniqueName = true
+                    }
                 }
             }
-        }
 
+        val numAddresses = numSuccessfulNameLookups + numFailedNameLookups + numEmptyAddresses
+        Countly.sharedInstance().events().endEvent(
+            "getThreads()",
+            mapOf(
+                "total number of addresses" to numAddresses,
+                "number of successful name lookups" to numSuccessfulNameLookups,
+                "number of failed name lookups" to numFailedNameLookups,
+                "number of empty addresses" to numEmptyAddresses,
+                "percentage successful name lookups" to 100.0 * numSuccessfulNameLookups / numAddresses,
+                "percentage failed name lookups" to 100.0 * numFailedNameLookups / numAddresses,
+                "percentage empty addresses" to 100.0 * numEmptyAddresses / numAddresses
+            ),
+            1,
+            0.0
+        )
         return nonEmptyMessageThreads
     }
 
@@ -210,11 +234,11 @@ class ThreadGetter(val context: Context) {
             null
         )
         val name = if (phoneLookupCursor != null && phoneLookupCursor.count > 0) {
-            // TODO: Analytics: Log that a name lookup was successful
+            numSuccessfulNameLookups++
             phoneLookupCursor.moveToFirst()
             phoneLookupCursor.getString(0)
         } else {
-            // TODO: Analytics: Log that a name lookup failed
+            numFailedNameLookups++
             Log.d(TAG, "Name lookup failed for address $address")
             null
         }

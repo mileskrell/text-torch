@@ -5,8 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.mileskrell.texttorch.R
+import ly.count.android.sdk.Countly
 
 class PeriodDialogFragment : DialogFragment() {
+
+    companion object {
+        const val TAG = "PeriodDialogFragment"
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -23,5 +28,10 @@ class PeriodDialogFragment : DialogFragment() {
                 }
                 .create()
         } ?: throw IllegalStateException()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Countly.sharedInstance().events().recordEvent("viewed period explanation")
     }
 }
