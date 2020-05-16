@@ -91,7 +91,7 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
 
     enum class SortType(val radioButtonId: Int) {
         MOST_RECENT(R.id.radio_button_sort_type_most_recent),
-        ALPHA(R.id.radio_button_sort_type_alphabetical),
+        ALPHABETICAL(R.id.radio_button_sort_type_alphabetical),
         NUMBER_OF_CONVERSATIONS(R.id.radio_button_sort_type_number_of_conversations),
         NUMBER_OF_TOTAL_TEXTS(R.id.radio_button_sort_type_number_of_total_texts),
         PEOPLE_YOU_TEXT_FIRST(R.id.radio_button_sort_type_percentage_of_the_time_youve_texted_first),

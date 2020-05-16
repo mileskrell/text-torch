@@ -145,7 +145,7 @@ class Repository(val context: Context) {
                     socialRecords.sortedByDescending { it.mostRecentMessageDate }
                 }
             }
-            SocialRecordsViewModel.SortType.ALPHA -> {
+            SocialRecordsViewModel.SortType.ALPHABETICAL -> {
                 if (reversed) {
                     socialRecords.sortedByDescending(getNameAddressString)
                 } else {
