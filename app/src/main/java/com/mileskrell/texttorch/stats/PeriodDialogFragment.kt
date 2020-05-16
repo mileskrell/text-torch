@@ -19,15 +19,13 @@ class PeriodDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            AlertDialog.Builder(it)
-                .setTitle(R.string.whats_this)
-                .setMessage(getString(R.string.time_explanation))
-                .setNeutralButton(getString(R.string.close)) { dialog, _ ->
-                    dialog.cancel()
-                }
-                .create()
-        } ?: throw IllegalStateException()
+        return AlertDialog.Builder(requireContext())
+            .setTitle(R.string.whats_this)
+            .setMessage(getString(R.string.time_explanation))
+            .setNeutralButton(getString(R.string.close)) { dialog, _ ->
+                dialog.cancel()
+            }
+            .create()
     }
 
     override fun onResume() {
