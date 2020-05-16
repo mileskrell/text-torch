@@ -245,28 +245,28 @@ class ThreadGetter(val context: Context) {
         phoneLookupCursor?.close()
         return name
     }
-}
 
-fun Cursor.getString(name: String): String? {
-    return try {
-        getString(getColumnIndex(name))
-    } catch (e: IllegalStateException) {
-        null
+    private fun Cursor.getString(name: String): String? {
+        return try {
+            getString(getColumnIndex(name))
+        } catch (e: IllegalStateException) {
+            null
+        }
     }
-}
 
-fun Cursor.getInt(name: String): Int? {
-    return try {
-        getInt(getColumnIndex(name))
-    } catch (e: IllegalStateException) {
-        null
+    private fun Cursor.getInt(name: String): Int? {
+        return try {
+            getInt(getColumnIndex(name))
+        } catch (e: IllegalStateException) {
+            null
+        }
     }
-}
 
-fun Cursor.getLong(name: String): Long? {
-    return try {
-        getLong(getColumnIndex(name))
-    } catch (e: IllegalStateException) {
-        null
+    private fun Cursor.getLong(name: String): Long? {
+        return try {
+            getLong(getColumnIndex(name))
+        } catch (e: IllegalStateException) {
+            null
+        }
     }
 }
