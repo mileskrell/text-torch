@@ -160,9 +160,13 @@ class ThreadGetter(val context: Context) {
                         while (partsCursor.moveToNext()) {
                             val contentType = partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
                                 ?: throw RuntimeException("Could not get content type for message $messageId in thread $threadId")
-                            if (contentType.startsWith("text/")) {
+                            if (contentType == "text/plain") {
                                 body = partsCursor.getString(Telephony.Mms.Part.TEXT)
-                                    ?: throw RuntimeException("MMS part text is null, even though content type begins with \"text/\"")
+                                if (body == null) {
+                                    Countly.sharedInstance().crashes().recordHandledException(
+                                        RuntimeException("MMS part text is null, even though content type is \"text/plain\"")
+                                    )
+                                }
                                 break
                             }
                         }
