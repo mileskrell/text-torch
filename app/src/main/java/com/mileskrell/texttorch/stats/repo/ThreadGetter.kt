@@ -42,10 +42,6 @@ class ThreadGetter(val context: Context) {
         )
     }
 
-    var numFailedNameLookups = 0
-    var numSuccessfulNameLookups = 0
-    var numMessages = 0
-
     fun getThreads(
         threadsTotal: MutableLiveData<Int>,
         threadsCompleted: MutableLiveData<Int>
@@ -66,6 +62,9 @@ class ThreadGetter(val context: Context) {
          *
          * TODO: Lots of testing with different devices
          */
+        var numFailedNameLookups = 0
+        var numSuccessfulNameLookups = 0
+        var numMessages = 0
 
         val oneRecipientMessageThreads = mutableListOf<MessageThread>()
         val threadsCursor = context.contentResolver.query(
@@ -114,6 +113,11 @@ class ThreadGetter(val context: Context) {
                 continue
             }
             val name = getNameFromAddress(address)
+            if (name != null) {
+                numSuccessfulNameLookups++
+            } else {
+                numFailedNameLookups++
+            }
 
             //////////////////////////////////////////////////////////////// Get messages
             val messages = mutableListOf<Message>()
@@ -262,11 +266,9 @@ class ThreadGetter(val context: Context) {
             null
         )
         val name = if (phoneLookupCursor != null && phoneLookupCursor.count > 0) {
-            numSuccessfulNameLookups++
             phoneLookupCursor.moveToFirst()
             phoneLookupCursor.getString(0)
         } else {
-            numFailedNameLookups++
             Log.d(TAG, "Name lookup failed for address $address")
             null
         }
