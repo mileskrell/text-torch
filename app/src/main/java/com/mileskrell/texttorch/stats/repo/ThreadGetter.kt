@@ -45,6 +45,7 @@ class ThreadGetter(val context: Context) {
     var numEmptyAddresses = 0
     var numFailedNameLookups = 0
     var numSuccessfulNameLookups = 0
+    var numMessages = 0
 
     fun getThreads(
         threadsTotal: MutableLiveData<Int>,
@@ -173,6 +174,7 @@ class ThreadGetter(val context: Context) {
                 }
 
                 messages.add(Message(messageType, sentByUser, date, body))
+                numMessages++
             }
 
             messagesCursor.close()
@@ -207,6 +209,7 @@ class ThreadGetter(val context: Context) {
         Countly.sharedInstance().events().endEvent(
             "getThreads()",
             mapOf(
+                "total number of messages" to numMessages,
                 "total number of addresses" to numAddresses,
                 "number of successful name lookups" to numSuccessfulNameLookups,
                 "number of failed name lookups" to numFailedNameLookups,
