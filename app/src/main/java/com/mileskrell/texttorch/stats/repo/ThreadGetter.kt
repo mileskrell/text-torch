@@ -42,7 +42,6 @@ class ThreadGetter(val context: Context) {
         )
     }
 
-    var numEmptyAddresses = 0
     var numFailedNameLookups = 0
     var numSuccessfulNameLookups = 0
     var numMessages = 0
@@ -106,8 +105,9 @@ class ThreadGetter(val context: Context) {
                 // I experienced this at one point; it makes the name lookup throw an
                 // IllegalArgumentException. Unfortunately, with no address or name to identify the
                 // person by, we can't really show this to the user.
-                numEmptyAddresses++
-                Log.d(TAG, "Skipping empty address")
+                Countly.sharedInstance().crashes().recordHandledException(
+                    RuntimeException("Other party's address is empty for thread $threadId")
+                )
                 threadsCompleted.run {
                     postValue(1 + value!!)
                 }
@@ -213,7 +213,7 @@ class ThreadGetter(val context: Context) {
                 }
             }
 
-        val numAddresses = numSuccessfulNameLookups + numFailedNameLookups + numEmptyAddresses
+        val numAddresses = numSuccessfulNameLookups + numFailedNameLookups
         Countly.sharedInstance().events().endEvent(
             "getThreads()",
             mapOf(
@@ -221,10 +221,8 @@ class ThreadGetter(val context: Context) {
                 "total number of addresses" to numAddresses,
                 "number of successful name lookups" to numSuccessfulNameLookups,
                 "number of failed name lookups" to numFailedNameLookups,
-                "number of empty addresses" to numEmptyAddresses,
                 "percentage successful name lookups" to 100.0 * numSuccessfulNameLookups / numAddresses,
-                "percentage failed name lookups" to 100.0 * numFailedNameLookups / numAddresses,
-                "percentage empty addresses" to 100.0 * numEmptyAddresses / numAddresses
+                "percentage failed name lookups" to 100.0 * numFailedNameLookups / numAddresses
             ),
             1,
             0.0
