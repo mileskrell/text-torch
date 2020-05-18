@@ -5,7 +5,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.Telephony
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.Message
 import com.mileskrell.texttorch.stats.model.MessageThread
@@ -258,22 +257,17 @@ class ThreadGetter(val context: Context) {
             ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
             Uri.encode(address)
         )
-        val phoneLookupCursor = context.contentResolver.query(
-            uri,
-            arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY),
-            null,
-            null,
-            null
+        context.contentResolver.query(
+            uri, arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY), null, null, null
+        )?.use { nameLookupCursor ->
+            return if (nameLookupCursor.count > 0) {
+                nameLookupCursor.moveToFirst()
+                nameLookupCursor.getString(0)
+            } else null
+        } ?: Countly.sharedInstance().crashes().recordHandledException(
+            RuntimeException("Name lookup cursor is null")
         )
-        val name = if (phoneLookupCursor != null && phoneLookupCursor.count > 0) {
-            phoneLookupCursor.moveToFirst()
-            phoneLookupCursor.getString(0)
-        } else {
-            Log.d(TAG, "Name lookup failed for address $address")
-            null
-        }
-        phoneLookupCursor?.close()
-        return name
+        return null
     }
 
     private fun Cursor.getString(name: String): String? {
