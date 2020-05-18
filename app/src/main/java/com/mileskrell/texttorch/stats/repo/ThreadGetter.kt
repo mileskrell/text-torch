@@ -151,26 +151,30 @@ class ThreadGetter(val context: Context) {
                         val type = messagesCursor.getInt(Telephony.Mms.MESSAGE_BOX)
                         sentByUser = type != Telephony.Mms.MESSAGE_BOX_INBOX
 
-                        val partsCursor = context.contentResolver.query(
+                        context.contentResolver.query(
                             Uri.parse("content://mms/part"), null,
                             "${Telephony.Mms.Part.MSG_ID} = $messageId", null, null
-                        )
-                            ?: throw RuntimeException("MMS parts cursor null for thread $threadId")
-
-                        while (partsCursor.moveToNext()) {
-                            val contentType = partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
-                                ?: throw RuntimeException("Could not get content type for message $messageId in thread $threadId")
-                            if (contentType == "text/plain") {
-                                body = partsCursor.getString(Telephony.Mms.Part.TEXT)
-                                if (body == null) {
+                        )?.use { partsCursor ->
+                            while (partsCursor.moveToNext()) {
+                                val contentType =
+                                    partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
+                                if (contentType == null) {
                                     Countly.sharedInstance().crashes().recordHandledException(
-                                        RuntimeException("MMS part text is null, even though content type is \"text/plain\"")
+                                        RuntimeException("Could not get content type for message $messageId in thread $threadId")
                                     )
+                                } else if (contentType == "text/plain") {
+                                    body = partsCursor.getString(Telephony.Mms.Part.TEXT)
+                                    if (body == null) {
+                                        Countly.sharedInstance().crashes().recordHandledException(
+                                            RuntimeException("MMS part text is null, even though content type is \"text/plain\"")
+                                        )
+                                    }
+                                    break
                                 }
-                                break
                             }
-                        }
-                        partsCursor.close()
+                        } ?: Countly.sharedInstance().crashes().recordHandledException(
+                            RuntimeException("MMS parts cursor for thread $threadId is null")
+                        )
                     }
                     else -> {
                         throw RuntimeException("Unknown message type $messageType")
