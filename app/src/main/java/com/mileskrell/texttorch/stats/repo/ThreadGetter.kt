@@ -66,7 +66,7 @@ class ThreadGetter(val context: Context) {
         var numMessages = 0
 
         val oneRecipientMessageThreads = mutableListOf<MessageThread>()
-        val threadsCursor = context.contentResolver.query(
+        context.contentResolver.query(
             threadsUri,
             threadsProjection,
             // Filter out threads with spaces in the "recipients" string,
@@ -74,158 +74,171 @@ class ThreadGetter(val context: Context) {
             "${Telephony.Threads.RECIPIENT_IDS} NOT LIKE '% %'",
             null,
             null
-        )
-            ?: throw RuntimeException("ThreadGetter: threadsCursor is null")
+        )?.use { threadsCursor ->
+            threadsTotal.postValue(threadsCursor.count)
 
-        threadsTotal.postValue(threadsCursor.count)
+            while (threadsCursor.moveToNext()) {
+                val threadId = threadsCursor.getLong(Telephony.Threads._ID)
+                if (threadId == null) {
+                    Countly.sharedInstance().crashes().recordHandledException(
+                        RuntimeException("Couldn't get thread ID")
+                    )
+                    continue
+                }
 
-        while (threadsCursor.moveToNext()) {
-            val threadId = threadsCursor.getLong(Telephony.Threads._ID)
-                ?: throw RuntimeException("Couldn't get thread ID")
-            val recipients = threadsCursor.getString(Telephony.Threads.RECIPIENT_IDS)
-                ?: throw RuntimeException("Couldn't get recipients for thread $threadId")
+                val recipients = threadsCursor.getString(Telephony.Threads.RECIPIENT_IDS)
+                if (recipients == null) {
+                    Countly.sharedInstance().crashes().recordHandledException(
+                        RuntimeException("Couldn't get recipients for thread $threadId")
+                    )
+                    continue
+                }
 
-            //////////////////////////////////////////////////////////////// Get name and address
-            val addressCursor = context.contentResolver.query(
-                Uri.parse("content://mms-sms/canonical-addresses"),
-                null,
-                "${Telephony.CanonicalAddressesColumns._ID} = $recipients",
-                null,
-                null
-            )
-            if (addressCursor == null) {
-                Countly.sharedInstance().crashes().recordHandledException(
-                    RuntimeException("Address cursor is null for thread $threadId")
+                //////////////////////////////////////////////////////////////// Get name and address
+                val addressCursor = context.contentResolver.query(
+                    Uri.parse("content://mms-sms/canonical-addresses"),
+                    null,
+                    "${Telephony.CanonicalAddressesColumns._ID} = $recipients",
+                    null,
+                    null
                 )
-                continue
-            }
-            val address = addressCursor.use {
-                it.moveToFirst()
-                it.getString(Telephony.CanonicalAddressesColumns.ADDRESS)
-            }
-            if (address == null) {
-                Countly.sharedInstance().crashes().recordHandledException(
-                    RuntimeException("Other party's address is null for thread $threadId")
-                )
-                continue
-            }
+                if (addressCursor == null) {
+                    Countly.sharedInstance().crashes().recordHandledException(
+                        RuntimeException("Address cursor is null for thread $threadId")
+                    )
+                    continue
+                }
+                val address = addressCursor.use {
+                    it.moveToFirst()
+                    it.getString(Telephony.CanonicalAddressesColumns.ADDRESS)
+                }
+                if (address == null) {
+                    Countly.sharedInstance().crashes().recordHandledException(
+                        RuntimeException("Other party's address is null for thread $threadId")
+                    )
+                    continue
+                }
 
-            if (address.isEmpty()) {
-                // I experienced this at one point; it makes the name lookup throw an
-                // IllegalArgumentException. Unfortunately, with no address or name to identify the
-                // person by, we can't really show this to the user.
-                Countly.sharedInstance().crashes().recordHandledException(
-                    RuntimeException("Other party's address is empty for thread $threadId")
+                if (address.isEmpty()) {
+                    // I experienced this at one point; it makes the name lookup throw an
+                    // IllegalArgumentException. Unfortunately, with no address or name to identify
+                    // the person by, we can't really show this to the user.
+                    Countly.sharedInstance().crashes().recordHandledException(
+                        RuntimeException("Other party's address is empty for thread $threadId")
+                    )
+                    threadsCompleted.run {
+                        postValue(1 + value!!)
+                    }
+                    continue
+                }
+                val name = getNameFromAddress(address)
+                if (name != null) {
+                    numSuccessfulNameLookups++
+                } else {
+                    numFailedNameLookups++
+                }
+
+                //////////////////////////////////////////////////////////////// Get messages
+                val messages = mutableListOf<Message>()
+
+                context.contentResolver.query(
+                    singleThreadUri,
+                    singleThreadProjection,
+                    "${Telephony.Mms.THREAD_ID} == $threadId",
+                    null,
+                    Telephony.Sms.DATE
+                )?.use { messagesCursor ->
+                    messagesCursorLoop@ while (messagesCursor.moveToNext()) {
+                        val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
+                        if (messageId == null) {
+                            Countly.sharedInstance().crashes().recordHandledException(
+                                RuntimeException("Message ID is null for thread $threadId")
+                            )
+                            continue
+                        }
+
+                        var date = messagesCursor.getLong(Telephony.Sms.DATE)
+                        if (date == null) {
+                            Countly.sharedInstance().crashes().recordHandledException(
+                                RuntimeException("Date is null for message $messageId in thread $threadId")
+                            )
+                            continue
+                        }
+                        val sentByUser: Boolean
+                        var body: String? = null
+
+                        val messageType =
+                            messagesCursor.getString(Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN)
+                        when (messageType) {
+                            "sms" -> {
+                                val type = messagesCursor.getInt(Telephony.Sms.TYPE)
+                                sentByUser =
+                                    type != Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX
+
+                                body = messagesCursor.getString(Telephony.Sms.BODY)
+                                if (body == null) {
+                                    Countly.sharedInstance().crashes().recordHandledException(
+                                        RuntimeException("Null body for SMS with message ID $messageId in thread $threadId")
+                                    )
+                                }
+                            }
+                            "mms" -> {
+                                date *= 1000L
+
+                                val type = messagesCursor.getInt(Telephony.Mms.MESSAGE_BOX)
+                                sentByUser = type != Telephony.Mms.MESSAGE_BOX_INBOX
+
+                                context.contentResolver.query(
+                                    Uri.parse("content://mms/part"), null,
+                                    "${Telephony.Mms.Part.MSG_ID} = $messageId", null, null
+                                )?.use { partsCursor ->
+                                    while (partsCursor.moveToNext()) {
+                                        val contentType =
+                                            partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
+                                        if (contentType == null) {
+                                            Countly.sharedInstance().crashes()
+                                                .recordHandledException(
+                                                    RuntimeException("Could not get content type for message $messageId in thread $threadId")
+                                                )
+                                        } else if (contentType == "text/plain") {
+                                            body = partsCursor.getString(Telephony.Mms.Part.TEXT)
+                                            if (body == null) {
+                                                Countly.sharedInstance().crashes()
+                                                    .recordHandledException(
+                                                        RuntimeException("MMS part text is null, even though content type is \"text/plain\"")
+                                                    )
+                                            }
+                                            break
+                                        }
+                                    }
+                                } ?: Countly.sharedInstance().crashes().recordHandledException(
+                                    RuntimeException("MMS parts cursor for thread $threadId is null")
+                                )
+                            }
+                            else -> {
+                                Countly.sharedInstance().crashes().recordHandledException(
+                                    RuntimeException("Unknown message type $messageType")
+                                )
+                                continue@messagesCursorLoop
+                            }
+                        }
+
+                        messages.add(Message(messageType, sentByUser, date, body))
+                        numMessages++
+                    }
+                } ?: Countly.sharedInstance().crashes().recordHandledException(
+                    RuntimeException("Messages cursor is null for thread $threadId")
                 )
+
                 threadsCompleted.run {
                     postValue(1 + value!!)
                 }
-                continue
+
+                oneRecipientMessageThreads.add(MessageThread(address, name, messages))
             }
-            val name = getNameFromAddress(address)
-            if (name != null) {
-                numSuccessfulNameLookups++
-            } else {
-                numFailedNameLookups++
-            }
-
-            //////////////////////////////////////////////////////////////// Get messages
-            val messages = mutableListOf<Message>()
-
-            context.contentResolver.query(
-                singleThreadUri,
-                singleThreadProjection,
-                "${Telephony.Mms.THREAD_ID} == $threadId",
-                null,
-                Telephony.Sms.DATE
-            )?.use { messagesCursor ->
-                messagesCursorLoop@ while (messagesCursor.moveToNext()) {
-                    val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
-                    if (messageId == null) {
-                        Countly.sharedInstance().crashes().recordHandledException(
-                            RuntimeException("Message ID is null for thread $threadId")
-                        )
-                        continue
-                    }
-
-                    var date = messagesCursor.getLong(Telephony.Sms.DATE)
-                    if (date == null) {
-                        Countly.sharedInstance().crashes().recordHandledException(
-                            RuntimeException("Date is null for message $messageId in thread $threadId")
-                        )
-                        continue
-                    }
-                    val sentByUser: Boolean
-                    var body: String? = null
-
-                    val messageType =
-                        messagesCursor.getString(Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN)
-                    when (messageType) {
-                        "sms" -> {
-                            val type = messagesCursor.getInt(Telephony.Sms.TYPE)
-                            sentByUser = type != Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX
-
-                            body = messagesCursor.getString(Telephony.Sms.BODY)
-                            if (body == null) {
-                                Countly.sharedInstance().crashes().recordHandledException(
-                                    RuntimeException("Null body for SMS with message ID $messageId in thread $threadId")
-                                )
-                            }
-                        }
-                        "mms" -> {
-                            date *= 1000L
-
-                            val type = messagesCursor.getInt(Telephony.Mms.MESSAGE_BOX)
-                            sentByUser = type != Telephony.Mms.MESSAGE_BOX_INBOX
-
-                            context.contentResolver.query(
-                                Uri.parse("content://mms/part"), null,
-                                "${Telephony.Mms.Part.MSG_ID} = $messageId", null, null
-                            )?.use { partsCursor ->
-                                while (partsCursor.moveToNext()) {
-                                    val contentType =
-                                        partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
-                                    if (contentType == null) {
-                                        Countly.sharedInstance().crashes().recordHandledException(
-                                            RuntimeException("Could not get content type for message $messageId in thread $threadId")
-                                        )
-                                    } else if (contentType == "text/plain") {
-                                        body = partsCursor.getString(Telephony.Mms.Part.TEXT)
-                                        if (body == null) {
-                                            Countly.sharedInstance().crashes()
-                                                .recordHandledException(
-                                                    RuntimeException("MMS part text is null, even though content type is \"text/plain\"")
-                                                )
-                                        }
-                                        break
-                                    }
-                                }
-                            } ?: Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("MMS parts cursor for thread $threadId is null")
-                            )
-                        }
-                        else -> {
-                            Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Unknown message type $messageType")
-                            )
-                            continue@messagesCursorLoop
-                        }
-                    }
-
-                    messages.add(Message(messageType, sentByUser, date, body))
-                    numMessages++
-                }
-            } ?: Countly.sharedInstance().crashes().recordHandledException(
-                RuntimeException("Messages cursor is null for thread $threadId")
-            )
-
-            threadsCompleted.run {
-                postValue(1 + value!!)
-            }
-
-            oneRecipientMessageThreads.add(MessageThread(address, name, messages))
-        }
-        threadsCursor.close()
+        } ?: Countly.sharedInstance().crashes().recordUnhandledException(
+            RuntimeException("Threads cursor is null; unable to view anything")
+        )
 
         val nonEmptyMessageThreads = oneRecipientMessageThreads.filter { messageThread ->
             messageThread.messages.isNotEmpty()
