@@ -93,11 +93,22 @@ class ThreadGetter(val context: Context) {
                 null,
                 null
             )
-                ?: throw RuntimeException("Address cursor was null when trying to get other party address for thread $threadId")
-            addressCursor.moveToFirst()
-            val address = addressCursor.getString(Telephony.CanonicalAddressesColumns.ADDRESS)
-                ?: throw RuntimeException("Could not get address for recipient $recipients in thread $threadId")
-            addressCursor.close()
+            if (addressCursor == null) {
+                Countly.sharedInstance().crashes().recordHandledException(
+                    RuntimeException("Address cursor is null for thread $threadId")
+                )
+                continue
+            }
+            val address = addressCursor.use {
+                it.moveToFirst()
+                it.getString(Telephony.CanonicalAddressesColumns.ADDRESS)
+            }
+            if (address == null) {
+                Countly.sharedInstance().crashes().recordHandledException(
+                    RuntimeException("Other party's address is null for thread $threadId")
+                )
+                continue
+            }
 
             if (address.isEmpty()) {
                 // I experienced this at one point; it makes the name lookup throw an
