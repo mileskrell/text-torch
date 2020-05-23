@@ -249,11 +249,11 @@ class ThreadGetter(val context: Context) {
         // Lastly, we'll set a flag in each MessageThread indicating whether there are multiple
         // threads sharing the same name
         nonEmptyMessageThreads.filter { it.otherPartyName != null }
-            .groupBy { it.otherPartyName }.forEach {
+            .groupBy { it.otherPartyName }.map { it.value }.forEach { threadList ->
                 // If there's more than one thread with this name...
-                if (it.value.size > 1) {
+                if (threadList.size > 1) {
                     // In each thread with this name, mark the name as non-unique
-                    it.value.forEach {
+                    threadList.forEach {
                         it.nonUniqueName = true
                     }
                 }
