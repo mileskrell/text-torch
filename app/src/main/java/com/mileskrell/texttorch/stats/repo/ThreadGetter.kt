@@ -89,7 +89,7 @@ class ThreadGetter(val context: Context) {
                 val recipients = threadsCursor.getString(Telephony.Threads.RECIPIENT_IDS)
                 if (recipients == null) {
                     Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Couldn't get recipients for thread $threadId")
+                        RuntimeException("Couldn't get recipient IDs")
                     )
                     continue
                 }
@@ -104,7 +104,7 @@ class ThreadGetter(val context: Context) {
                 )
                 if (addressCursor == null) {
                     Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Address cursor is null for thread $threadId")
+                        RuntimeException("Address cursor is null")
                     )
                     continue
                 }
@@ -114,7 +114,7 @@ class ThreadGetter(val context: Context) {
                 }
                 if (address == null) {
                     Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Couldn't get other party's address for thread $threadId")
+                        RuntimeException("Couldn't get other party's address")
                     )
                     continue
                 }
@@ -124,7 +124,7 @@ class ThreadGetter(val context: Context) {
                     // IllegalArgumentException. Unfortunately, with no address or name to identify
                     // the person by, we can't really show this to the user.
                     Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Other party's address is empty for thread $threadId")
+                        RuntimeException("Other party's address is empty")
                     )
                     threadsCompleted.run {
                         postValue(1 + value!!)
@@ -152,7 +152,7 @@ class ThreadGetter(val context: Context) {
                         val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
                         if (messageId == null) {
                             Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Couldn't get message ID for thread $threadId")
+                                RuntimeException("Couldn't get message ID")
                             )
                             continue
                         }
@@ -160,7 +160,7 @@ class ThreadGetter(val context: Context) {
                         var date = messagesCursor.getLong(Telephony.Sms.DATE)
                         if (date == null) {
                             Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Couldn't get date for message $messageId in thread $threadId")
+                                RuntimeException("Couldn't get message date")
                             )
                             continue
                         }
@@ -178,7 +178,7 @@ class ThreadGetter(val context: Context) {
                                 body = messagesCursor.getString(Telephony.Sms.BODY)
                                 if (body == null) {
                                     Countly.sharedInstance().crashes().recordHandledException(
-                                        RuntimeException("Couldn't get body for SMS with message ID $messageId in thread $threadId")
+                                        RuntimeException("Couldn't get SMS body")
                                     )
                                 }
                             }
@@ -198,27 +198,29 @@ class ThreadGetter(val context: Context) {
                                         if (contentType == null) {
                                             Countly.sharedInstance().crashes()
                                                 .recordHandledException(
-                                                    RuntimeException("Couldn't get content type for message $messageId in thread $threadId")
+                                                    RuntimeException("Couldn't get content type for MMS part")
                                                 )
                                         } else if (contentType == "text/plain") {
                                             body = partsCursor.getString(Telephony.Mms.Part.TEXT)
                                             if (body == null) {
                                                 Countly.sharedInstance().crashes()
                                                     .recordHandledException(
-                                                        RuntimeException("Couldn't get MMS part text for message $messageId in thread $threadId, even though content type is \"text/plain\"")
+                                                        RuntimeException("Couldn't get text for MMS part, even though its content type is \"text/plain\"")
                                                     )
                                             }
                                             break
                                         }
                                     }
                                 } ?: Countly.sharedInstance().crashes().recordHandledException(
-                                    RuntimeException("MMS parts cursor for thread $threadId is null")
+                                    RuntimeException("MMS parts cursor is null")
                                 )
                             }
                             else -> {
-                                Countly.sharedInstance().crashes().recordHandledException(
-                                    RuntimeException("Unknown message type $messageType")
-                                )
+                                Countly.sharedInstance()
+                                    .crashes().addCrashBreadcrumb("Message type: $messageType")
+                                    .crashes().recordHandledException(
+                                        RuntimeException("Unknown message type")
+                                    )
                                 continue@messagesCursorLoop
                             }
                         }
@@ -227,7 +229,7 @@ class ThreadGetter(val context: Context) {
                         numMessages++
                     }
                 } ?: Countly.sharedInstance().crashes().recordHandledException(
-                    RuntimeException("Messages cursor is null for thread $threadId")
+                    RuntimeException("Messages cursor is null")
                 )
 
                 threadsCompleted.run {
