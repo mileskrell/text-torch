@@ -114,7 +114,7 @@ class ThreadGetter(val context: Context) {
                 }
                 if (address == null) {
                     Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Other party's address is null for thread $threadId")
+                        RuntimeException("Couldn't get other party's address for thread $threadId")
                     )
                     continue
                 }
@@ -152,7 +152,7 @@ class ThreadGetter(val context: Context) {
                         val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
                         if (messageId == null) {
                             Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Message ID is null for thread $threadId")
+                                RuntimeException("Couldn't get message ID for thread $threadId")
                             )
                             continue
                         }
@@ -160,7 +160,7 @@ class ThreadGetter(val context: Context) {
                         var date = messagesCursor.getLong(Telephony.Sms.DATE)
                         if (date == null) {
                             Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Date is null for message $messageId in thread $threadId")
+                                RuntimeException("Couldn't get date for message $messageId in thread $threadId")
                             )
                             continue
                         }
@@ -178,7 +178,7 @@ class ThreadGetter(val context: Context) {
                                 body = messagesCursor.getString(Telephony.Sms.BODY)
                                 if (body == null) {
                                     Countly.sharedInstance().crashes().recordHandledException(
-                                        RuntimeException("Null body for SMS with message ID $messageId in thread $threadId")
+                                        RuntimeException("Couldn't get body for SMS with message ID $messageId in thread $threadId")
                                     )
                                 }
                             }
@@ -198,14 +198,14 @@ class ThreadGetter(val context: Context) {
                                         if (contentType == null) {
                                             Countly.sharedInstance().crashes()
                                                 .recordHandledException(
-                                                    RuntimeException("Could not get content type for message $messageId in thread $threadId")
+                                                    RuntimeException("Couldn't get content type for message $messageId in thread $threadId")
                                                 )
                                         } else if (contentType == "text/plain") {
                                             body = partsCursor.getString(Telephony.Mms.Part.TEXT)
                                             if (body == null) {
                                                 Countly.sharedInstance().crashes()
                                                     .recordHandledException(
-                                                        RuntimeException("MMS part text is null, even though content type is \"text/plain\"")
+                                                        RuntimeException("Couldn't get MMS part text for message $messageId in thread $threadId, even though content type is \"text/plain\"")
                                                     )
                                             }
                                             break
