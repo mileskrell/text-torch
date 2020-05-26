@@ -23,3 +23,9 @@
 # For Countly
 -keep class org.openudid.** { *; }
 -keep class ly.count.android.sdk.** { *; }
+
+# For AboutLibraries
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}

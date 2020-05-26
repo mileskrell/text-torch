@@ -24,7 +24,7 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
         val preText = getString(R.string.intro_verify_pre_text)
         val postText = getString(R.string.intro_verify_post_text)
         val linkText = getString(R.string.intro_verify_link_text)
-        val url = getString(R.string.about_github_url)
+        val url = getString(R.string.github_url)
         val linkColor = ContextCompat.getColor(requireContext(), R.color.intro_slide_2_link_color)
 
         intro_page_2_text_view_3.run {

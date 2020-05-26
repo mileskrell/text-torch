@@ -59,7 +59,21 @@
     <fragment
         android:id="@+id/about_dest"
         android:name="com.mileskrell.texttorch.about.AboutFragment"
-        android:label="@string/about" />
+        android:label="@string/about"
+        tools:layout="@layout/fragment_about">
+        <action
+            android:id="@+id/about_to_licenses_action"
+            app:destination="@id/licenses_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/licenses_dest"
+        android:name="com.mileskrell.texttorch.about.LicensesFragment"
+        android:label="@string/licenses"
+        tools:layout="@layout/fragment_licenses" />
     <fragment
         android:id="@+id/regain_dest"
         android:name="com.mileskrell.texttorch.regain.RegainPermissionsFragment"

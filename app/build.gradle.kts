@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
+    id("com.mikepenz.aboutlibraries.plugin")
 }
 
 android {
@@ -45,7 +46,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.preference:preference-ktx:1.1.1")
 
-    implementation("com.github.medyo:android-about-page:1.2.5")
+    val aboutLibrariesVersion: String by rootProject.extra
+    implementation("com.google.android.material:material:1.1.0")
+    implementation("com.mikepenz:aboutlibraries:$aboutLibrariesVersion")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("ly.count.android:sdk:20.04.1")
 
