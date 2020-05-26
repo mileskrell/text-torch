@@ -25,8 +25,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Please complete the following information:**
  - Device: [e.g. Google Pixel]
- - OS: [e.g. iOS8.1]
- - Version [e.g. 22]
+ - OS: [e.g. Android 9]
+ - App version [e.g. 1.0]
 
 **Additional context**
 Add any other context about the problem here.
