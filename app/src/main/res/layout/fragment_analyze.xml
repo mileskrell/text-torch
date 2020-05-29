@@ -79,6 +79,6 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/progress_bar"
         app:layout_constraintTop_toBottomOf="@id/progress_bar"
-        tools:text="28/150 threads"
+        tools:text="28/150 message threads"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
