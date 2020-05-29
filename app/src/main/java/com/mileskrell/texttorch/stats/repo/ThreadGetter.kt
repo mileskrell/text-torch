@@ -102,6 +102,10 @@ class ThreadGetter(val context: Context) {
                     Countly.sharedInstance().crashes().recordHandledException(
                         RuntimeException("Couldn't get thread ID")
                     )
+                    // TODO: Maybe display "x threads failed" in AnalyzeFragment? On the other hand,
+                    //  that might just frustrate/confuse the user more. So instead, maybe I should
+                    //  just add an "if threads are missing, report a bug" message somewhere.
+                    threadsCompleted.run { postValue(value!! + 1) }
                     continue
                 }
 
@@ -110,6 +114,7 @@ class ThreadGetter(val context: Context) {
                     Countly.sharedInstance().crashes().recordHandledException(
                         RuntimeException("Couldn't get recipient IDs")
                     )
+                    threadsCompleted.run { postValue(value!! + 1) }
                     continue
                 }
 
@@ -125,6 +130,7 @@ class ThreadGetter(val context: Context) {
                     Countly.sharedInstance().crashes().recordHandledException(
                         RuntimeException("Address cursor is null")
                     )
+                    threadsCompleted.run { postValue(value!! + 1) }
                     continue
                 }
                 val address = addressCursor.use {
@@ -135,6 +141,7 @@ class ThreadGetter(val context: Context) {
                     Countly.sharedInstance().crashes().recordHandledException(
                         RuntimeException("Couldn't get other party's address")
                     )
+                    threadsCompleted.run { postValue(value!! + 1) }
                     continue
                 }
 
@@ -145,9 +152,7 @@ class ThreadGetter(val context: Context) {
                     Countly.sharedInstance().crashes().recordHandledException(
                         RuntimeException("Other party's address is empty")
                     )
-                    threadsCompleted.run {
-                        postValue(1 + value!!)
-                    }
+                    threadsCompleted.run { postValue(value!! + 1) }
                     continue
                 }
                 val name = getNameFromAddress(address)
@@ -251,9 +256,7 @@ class ThreadGetter(val context: Context) {
                     RuntimeException("Messages cursor is null")
                 )
 
-                threadsCompleted.run {
-                    postValue(1 + value!!)
-                }
+                threadsCompleted.run { postValue(value!! + 1) }
 
                 oneRecipientMessageThreads.add(MessageThread(address, name, messages))
             }
