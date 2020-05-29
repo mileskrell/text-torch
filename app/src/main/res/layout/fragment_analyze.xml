@@ -29,7 +29,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/analyze_button"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -54,7 +54,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
         app:layout_constraintTop_toTopOf="parent"
         tools:progress="19"
         tools:visibility="visible" />
