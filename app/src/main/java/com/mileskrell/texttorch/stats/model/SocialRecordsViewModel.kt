@@ -72,8 +72,15 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
             .unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener)
     }
 
-    fun initializeSocialRecords(threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>) {
-        val initialSocialRecords = repository.initializeSocialRecords(period.ms, threadsTotal, threadsCompleted)
+    fun initializeSocialRecords(
+        threadsTotal: MutableLiveData<Int>,
+        threadsCompleted: MutableLiveData<Int>,
+        messagesTotal: MutableLiveData<Int>,
+        messagesCompleted: MutableLiveData<Int>
+    ) {
+        val initialSocialRecords = repository.initializeSocialRecords(
+            period.ms, threadsTotal, threadsCompleted, messagesTotal, messagesCompleted
+        )
         sortAndSetSocialRecords(initialSocialRecords)
     }
 

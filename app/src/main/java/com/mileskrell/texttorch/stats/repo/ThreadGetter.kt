@@ -62,7 +62,9 @@ class ThreadGetter(val context: Context) {
 
     fun getThreads(
         threadsTotal: MutableLiveData<Int>,
-        threadsCompleted: MutableLiveData<Int>
+        threadsCompleted: MutableLiveData<Int>,
+        messagesTotal: MutableLiveData<Int>,
+        messagesCompleted: MutableLiveData<Int>
     ): List<MessageThread> {
         Countly.sharedInstance().events().startEvent("getThreads()")
         /**
@@ -172,12 +174,16 @@ class ThreadGetter(val context: Context) {
                     null,
                     Telephony.Sms.DATE
                 )?.use { messagesCursor ->
+                    messagesTotal.postValue(messagesCursor.count)
+                    messagesCompleted.postValue(0)
+
                     messagesCursorLoop@ while (messagesCursor.moveToNext()) {
                         val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
                         if (messageId == null) {
                             Countly.sharedInstance().crashes().recordHandledException(
                                 RuntimeException("Couldn't get message ID")
                             )
+                            messagesCompleted.run { postValue(messagesCursor.position + 1) }
                             continue
                         }
 
@@ -186,6 +192,7 @@ class ThreadGetter(val context: Context) {
                             Countly.sharedInstance().crashes().recordHandledException(
                                 RuntimeException("Couldn't get message date")
                             )
+                            messagesCompleted.run { postValue(messagesCursor.position + 1) }
                             continue
                         }
                         val sentByUser: Boolean
@@ -245,12 +252,14 @@ class ThreadGetter(val context: Context) {
                                     .crashes().recordHandledException(
                                         RuntimeException("Unknown message type")
                                     )
+                                messagesCompleted.run { postValue(messagesCursor.position + 1) }
                                 continue@messagesCursorLoop
                             }
                         }
 
                         messages.add(Message(messageType, sentByUser, date, body))
                         numMessages++
+                        messagesCompleted.run { postValue(messagesCursor.position + 1) }
                     }
                 } ?: Countly.sharedInstance().crashes().recordHandledException(
                     RuntimeException("Messages cursor is null")

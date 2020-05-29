@@ -1,84 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".analyze.AnalyzeFragment">
 
-    <Button
-        android:id="@+id/analyze_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/analyze_my_texts"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/analyzing_message_threads_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/analyzing"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/analyze_button"
-        app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintStart_toEndOf="@id/guideline_left"
-        tools:visibility="visible" />
+        <Button
+            android:id="@+id/analyze_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/analyze_my_texts"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="invisible" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+        <TextView
+            android:id="@+id/analyzing_message_threads_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/analyzing"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/analyze_button"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintStart_toEndOf="@id/guideline_left"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:progress="19"
-        tools:visibility="visible" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
 
-    <TextView
-        android:id="@+id/progress_percentage_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/progress_bar"
-        app:layout_constraintTop_toBottomOf="@id/progress_bar"
-        tools:text="19%"
-        tools:visibility="visible" />
+        <ProgressBar
+            android:id="@+id/threads_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:progress="19"
+            tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/progress_fraction_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/progress_bar"
-        app:layout_constraintTop_toBottomOf="@id/progress_bar"
-        tools:text="28/150 message threads"
-        tools:visibility="visible" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/threads_progress_percentage_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/threads_progress_bar"
+            app:layout_constraintTop_toBottomOf="@id/threads_progress_bar"
+            tools:text="19%"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/threads_progress_fraction_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/threads_progress_bar"
+            app:layout_constraintTop_toBottomOf="@id/threads_progress_bar"
+            tools:text="28/150 message threads"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/for_current_message_thread_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:text="@string/for_current_message_thread"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/threads_progress_percentage_text_view"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/messages_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/for_current_message_thread_text_view"
+            tools:layout_editor_absoluteY="491dp"
+            tools:progress="60"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/messages_progress_percentage_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/messages_progress_bar"
+            app:layout_constraintTop_toBottomOf="@id/messages_progress_bar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="60%"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/messages_progress_fraction_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/messages_progress_bar"
+            app:layout_constraintTop_toBottomOf="@id/messages_progress_bar"
+            tools:text="228/380 messages"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/show_details_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_details"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/messages_progress_bar"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="@id/messages_progress_bar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

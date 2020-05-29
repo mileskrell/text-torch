@@ -28,15 +28,21 @@ import kotlinx.coroutines.launch
 
 class AnalyzeViewModel : ViewModel() {
 
+    val threadsTotal = MutableLiveData<Int>()
     val threadsCompleted = MutableLiveData(0)
 
-    val threadsTotal = MutableLiveData<Int>()
+    // These are for the current message thread
+    val messagesTotal = MutableLiveData<Int>()
+    val messagesCompleted = MutableLiveData(0)
 
     var clickedAnalyze = false
+    var clickedShowDetails = false
 
     fun initializeSocialRecordList(socialRecordsViewModel: SocialRecordsViewModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            socialRecordsViewModel.initializeSocialRecords(threadsTotal, threadsCompleted)
+            socialRecordsViewModel.initializeSocialRecords(
+                threadsTotal, threadsCompleted, messagesTotal, messagesCompleted
+            )
         }
     }
 }

@@ -53,9 +53,17 @@ class Repository(val context: Context) {
      *
      * @param period: Number of milliseconds of silence required until the next conversation has officially started
      */
-    fun initializeSocialRecords(period: Int, threadsTotal: MutableLiveData<Int>, threadsCompleted: MutableLiveData<Int>): List<SocialRecord> {
+    fun initializeSocialRecords(
+        period: Int,
+        threadsTotal: MutableLiveData<Int>,
+        threadsCompleted: MutableLiveData<Int>,
+        messagesTotal: MutableLiveData<Int>,
+        messagesCompleted: MutableLiveData<Int>
+    ): List<SocialRecord> {
         if (!::threads.isInitialized) {
-            threads = ThreadGetter(context).getThreads(threadsTotal, threadsCompleted)
+            threads = ThreadGetter(context).getThreads(
+                threadsTotal, threadsCompleted, messagesTotal, messagesCompleted
+            )
         }
 
         return getSocialRecordsFromPeriod(period)
