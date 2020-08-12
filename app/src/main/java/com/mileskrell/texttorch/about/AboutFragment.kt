@@ -25,7 +25,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
 import kotlinx.android.synthetic.main.fragment_about.*
@@ -46,23 +45,6 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         about_version.text = "${getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
         if (BuildConfig.DEBUG) {
             about_version.append("-debug")
-        }
-
-        about_feedback_button.setOnClickListener {
-            Countly.sharedInstance().ratings().showFeedbackPopup(
-                "5ecc6278562d9032a46c733d",
-                getString(R.string.close),
-                requireActivity()
-            ) { error ->
-                Countly.sharedInstance().crashes().recordHandledException(
-                    RuntimeException("Error showing feedback popup: $error")
-                )
-                Snackbar.make(
-                    about_constraint_layout,
-                    getString(R.string.error_showing_feedback_dialog),
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
         }
 
         about_github_button.setOnClickListener {

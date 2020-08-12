@@ -98,9 +98,6 @@
     <string name="view_code_or_report_issue">View the code or report an issue</string>
     <string name="github_url" translatable="false">https://github.com/mileskrell/text-torch</string>
 
-    <string name="submit_feedback">Submit feedback</string>
-    <string name="error_showing_feedback_dialog">Error showing feedback dialog. Make sure you have an Internet connection.</string>
-
     <string name="view_open_source_licenses">View open source licenses</string>
 
     <string name="donate">Send me a buck if you\'re feeling generous ❤</string>
