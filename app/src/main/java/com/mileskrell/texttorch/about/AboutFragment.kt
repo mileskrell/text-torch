@@ -37,10 +37,10 @@ class AboutFragment : LifecycleLogggingFragment(R.layout.fragment_about) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        about_version.text = getString(R.string.version_x, BuildConfig.VERSION_NAME)
-        if (BuildConfig.DEBUG) {
-            about_version.append("-debug")
-        }
+        about_version.text = getString(
+            R.string.version_x,
+            BuildConfig.VERSION_NAME + if (BuildConfig.DEBUG) "-debug" else ""
+        )
 
         about_github_button.setOnClickListener {
             logToBoth(TAG, "Clicked \"view code\" button")
