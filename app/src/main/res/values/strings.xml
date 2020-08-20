@@ -92,7 +92,7 @@
 
     <!--About fragment-->
     <string name="text_torch_app_icon">Text Torch app icon</string>
-    <string name="version">Version</string>
+    <string name="version_x">Version %1$s</string>
     <string name="about_description">An open source project by Miles Krell</string>
 
     <string name="view_code_or_report_issue">View the code or report an issue</string>

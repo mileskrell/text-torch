@@ -37,7 +37,7 @@ class AboutFragment : LifecycleLogggingFragment(R.layout.fragment_about) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        about_version.text = "${getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
+        about_version.text = getString(R.string.version_x, BuildConfig.VERSION_NAME)
         if (BuildConfig.DEBUG) {
             about_version.append("-debug")
         }
