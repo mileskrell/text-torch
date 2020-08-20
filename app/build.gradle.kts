@@ -53,7 +53,7 @@ dependencies {
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("io.sentry:sentry-android:2.3.0")
 
-    val coroutinesVersion = "1.3.8"
+    val coroutinesVersion = "1.3.9"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
