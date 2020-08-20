@@ -20,13 +20,13 @@
 package com.mileskrell.texttorch.intro
 
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.*
+import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.ENTER_APP
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 
 class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -58,7 +58,7 @@ class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager)
     // TODO: Hold on, I'm actually not sure if I need this. Figure out what's going on here.
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         return super.instantiateItem(container, position).also {
-            pages[position] = it as Fragment
+            pages[position] = it as LifecycleLogggingFragment
         }
     }
 }

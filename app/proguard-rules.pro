@@ -20,9 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# For Countly
--keep class org.openudid.** { *; }
--keep class ly.count.android.sdk.** { *; }
+# For Sentry
+-dontwarn io.sentry.**
 
 # For AboutLibraries
 -keep class .R

@@ -22,12 +22,17 @@ package com.mileskrell.texttorch.stats.repo
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.os.SystemClock
 import android.provider.ContactsContract
 import android.provider.Telephony
 import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.Message
 import com.mileskrell.texttorch.stats.model.MessageThread
-import ly.count.android.sdk.Countly
+import com.mileskrell.texttorch.util.logEvent
+import com.mileskrell.texttorch.util.logToBoth
+import io.sentry.core.Sentry
+import io.sentry.core.SentryLevel
+import kotlin.math.roundToInt
 
 /**
  * Retrieves threads of conversation, as a List<[MessageThread]>.
@@ -66,7 +71,7 @@ class ThreadGetter(val context: Context) {
         messagesTotal: MutableLiveData<Int>,
         messagesCompleted: MutableLiveData<Int>
     ): List<MessageThread> {
-        Countly.sharedInstance().events().startEvent("getThreads()")
+        val startTime = SystemClock.elapsedRealtime()
         /**
          * This might take a while - it seems that different devices require using different content URIs.
          * See https://seap.samsung.com/faq/why-does-sdk-return-nullpointerexception-when-i-access-smsmms-content-uri-0
@@ -86,6 +91,12 @@ class ThreadGetter(val context: Context) {
         var numSuccessfulNameLookups = 0
         var numMessages = 0
 
+        fun addProgressBreadcrumbs() {
+            Sentry.addBreadcrumb("[$TAG] Threads so far: ${threadsCompleted.value}")
+            Sentry.addBreadcrumb("[$TAG] Messages so far: $numMessages")
+            Sentry.addBreadcrumb("[$TAG] Addresses so far: ${numSuccessfulNameLookups + numFailedNameLookups}")
+        }
+
         val oneRecipientMessageThreads = mutableListOf<MessageThread>()
         context.contentResolver.query(
             threadsUri,
@@ -101,8 +112,10 @@ class ThreadGetter(val context: Context) {
             while (threadsCursor.moveToNext()) {
                 val threadId = threadsCursor.getLong(Telephony.Threads._ID)
                 if (threadId == null) {
-                    Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Couldn't get thread ID")
+                    addProgressBreadcrumbs()
+                    Sentry.captureMessage(
+                        "[$TAG] Couldn't get thread ID",
+                        SentryLevel.ERROR
                     )
                     // TODO: Maybe display "x threads failed" in AnalyzeFragment? On the other hand,
                     //  that might just frustrate/confuse the user more. So instead, maybe I should
@@ -113,8 +126,10 @@ class ThreadGetter(val context: Context) {
 
                 val recipients = threadsCursor.getString(Telephony.Threads.RECIPIENT_IDS)
                 if (recipients == null) {
-                    Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Couldn't get recipient IDs")
+                    addProgressBreadcrumbs()
+                    Sentry.captureMessage(
+                        "[$TAG] Couldn't get recipient IDs",
+                        SentryLevel.ERROR
                     )
                     threadsCompleted.run { postValue(value!! + 1) }
                     continue
@@ -129,8 +144,10 @@ class ThreadGetter(val context: Context) {
                     null
                 )
                 if (addressCursor == null) {
-                    Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Address cursor is null")
+                    addProgressBreadcrumbs()
+                    Sentry.captureMessage(
+                        "[$TAG] Address cursor is null",
+                        SentryLevel.ERROR
                     )
                     threadsCompleted.run { postValue(value!! + 1) }
                     continue
@@ -140,8 +157,10 @@ class ThreadGetter(val context: Context) {
                     it.getString(Telephony.CanonicalAddressesColumns.ADDRESS)
                 }
                 if (address == null) {
-                    Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Couldn't get other party's address")
+                    addProgressBreadcrumbs()
+                    Sentry.captureMessage(
+                        "[$TAG] Couldn't get other party's address",
+                        SentryLevel.ERROR
                     )
                     threadsCompleted.run { postValue(value!! + 1) }
                     continue
@@ -151,9 +170,8 @@ class ThreadGetter(val context: Context) {
                     // I experienced this at one point; it makes the name lookup throw an
                     // IllegalArgumentException. Unfortunately, with no address or name to identify
                     // the person by, we can't really show this to the user.
-                    Countly.sharedInstance().crashes().recordHandledException(
-                        RuntimeException("Other party's address is empty")
-                    )
+                    addProgressBreadcrumbs()
+                    logToBoth(TAG, "Other party's address is empty", SentryLevel.ERROR)
                     threadsCompleted.run { postValue(value!! + 1) }
                     continue
                 }
@@ -180,8 +198,10 @@ class ThreadGetter(val context: Context) {
                     messagesCursorLoop@ while (messagesCursor.moveToNext()) {
                         val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)
                         if (messageId == null) {
-                            Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Couldn't get message ID")
+                            addProgressBreadcrumbs()
+                            Sentry.captureMessage(
+                                "[$TAG] Couldn't get message ID",
+                                SentryLevel.ERROR
                             )
                             messagesCompleted.run { postValue(messagesCursor.position + 1) }
                             continue
@@ -189,8 +209,10 @@ class ThreadGetter(val context: Context) {
 
                         var date = messagesCursor.getLong(Telephony.Sms.DATE)
                         if (date == null) {
-                            Countly.sharedInstance().crashes().recordHandledException(
-                                RuntimeException("Couldn't get message date")
+                            addProgressBreadcrumbs()
+                            Sentry.captureMessage(
+                                "[$TAG] Couldn't get message date",
+                                SentryLevel.ERROR
                             )
                             messagesCompleted.run { postValue(messagesCursor.position + 1) }
                             continue
@@ -208,8 +230,10 @@ class ThreadGetter(val context: Context) {
 
                                 body = messagesCursor.getString(Telephony.Sms.BODY)
                                 if (body == null) {
-                                    Countly.sharedInstance().crashes().recordHandledException(
-                                        RuntimeException("Couldn't get SMS body")
+                                    addProgressBreadcrumbs()
+                                    Sentry.captureMessage(
+                                        "[$TAG] Couldn't get SMS body",
+                                        SentryLevel.ERROR
                                     )
                                 }
                             }
@@ -227,31 +251,37 @@ class ThreadGetter(val context: Context) {
                                         val contentType =
                                             partsCursor.getString(Telephony.Mms.Part.CONTENT_TYPE)
                                         if (contentType == null) {
-                                            Countly.sharedInstance().crashes()
-                                                .recordHandledException(
-                                                    RuntimeException("Couldn't get content type for MMS part")
-                                                )
+                                            addProgressBreadcrumbs()
+                                            Sentry.captureMessage(
+                                                "[$TAG] Couldn't get content type for MMS part",
+                                                SentryLevel.ERROR
+                                            )
                                         } else if (contentType == "text/plain") {
                                             body = partsCursor.getString(Telephony.Mms.Part.TEXT)
                                             if (body == null) {
-                                                Countly.sharedInstance().crashes()
-                                                    .recordHandledException(
-                                                        RuntimeException("Couldn't get text for MMS part, even though its content type is \"text/plain\"")
-                                                    )
+                                                addProgressBreadcrumbs()
+                                                Sentry.captureMessage(
+                                                    "[$TAG] Couldn't get text for MMS part, even though its content type is \"text/plain\"",
+                                                    SentryLevel.ERROR
+                                                )
                                             }
                                             break
                                         }
                                     }
-                                } ?: Countly.sharedInstance().crashes().recordHandledException(
-                                    RuntimeException("MMS parts cursor is null")
-                                )
+                                } ?: run {
+                                    addProgressBreadcrumbs()
+                                    Sentry.captureMessage(
+                                        "[$TAG] MMS parts cursor is null",
+                                        SentryLevel.ERROR
+                                    )
+                                }
                             }
                             else -> {
-                                Countly.sharedInstance()
-                                    .crashes().addCrashBreadcrumb("Message type: $messageType")
-                                    .crashes().recordHandledException(
-                                        RuntimeException("Unknown message type")
-                                    )
+                                addProgressBreadcrumbs()
+                                Sentry.captureMessage(
+                                    "[$TAG] Unknown message type $messageType",
+                                    SentryLevel.ERROR
+                                )
                                 messagesCompleted.run { postValue(messagesCursor.position + 1) }
                                 continue@messagesCursorLoop
                             }
@@ -261,16 +291,21 @@ class ThreadGetter(val context: Context) {
                         numMessages++
                         messagesCompleted.run { postValue(messagesCursor.position + 1) }
                     }
-                } ?: Countly.sharedInstance().crashes().recordHandledException(
-                    RuntimeException("Messages cursor is null")
-                )
+                } ?: run {
+                    addProgressBreadcrumbs()
+                    Sentry.captureMessage(
+                        "[$TAG] Messages cursor is null",
+                        SentryLevel.ERROR
+                    )
+                }
 
                 threadsCompleted.run { postValue(value!! + 1) }
 
                 oneRecipientMessageThreads.add(MessageThread(address, name, messages))
             }
-        } ?: Countly.sharedInstance().crashes().recordUnhandledException(
-            RuntimeException("Threads cursor is null; unable to view anything")
+        } ?: Sentry.captureMessage(
+            "[$TAG] Threads cursor is null; unable to view anything",
+            SentryLevel.FATAL
         )
 
         val nonEmptyMessageThreads = oneRecipientMessageThreads.filter { messageThread ->
@@ -293,18 +328,21 @@ class ThreadGetter(val context: Context) {
             }
 
         val numAddresses = numSuccessfulNameLookups + numFailedNameLookups
-        Countly.sharedInstance().events().endEvent(
-            "getThreads()",
+        val duration = SystemClock.elapsedRealtime() - startTime
+        logEvent(
+            TAG,
+            "getThreads() finished",
+            SentryLevel.INFO,
+            true,
             mapOf(
-                "total number of messages" to numMessages,
-                "total number of addresses" to numAddresses,
+                "duration (ms)" to duration,
+                "number of messages" to numMessages,
+                "number of addresses" to numAddresses,
                 "number of successful name lookups" to numSuccessfulNameLookups,
                 "number of failed name lookups" to numFailedNameLookups,
-                "percentage successful name lookups" to 100.0 * numSuccessfulNameLookups / numAddresses,
-                "percentage failed name lookups" to 100.0 * numFailedNameLookups / numAddresses
-            ),
-            1,
-            0.0
+                "percentage of successful name lookups" to (100.0 * numSuccessfulNameLookups / numAddresses).roundToInt(),
+                "percentage of failed name lookups" to (100.0 * numFailedNameLookups / numAddresses).roundToInt()
+            )
         )
         return nonEmptyMessageThreads
     }
@@ -321,9 +359,7 @@ class ThreadGetter(val context: Context) {
                 nameLookupCursor.moveToFirst()
                 nameLookupCursor.getString(0)
             } else null
-        } ?: Countly.sharedInstance().crashes().recordHandledException(
-            RuntimeException("Name lookup cursor is null")
-        )
+        } ?: Sentry.captureMessage("[$TAG] Name lookup cursor is null", SentryLevel.ERROR)
         return null
     }
 

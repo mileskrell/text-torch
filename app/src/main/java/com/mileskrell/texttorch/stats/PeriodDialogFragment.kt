@@ -22,11 +22,11 @@ package com.mileskrell.texttorch.stats
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import com.mileskrell.texttorch.R
-import ly.count.android.sdk.Countly
+import com.mileskrell.texttorch.util.LifecycleLogggingDialogFragment
+import com.mileskrell.texttorch.util.logToBoth
 
-class PeriodDialogFragment : DialogFragment() {
+class PeriodDialogFragment : LifecycleLogggingDialogFragment() {
 
     companion object {
         const val TAG = "PeriodDialogFragment"
@@ -47,8 +47,8 @@ class PeriodDialogFragment : DialogFragment() {
             .create()
     }
 
-    override fun onResume() {
-        super.onResume()
-        Countly.sharedInstance().events().recordEvent("viewed period explanation")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        logToBoth(TAG, "Viewed period explanation")
     }
 }

@@ -21,21 +21,15 @@ package com.mileskrell.texttorch.about
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mileskrell.texttorch.R
-import ly.count.android.sdk.Countly
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 
-class LicensesFragment : Fragment(R.layout.fragment_licenses) {
+class LicensesFragment : LifecycleLogggingFragment(R.layout.fragment_licenses) {
 
     companion object {
         const val TAG = "LicensesFragment"
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Countly.sharedInstance().views().recordView(TAG)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

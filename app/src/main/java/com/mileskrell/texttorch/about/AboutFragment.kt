@@ -23,22 +23,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.logToBoth
 import kotlinx.android.synthetic.main.fragment_about.*
-import ly.count.android.sdk.Countly
 
-class AboutFragment : Fragment(R.layout.fragment_about) {
+class AboutFragment : LifecycleLogggingFragment(R.layout.fragment_about) {
 
     companion object {
         const val TAG = "AboutFragment"
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Countly.sharedInstance().views().recordView(TAG)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,14 +43,17 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         }
 
         about_github_button.setOnClickListener {
+            logToBoth(TAG, "Clicked \"view code\" button")
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url))))
         }
 
         about_licenses_button.setOnClickListener {
+            logToBoth(TAG, "Clicked \"view licenses\" button")
             findNavController().navigate(R.id.about_to_licenses_action)
         }
 
         about_donate_button.setOnClickListener {
+            logToBoth(TAG, "Clicked \"donate\" button")
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_url))))
         }
     }

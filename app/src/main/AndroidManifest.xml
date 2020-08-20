@@ -22,9 +22,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|screenSize">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,11 +30,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name="org.openudid.OpenUDID_service">
-            <intent-filter>
-                <action android:name="org.openudid.GETUDID" />
-            </intent-filter>
-        </service>
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://c0dc584325e94446a0d569b35a5b8272@o403459.ingest.sentry.io/5266113" />
+
+        <!-- We're initializing Sentry in App.kt -->
+        <meta-data
+            android:name="io.sentry.auto-init"
+            android:value="false" />
 
     </application>
 </manifest>

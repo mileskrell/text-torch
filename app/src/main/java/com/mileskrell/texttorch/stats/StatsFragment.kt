@@ -25,16 +25,22 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
+import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
+import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.logEvent
+import com.mileskrell.texttorch.util.logToBoth
+import io.sentry.core.Sentry
+import io.sentry.core.SentryLevel
 import kotlinx.android.synthetic.main.fragment_stats.*
-import ly.count.android.sdk.Countly
 
-class StatsFragment : Fragment(R.layout.fragment_stats) {
+class StatsFragment : LifecycleLogggingFragment(R.layout.fragment_stats) {
 
     companion object {
         const val TAG = "StatsFragment"
@@ -70,11 +76,15 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         stats_view_pager.offscreenPageLimit = 2
         stats_tab_layout.setupWithViewPager(stats_view_pager)
         stats_view_pager.adapter = StatsPagerAdapter(requireContext(), childFragmentManager)
-        stats_view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        stats_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 // Sync RecyclerView scroll position immediately when user drags another page into view.
                 // Otherwise, the scroll position wouldn't be updated until the page had settled.
                 (stats_view_pager.adapter as StatsPagerAdapter).onPageChanged(lastPage)
@@ -87,23 +97,16 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 // Save the new position, so that when the user moves somewhere else,
                 // we know which page's state is most recent.
                 lastPage = position
-                Countly.sharedInstance().events().recordEvent(
-                    "switched stats page", mapOf(
-                        "page" to when (position) {
-                            0 -> "who texts first"
-                            1 -> "total texts"
-                            2 -> "average length"
-                            else -> "invalid position $position"
-                        }
-                    )
+                Sentry.addBreadcrumb(
+                    "[$TAG] Switched stats page to ${when (position) {
+                        0 -> WhoTextsFirstFragment.TAG
+                        1 -> TotalTextsFragment.TAG
+                        2 -> AverageLengthFragment.TAG
+                        else -> "invalid position $position"
+                    }}"
                 )
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Countly.sharedInstance().views().recordView(TAG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -117,12 +120,19 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Countly.sharedInstance().events()
-            .recordEvent("menu item selected", mapOf("item" to item.title))
+        logToBoth(TAG, "Selected menu item with title \"${item.title}\"")
         return when (item.itemId) {
             R.id.menu_item_sorting -> {
-                val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(socialRecordsViewModel.sortType.radioButtonId, socialRecordsViewModel.reversed)
-                    .apply { setTargetFragment(this@StatsFragment, SortTypeDialogFragment.REQUEST_CODE) }
+                val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(
+                    socialRecordsViewModel.sortType.radioButtonId,
+                    socialRecordsViewModel.reversed
+                )
+                    .apply {
+                        setTargetFragment(
+                            this@StatsFragment,
+                            SortTypeDialogFragment.REQUEST_CODE
+                        )
+                    }
                 sortTypeDialogFragment.show(parentFragmentManager, null)
                 true
             }
@@ -149,7 +159,11 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             val newSortType = SocialRecordsViewModel.SortType.values()
                 .first { it.radioButtonId == checkedRadioButtonId }
 
-            Countly.sharedInstance().events().recordEvent("changed sort type",
+            logEvent(
+                TAG,
+                "Changed sort type",
+                SentryLevel.INFO,
+                true,
                 mapOf("type" to newSortType.name, "reversed" to reversed)
             )
             socialRecordsViewModel.changeSortTypeAndReversed(newSortType, reversed)

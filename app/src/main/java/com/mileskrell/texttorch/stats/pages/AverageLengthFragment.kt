@@ -21,17 +21,21 @@ package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 import kotlinx.android.synthetic.main.fragment_stat_page.*
 
 /**
  * TODO: Add a disclaimer somewhere explaining how emoji (and other chars?) can mess with this
  */
-class AverageLengthFragment : Fragment(R.layout.fragment_stat_page) {
+class AverageLengthFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page) {
+
+    companion object {
+        const val TAG = "AverageLengthFragment"
+    }
 
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.AVERAGE_LENGTH)

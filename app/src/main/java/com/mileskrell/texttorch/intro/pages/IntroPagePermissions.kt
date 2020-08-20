@@ -28,17 +28,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.intro.IntroFragment
-import com.mileskrell.texttorch.util.PERMISSIONS_REQUEST_CODE
-import com.mileskrell.texttorch.util.readContactsGranted
-import com.mileskrell.texttorch.util.readSmsGranted
-import com.mileskrell.texttorch.util.showAppSettingsDialog
+import com.mileskrell.texttorch.util.*
+import io.sentry.core.SentryLevel
 import kotlinx.android.synthetic.main.fragment_intro_page_permissions.*
-import ly.count.android.sdk.Countly
 
-class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) {
+class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_page_permissions) {
+
+    companion object {
+        const val TAG = "IntroPagePermissions"
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val preText = getString(R.string.intro_verify_pre_text)
         val postText = getString(R.string.intro_verify_post_text)
@@ -54,6 +55,7 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
         }
 
         intro_permissions_button.setOnClickListener {
+            logToBoth(TAG, "Clicked \"grant needed permissions\" button")
             if (shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)
                 || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
                 showRationale()
@@ -77,23 +79,27 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
-                Countly.sharedInstance().events().recordEvent(
-                    "received permission results",
-                    mapOf(
-                        "READ_SMS" to readSmsGranted(),
-                        "READ_CONTACTS" to readContactsGranted()
-                    )
-                )
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    logToBoth(TAG, "User granted all permissions")
                     onPermissionsGranted()
                 } else {
                     // Not all permissions were granted
+                    logEvent(
+                        TAG,
+                        "User only granted some permissions",
+                        SentryLevel.INFO,
+                        true,
+                        mapOf(
+                            "READ_SMS" to readSmsGranted(),
+                            "READ_CONTACTS" to readContactsGranted()
+                        )
+                    )
                     val canAskAgain = (readSmsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS))
                             && (readContactsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
                     if (!canAskAgain) {
-                        Countly.sharedInstance().events().recordEvent("showed app settings dialog")
                         // User checked "Never ask again", so open app settings page
-                        showAppSettingsDialog()
+                        logToBoth(TAG, "Showed app settings dialog")
+                        showAppSettingsDialog(TAG)
                     }
                 }
             }

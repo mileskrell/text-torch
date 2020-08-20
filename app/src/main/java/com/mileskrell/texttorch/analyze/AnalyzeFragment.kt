@@ -26,11 +26,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.stats.StatsFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
+import io.sentry.core.Sentry
 import kotlinx.android.synthetic.main.fragment_analyze.*
-import ly.count.android.sdk.Countly
 import kotlin.math.roundToInt
 
 /**
@@ -42,7 +45,7 @@ import kotlin.math.roundToInt
  * This initially just used a simple callback, but I found that this crashed on configuration changes.
  * With ViewModel and LiveData, we can handle these events.
  */
-class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
+class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
 
     companion object {
         const val TAG = "AnalyzeFragment"
@@ -66,10 +69,7 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         }
 
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
-            Countly.sharedInstance().events().recordEvent(
-                "analyze to stats",
-                mapOf("clicked show details" to analyzeViewModel.clickedShowDetails)
-            )
+            Sentry.captureMessage("[$TAG] Finished getting records; going to ${StatsFragment.TAG}")
             findNavController().navigate(R.id.analyze_to_stats_action)
         }
 
@@ -82,15 +82,11 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
         }
 
         analyze_button.setOnClickListener {
+            logToBoth(TAG, "Clicked \"analyze\" button")
             analyzeViewModel.clickedAnalyze = true
             enterProgressDisplayingMode()
             analyzeViewModel.initializeSocialRecordList(socialRecordsViewModel)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Countly.sharedInstance().views().recordView(TAG)
     }
 
     private fun enterProgressDisplayingMode() {
@@ -105,6 +101,7 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
 
         show_details_button.visibility = View.VISIBLE
         show_details_button.setOnClickListener {
+            logToBoth(TAG, "Clicked \"show details\" button")
             analyzeViewModel.clickedShowDetails = true
             enterProgressDetailsMode()
         }

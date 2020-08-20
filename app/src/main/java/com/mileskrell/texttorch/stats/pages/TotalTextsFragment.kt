@@ -21,14 +21,18 @@ package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 import kotlinx.android.synthetic.main.fragment_stat_page.*
 
-class TotalTextsFragment : Fragment(R.layout.fragment_stat_page) {
+class TotalTextsFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page) {
+
+    companion object {
+        const val TAG = "TotalTextsFragment"
+    }
 
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.TOTAL_TEXTS)

@@ -23,15 +23,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.PERMISSIONS_REQUEST_CODE
-import com.mileskrell.texttorch.util.readContactsGranted
-import com.mileskrell.texttorch.util.readSmsGranted
-import com.mileskrell.texttorch.util.showAppSettingsDialog
+import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
+import com.mileskrell.texttorch.util.*
+import io.sentry.core.SentryLevel
 import kotlinx.android.synthetic.main.fragment_regain_permissions.*
-import ly.count.android.sdk.Countly
 
 /**
  * This page is opened if the user has completed the tutorial, but we don't have all the permissions
@@ -43,7 +40,7 @@ import ly.count.android.sdk.Countly
  * This page can be opened either on app start (by IntroFragment) or in AnalyzeFragment's
  * onCreateView.
  */
-class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions) {
+class RegainPermissionsFragment : LifecycleLogggingFragment(R.layout.fragment_regain_permissions) {
 
     companion object {
         const val TAG = "RegainPermissionsFragment"
@@ -62,14 +59,26 @@ class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions)
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED } ) {
+                    logToBoth(IntroPagePermissions.TAG, "User regranted all permissions")
                     findNavController().navigate(R.id.regain_to_analyze_action)
                 } else {
                     // Not all permissions were granted
+                    logEvent(
+                        TAG,
+                        "User only regranted some permissions",
+                        SentryLevel.INFO,
+                        true,
+                        mapOf(
+                            "READ_SMS" to readSmsGranted(),
+                            "READ_CONTACTS" to readContactsGranted()
+                        )
+                    )
                     val canAskAgain = (readSmsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS))
                             && (readContactsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
                     if (!canAskAgain) {
                         // User checked "Never ask again", so open app settings page
-                        showAppSettingsDialog()
+                        logToBoth(TAG, "Showed app settings dialog")
+                        showAppSettingsDialog(TAG)
                     }
                 }
             }
@@ -82,7 +91,6 @@ class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions)
      */
     override fun onResume() {
         super.onResume()
-        Countly.sharedInstance().views().recordView(TAG)
         if (readSmsGranted() && readContactsGranted()) {
             // The user finally granted the permissions! Continue to AnalyzeFragment.
             findNavController().navigate(R.id.regain_to_analyze_action)

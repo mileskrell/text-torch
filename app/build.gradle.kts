@@ -4,11 +4,16 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
+    id("io.sentry.android.gradle")
     id("com.mikepenz.aboutlibraries.plugin")
 }
 
 android {
     compileSdkVersion(28)
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId = "com.mileskrell.texttorch"
         minSdkVersion(21)
@@ -46,7 +51,7 @@ dependencies {
     implementation("com.google.android.material:material:1.2.0")
     implementation("com.mikepenz:aboutlibraries:$aboutLibrariesVersion")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
-    implementation("ly.count.android:sdk:20.04.1")
+    implementation("io.sentry:sentry-android:2.3.0")
 
     val coroutinesVersion = "1.3.8"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")

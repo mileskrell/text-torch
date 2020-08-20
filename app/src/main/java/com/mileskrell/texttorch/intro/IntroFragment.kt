@@ -29,7 +29,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
@@ -37,14 +36,21 @@ import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.MainActivity
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.analyze.AnalyzeFragment
+import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
+import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
+import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
+import com.mileskrell.texttorch.regain.RegainPermissionsFragment
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
+import io.sentry.core.Sentry
 import kotlinx.android.synthetic.main.fragment_intro.*
-import ly.count.android.sdk.Countly
 
 // TODO: I'd like to have translucent status and navigation bars here
 
-class IntroFragment : Fragment(R.layout.fragment_intro) {
+class IntroFragment : LifecycleLogggingFragment(R.layout.fragment_intro) {
 
     companion object {
         const val TAG = "IntroFragment"
@@ -70,14 +76,16 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
             // If all permissions have been granted...
             if (readSmsGranted() && readContactsGranted()) {
                 // Immediately go to AnalyzeFragment, without any animations
-                Countly.sharedInstance().events().recordEvent("intro to analyze")
+                logToBoth(TAG, "Go to ${AnalyzeFragment.TAG} (user has already seen tutorial)")
                 findNavController().navigate(R.id.intro_to_analyze_action)
             } else {
                 // Permissions were granted (because tutorial was completed), but the user went in
                 // and manually denied them later on. Prompt the user to grant them again.
-                Countly.sharedInstance().events().recordEvent("intro to regain")
+                logToBoth(TAG, "Go to ${RegainPermissionsFragment.TAG} (user has already seen tutorial)")
                 findNavController().navigate(R.id.intro_to_regain_action)
             }
+        } else {
+            logToBoth(TAG, "Showing tutorial for first time")
         }
 
         backgroundColors = resources.getStringArray(R.array.intro_background_colors)
@@ -137,18 +145,22 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
                     intro_arrow_next.show()
                 }
             }
-            override fun onPageSelected(position: Int) {}
+            override fun onPageSelected(position: Int) {
+                Sentry.addBreadcrumb(
+                    "[$TAG] Switched intro page to ${when (position) {
+                        0 -> IntroPageWelcome.TAG
+                        1 -> IntroPagePermissions.TAG
+                        2 -> IntroPageEnterApp.TAG
+                        else -> "invalid position $position"
+                    }}"
+                )
+            }
         })
 
         // TODO: Can we make this button scroll more slowly?
         intro_arrow_next.setOnClickListener {
             intro_view_pager.arrowScroll(View.FOCUS_RIGHT)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Countly.sharedInstance().views().recordView(TAG)
     }
 
     /**
@@ -161,7 +173,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putBoolean(getString(R.string.key_has_seen_tutorial), true)
         }
-        Countly.sharedInstance().events().recordEvent("finished tutorial")
+        logToBoth(TAG, "Clicked \"finish tutorial\" button")
 
         // Animated navigation to AnalyzeFragment
         findNavController().navigate(R.id.intro_to_analyze_action, null, navOptions {

@@ -21,7 +21,6 @@ package com.mileskrell.texttorch.stats
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +28,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
 import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
 import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 
 class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -63,7 +63,7 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
      */
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         return super.instantiateItem(container, position).also {
-            pages[position] = it as Fragment
+            pages[position] = it as LifecycleLogggingFragment
         }
     }
 

@@ -19,7 +19,11 @@
 
 package com.mileskrell.texttorch.intro.pages
 
-import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 
-class IntroPageWelcome : Fragment(R.layout.fragment_intro_page_welcome)
+class IntroPageWelcome : LifecycleLogggingFragment(R.layout.fragment_intro_page_welcome) {
+    companion object {
+        const val TAG = "IntroPageWelcome"
+    }
+}

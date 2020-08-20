@@ -27,7 +27,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.repo.Repository
-import ly.count.android.sdk.Countly
+import com.mileskrell.texttorch.util.logToBoth
+import io.sentry.android.core.SentryAndroid
+import io.sentry.core.Sentry
+import io.sentry.core.SentryEvent
+import io.sentry.core.SentryLevel
 
 /**
  * An [AndroidViewModel] holding a [MutableLiveData] containing a list of [SocialRecord]
@@ -47,18 +51,16 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
     var showNonContacts = PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
         .getBoolean(app.getString(R.string.key_show_non_contacts), false)
 
-    private val onSharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-        if (key == app.getString(R.string.key_show_non_contacts)) {
-            showNonContacts = sharedPreferences.getBoolean(key, false)
-            Countly.sharedInstance().events().recordEvent(
-                "change show/hide non-contacts setting",
-                mapOf("show" to showNonContacts)
-            )
-            // Let the stats fragments know about the change. Their parent fragments will check the
-            // value of showNonContacts when they reload the data.
-            _socialRecords.value = _socialRecords.value
+    private val onSharedPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == app.getString(R.string.key_show_non_contacts)) {
+                showNonContacts = sharedPreferences.getBoolean(key, false)
+                logToBoth(TAG, "Set show/hide non-contacts setting to $showNonContacts")
+                // Let the stats fragments know about the change. Their parent fragments will check the
+                // value of showNonContacts when they reload the data.
+                _socialRecords.value = _socialRecords.value
+            }
         }
-    }
 
     private val repository = Repository(app.applicationContext)
 
@@ -100,7 +102,10 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
         if (this.sortType != sortType || this.reversed != reversed) { // If nothing has changed, ignore it
             this.sortType = sortType
             this.reversed = reversed
-            sortAndSetSocialRecords(socialRecords.value ?: return)
+            sortAndSetSocialRecords(socialRecords.value ?: run {
+                logToBoth(TAG, "SocialRecords.value is null", SentryLevel.ERROR)
+                return
+            })
         }
     }
 
