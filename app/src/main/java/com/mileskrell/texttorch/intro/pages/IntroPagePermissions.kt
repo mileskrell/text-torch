@@ -25,8 +25,6 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.intro.IntroFragment
@@ -56,12 +54,10 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
 
         intro_permissions_button.setOnClickListener {
             logToBoth(TAG, "Clicked \"grant needed permissions\" button")
-            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)
-                || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
-                showRationale()
-            } else {
-                requestPermissions(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_CODE)
-            }
+            requestPermissions(
+                arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS),
+                PERMISSIONS_REQUEST_CODE
+            )
         }
 
         // I think storing permission statuses in a ViewModel would just introduce more complexity,
@@ -110,23 +106,5 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
         intro_permissions_button.visibility = View.INVISIBLE
         intro_text_view_permissions_granted.visibility = View.VISIBLE
         (parentFragment as IntroFragment).introPagerAdapter.addEnterAppPage()
-    }
-
-    private fun showRationale() {
-        // TODO Figure out what to actually do here (maybe display a TextView with a nice animation?)
-
-        // TODO: Do we actually need to show this additional rationale, only after the user has
-        //  denied the permission? We should probably just make the initial rationale really clear.
-        AlertDialog.Builder(requireContext()).apply {
-            setTitle("Hey! You!")
-            setMessage("Grant that permission!")
-            setPositiveButton("Okay") { _, _ ->
-                requestPermissions(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_CODE)
-            }
-            setNegativeButton("No!") { _, _ ->
-                Toast.makeText(context, "Well that's just rude", Toast.LENGTH_LONG).show()
-            }
-            show()
-        }
     }
 }
