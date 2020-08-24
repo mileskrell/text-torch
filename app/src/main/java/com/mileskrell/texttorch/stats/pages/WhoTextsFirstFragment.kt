@@ -24,6 +24,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
@@ -46,6 +47,7 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
         setHasOptionsMenu(true)
 
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
+            recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.loadSocialRecords(it)
             } else {
@@ -53,6 +55,7 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
                     socialRecord.correspondentName != null
                 })
             }
+            recycler_view.scheduleLayoutAnimation()
         }
 
         recycler_view.setHasFixedSize(true)

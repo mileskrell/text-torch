@@ -21,6 +21,7 @@ package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
@@ -39,6 +40,7 @@ class TotalTextsFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
+            recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.loadSocialRecords(it)
             } else {
@@ -46,6 +48,7 @@ class TotalTextsFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page
                     socialRecord.correspondentName != null
                 })
             }
+            recycler_view.scheduleLayoutAnimation()
         }
 
         recycler_view.setHasFixedSize(true)

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><!--Thanks to Patrick Elmquist for his great article - https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213-->
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@anim/item_animation_fall_up"
+    android:animationOrder="normal"
+    android:delay="15%" />
