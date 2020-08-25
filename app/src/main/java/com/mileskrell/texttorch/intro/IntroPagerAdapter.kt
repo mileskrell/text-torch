@@ -19,6 +19,7 @@
 
 package com.mileskrell.texttorch.intro
 
+import android.os.Build
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -31,11 +32,16 @@ import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val pages = mutableListOf(
+    private val pages = mutableListOf<LifecycleLogggingFragment>(
         IntroPageWelcome(),
-        IntroPagePermissions()
     ).apply {
-        if (introViewModel.lastPageVisible.ordinal >= ENTER_APP.ordinal) add(IntroPageEnterApp())
+        // On Lollipop, we only show the first page (with an "enter app" button)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            add(IntroPagePermissions())
+        }
+        if (introViewModel.lastPageVisible.ordinal >= ENTER_APP.ordinal) {
+            add(IntroPageEnterApp())
+        }
     }
 
     fun addEnterAppPage() {
