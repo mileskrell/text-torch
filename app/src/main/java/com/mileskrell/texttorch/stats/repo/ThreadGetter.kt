@@ -340,8 +340,8 @@ class ThreadGetter(val context: Context) {
                 "number of addresses" to numAddresses,
                 "number of successful name lookups" to numSuccessfulNameLookups,
                 "number of failed name lookups" to numFailedNameLookups,
-                "percentage of successful name lookups" to (100.0 * numSuccessfulNameLookups / numAddresses).roundToInt(),
-                "percentage of failed name lookups" to (100.0 * numFailedNameLookups / numAddresses).roundToInt()
+                "percentage of successful name lookups" to if (numAddresses == 0) 0 else (100.0 * numSuccessfulNameLookups / numAddresses).roundToInt(),
+                "percentage of failed name lookups" to if (numAddresses == 0) 0 else (100.0 * numFailedNameLookups / numAddresses).roundToInt()
             )
         )
         return nonEmptyMessageThreads
