@@ -9,6 +9,8 @@ After it analyzes your SMS and MMS messages, you'll be told how you compare to e
 - what percent of the texts each of you has sent
 - how the average length of your texts compares to theirs
 
+## Screenshots
+
 | Intro | Analysis | Who texts first? | Total texts | Average text length
 |:-:|:-:|:-:|:-:|:-:|
 ![Intro](framed_screenshots/intro.png) | ![Analysis](framed_screenshots/analysis.png) | ![Who texts first?](framed_screenshots/who_texts_first.png) | ![Total texts](framed_screenshots/total_texts.png) | ![Average text length](framed_screenshots/average_text_length.png)
