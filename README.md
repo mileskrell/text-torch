@@ -1,13 +1,17 @@
-# Text Torch  
+# ![Text Torch logo](app/src/main/res/mipmap-mdpi/ic_launcher.png) Text Torch  
 
-Text Torch lets you shine a light on your texting behavior. After it analyzes your SMS and MMS messages, you'll be told how you compare to each person you message in several ways:
+[![License: GPLv3+](https://img.shields.io/badge/License-GPLv3%2B-blue)](COPYING)
+
+Text Torch lets you shine a light on your texting behavior.
+
+After it analyzes your SMS and MMS messages, you'll be told how you compare to each person you message in several ways:
 - what percent of the time each of you starts conversations with the other
 - what percent of the texts each of you has sent
 - how the average length of your texts compares to theirs
 
-| Intro | Analysis | Who texts first? | Total texts
-|:-:|:-:|:-:|:-:|
-![Intro](framed_screenshots/intro.png) | ![Analysis](framed_screenshots/analysis.png) | ![Who texts first?](framed_screenshots/who_texts_first.png) | ![Total texts](framed_screenshots/total_texts.png)
+| Intro | Analysis | Who texts first? | Total texts | Average text length
+|:-:|:-:|:-:|:-:|:-:|
+![Intro](framed_screenshots/intro.png) | ![Analysis](framed_screenshots/analysis.png) | ![Who texts first?](framed_screenshots/who_texts_first.png) | ![Total texts](framed_screenshots/total_texts.png) | ![Average text length](framed_screenshots/average_text_length.png)
 
 ## Why isn't Text Torch on Google Play?
 
