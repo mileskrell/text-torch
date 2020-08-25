@@ -34,4 +34,6 @@ If you like the app enough that you want to send me a dollar or two, you can do 
 
 ## License
 
+Copyright (C) 2020 Miles Krell and the Text Torch contributors
+
 Text Torch is licensed under the terms of the GNU General Public License, version 3 or later ("GPL-3.0-or-later"). See [COPYING](COPYING) for the full license text.
