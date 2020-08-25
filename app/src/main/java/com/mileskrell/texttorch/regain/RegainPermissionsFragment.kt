@@ -22,7 +22,10 @@ package com.mileskrell.texttorch.regain
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
@@ -47,6 +50,17 @@ class RegainPermissionsFragment : LifecycleLogggingFragment(R.layout.fragment_re
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        regrant_explanation_text_view.run {
+            movementMethod = LinkMovementMethod.getInstance()
+            setLinkTextColor(
+                ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
+            )
+            @Suppress("DEPRECATION")
+            text = Html.fromHtml(
+                getString(R.string.regrant_explanation, getString(R.string.github_url))
+            )
+        }
+
         regain_button.setOnClickListener {
             requestPermissions(
                 arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS),

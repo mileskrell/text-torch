@@ -19,7 +19,7 @@
         <item>#ffab00</item>
     </string-array>
 
-    <color name="intro_slide_2_link_color">#0988c9</color>
+    <color name="light_blue_link_color">#0988c9</color>
 
     <color name="colorLeftBar">#ff5252</color>
     <color name="colorRightBar">#2196f3</color>

@@ -43,7 +43,7 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
         val postText = getString(R.string.intro_verify_post_text)
         val linkText = getString(R.string.intro_verify_link_text)
         val url = getString(R.string.github_url)
-        val linkColor = ContextCompat.getColor(requireContext(), R.color.intro_slide_2_link_color)
+        val linkColor = ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
 
         intro_page_2_text_view_3.run {
             movementMethod = LinkMovementMethod.getInstance()

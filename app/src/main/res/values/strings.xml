@@ -21,7 +21,7 @@
     <string name="open_app_settings">Open app settings</string>
 
     <!-- Regain permissions fragment -->
-    <string name="regrant_explanation">Text Torch needs access to your texts and contacts to work, but it looks like one or both of those permissions was revoked at some point. To continue, you\'ll have to grant those permissions again.\n\nRemember, Text Torch will never send any of your texts or contacts anywhere.</string>
+    <string name="regrant_explanation">Text Torch needs access to your texts and contacts to work, but it looks like one or both of those permissions was revoked at some point. To continue, you\'ll have to grant those permissions again.&lt;br&gt;&lt;br&gt;Remember, Text Torch will never send any of your texts or contacts anywhere. You can always &lt;a href=\"%1$s\"&gt;view the code&lt;/a&gt; if you want to verify that.</string>
     <string name="regrant_needed_permissions">Regrant needed permissions</string>
 
     <!-- Analyze fragment -->
