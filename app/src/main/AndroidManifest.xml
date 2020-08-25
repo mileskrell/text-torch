@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="io.sentry.dsn"
-            android:value="https://c0dc584325e94446a0d569b35a5b8272@o403459.ingest.sentry.io/5266113" />
+            android:value="https://b19179bf252d42149d7deda382a89af5@o403459.ingest.sentry.io/5405284" />
 
         <!-- We're initializing Sentry in App.kt -->
         <meta-data
