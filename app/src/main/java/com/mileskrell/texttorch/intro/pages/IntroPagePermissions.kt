@@ -39,17 +39,15 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val preText = getString(R.string.intro_verify_pre_text)
-        val postText = getString(R.string.intro_verify_post_text)
-        val linkText = getString(R.string.intro_verify_link_text)
-        val url = getString(R.string.github_url)
-        val linkColor = ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
-
         intro_page_2_text_view_3.run {
             movementMethod = LinkMovementMethod.getInstance()
-            setLinkTextColor(linkColor)
+            setLinkTextColor(
+                ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
+            )
             @Suppress("DEPRECATION")
-            text = Html.fromHtml("$preText <a href=\"$url\">$linkText</a> $postText")
+            text = Html.fromHtml(
+                getString(R.string.intro_you_can_see_the_code, getString(R.string.github_url))
+            )
         }
 
         intro_permissions_button.setOnClickListener {

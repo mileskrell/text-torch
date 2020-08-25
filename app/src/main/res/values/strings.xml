@@ -7,9 +7,7 @@
 
     <string name="before_we_can_get_started">Before we can get started, Text Torch will need access to your text messages and contacts.</string>
     <string name="dont_worry">Don\'t worry - none of this information will ever leave your device.</string>
-    <string name="intro_verify_pre_text">Text Torch is open-source, so you can</string>
-    <string name="intro_verify_link_text">see the code</string>
-    <string name="intro_verify_post_text">and verify this for yourself if you like.</string>
+    <string name="intro_you_can_see_the_code">Text Torch is open-source, so you can &lt;a href=\"%1$s\"&gt;view the code&lt;/a&gt; and verify this for yourself if you like.</string>
     <string name="grant_needed_permissions">Grant needed permissions</string>
     <string name="permissions_granted">Permissions granted!</string>
 
