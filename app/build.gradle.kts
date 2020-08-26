@@ -18,7 +18,7 @@ android {
         applicationId = "com.mileskrell.texttorch"
         minSdkVersion(21)
         targetSdkVersion(28)
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
