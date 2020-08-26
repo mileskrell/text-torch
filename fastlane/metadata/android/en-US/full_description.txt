@@ -1,0 +1,8 @@
+<p>Text Torch lets you shine a light on your texting behavior.</p>
+
+<p>After it analyzes your SMS and MMS messages, you'll be told how you compare to each person you message in several ways:</p>
+<ul>
+    <li>what percent of the time each of you starts conversations with the other</li>
+    <li>what percent of the texts each of you has sent</li>
+    <li>how the average length of your texts compares to theirs</li>
+</ul>
