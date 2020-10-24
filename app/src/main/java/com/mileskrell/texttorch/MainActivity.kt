@@ -40,7 +40,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )))
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
+    override fun onSupportNavigateUp() = navController.navigateUp() || super.onSupportNavigateUp()
 }
