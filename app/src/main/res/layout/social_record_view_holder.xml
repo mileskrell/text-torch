@@ -75,7 +75,8 @@
             android:background="@drawable/view_holder_divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/correspondent_name_address_text_view" />
+            app:layout_constraintTop_toBottomOf="@id/correspondent_name_address_text_view"
+            tools:layout_constraintHorizontal_bias="0.2" />
 
         <View
             android:id="@+id/left_bar"
