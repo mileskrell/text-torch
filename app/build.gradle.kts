@@ -41,15 +41,15 @@ dependencies {
     val navigationVersion = "2.3.0"
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0")
-    implementation("androidx.core:core-ktx:1.3.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.core:core-ktx:1.3.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.preference:preference-ktx:1.1.1")
 
     val aboutLibrariesVersion: String by rootProject.extra
-    implementation("com.google.android.material:material:1.2.0")
+    implementation("com.google.android.material:material:1.2.1")
     implementation("com.mikepenz:aboutlibraries:$aboutLibrariesVersion")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("io.sentry:sentry-android:2.3.1")
@@ -61,6 +61,6 @@ dependencies {
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 
     testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    androidTestImplementation("androidx.test:runner:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }
