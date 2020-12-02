@@ -30,8 +30,8 @@ import com.mileskrell.texttorch.stats.model.Message
 import com.mileskrell.texttorch.stats.model.MessageThread
 import com.mileskrell.texttorch.util.logEvent
 import com.mileskrell.texttorch.util.logToBoth
-import io.sentry.core.Sentry
-import io.sentry.core.SentryLevel
+import io.sentry.Sentry
+import io.sentry.SentryLevel
 import kotlin.math.roundToInt
 
 /**

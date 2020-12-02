@@ -37,8 +37,8 @@ import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
 import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logEvent
 import com.mileskrell.texttorch.util.logToBoth
-import io.sentry.core.Sentry
-import io.sentry.core.SentryLevel
+import io.sentry.Sentry
+import io.sentry.SentryLevel
 
 class StatsFragment : LifecycleLoggingFragment(R.layout.fragment_stats) {
 

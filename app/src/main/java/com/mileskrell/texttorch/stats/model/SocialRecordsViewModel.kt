@@ -29,9 +29,9 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.repo.Repository
 import com.mileskrell.texttorch.util.logToBoth
 import io.sentry.android.core.SentryAndroid
-import io.sentry.core.Sentry
-import io.sentry.core.SentryEvent
-import io.sentry.core.SentryLevel
+import io.sentry.Sentry
+import io.sentry.SentryEvent
+import io.sentry.SentryLevel
 
 /**
  * An [AndroidViewModel] holding a [MutableLiveData] containing a list of [SocialRecord]

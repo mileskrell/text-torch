@@ -33,7 +33,7 @@ import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
-import io.sentry.core.Sentry
+import io.sentry.Sentry
 import kotlin.math.roundToInt
 
 /**

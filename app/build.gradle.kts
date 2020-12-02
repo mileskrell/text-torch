@@ -54,7 +54,7 @@ dependencies {
     implementation("com.google.android.material:material:1.2.1")
     implementation("com.mikepenz:aboutlibraries:$aboutLibrariesVersion")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
-    implementation("io.sentry:sentry-android:2.3.1")
+    implementation("io.sentry:sentry-android:3.2.0")
 
     val coroutinesVersion = "1.3.9"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")

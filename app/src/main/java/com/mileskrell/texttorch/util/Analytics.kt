@@ -23,11 +23,11 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
+import io.sentry.Sentry
+import io.sentry.SentryEvent
+import io.sentry.SentryLevel
 import io.sentry.android.core.SentryAndroid
-import io.sentry.core.Sentry
-import io.sentry.core.SentryEvent
-import io.sentry.core.SentryLevel
-import io.sentry.core.protocol.Message
+import io.sentry.protocol.Message
 
 const val DSN = "https://b19179bf252d42149d7deda382a89af5@o403459.ingest.sentry.io/5405284"
 
@@ -39,7 +39,6 @@ fun initSentry(context: Context) {
         options.dsn = if (enabled) DSN else ""
         options.isDebug = BuildConfig.DEBUG
         options.environment = BuildConfig.BUILD_TYPE
-        options.isEnableSessionTracking = true // User adoption, etc. https://docs.sentry.io/platforms/android/#release-health
         options.enableAllAutoBreadcrumbs(true)
     }
 }

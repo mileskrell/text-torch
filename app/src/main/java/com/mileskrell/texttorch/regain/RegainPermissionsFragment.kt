@@ -31,7 +31,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentRegainPermissionsBinding
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.util.*
-import io.sentry.core.SentryLevel
+import io.sentry.SentryLevel
 
 /**
  * This page is opened if the user has completed the tutorial, but we don't have all the permissions

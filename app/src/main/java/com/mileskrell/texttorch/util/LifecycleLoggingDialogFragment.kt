@@ -23,7 +23,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
-import io.sentry.core.Sentry
+import io.sentry.Sentry
 
 open class LifecycleLoggingDialogFragment : DialogFragment() {
 

@@ -23,7 +23,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.preference.PreferenceFragmentCompat
-import io.sentry.core.Sentry
+import io.sentry.Sentry
 
 open class LifecycleLoggingPreferenceFragmentCompat : PreferenceFragmentCompat() {
 

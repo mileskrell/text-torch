@@ -30,7 +30,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentIntroPagePermissionsBinding
 import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.*
-import io.sentry.core.SentryLevel
+import io.sentry.SentryLevel
 
 class IntroPagePermissions : LifecycleLoggingFragment(R.layout.fragment_intro_page_permissions) {
 

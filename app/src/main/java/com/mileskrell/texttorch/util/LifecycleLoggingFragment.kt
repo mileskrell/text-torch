@@ -24,7 +24,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import io.sentry.core.Sentry
+import io.sentry.Sentry
 
 open class LifecycleLoggingFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
