@@ -58,7 +58,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.5")
 
     testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.test:runner:1.3.0")
