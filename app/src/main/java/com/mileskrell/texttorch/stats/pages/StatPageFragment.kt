@@ -29,23 +29,24 @@ import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
-class TotalTextsFragment : LifecycleLoggingFragment(R.layout.fragment_stat_page) {
-
-    companion object {
-        const val TAG = "TotalTextsFragment"
-    }
+/**
+ * Used for the fragments shown in [com.mileskrell.texttorch.stats.StatsFragment]
+ */
+open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
+    LifecycleLoggingFragment(R.layout.fragment_stat_page) {
 
     private var _binding: FragmentStatPageBinding? = null
     private val b get() = _binding!!
 
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
-    private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.TOTAL_TEXTS)
+    private val socialRecordAdapter = SocialRecordAdapter(type)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStatPageBinding.bind(view)
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
-            b.recyclerView.layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
+            b.recyclerView.layoutAnimation =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.loadSocialRecords(it)
             } else {
@@ -65,5 +66,29 @@ class TotalTextsFragment : LifecycleLoggingFragment(R.layout.fragment_stat_page)
         super.onDestroyView()
         b.recyclerView.adapter = null
         _binding = null
+    }
+}
+
+// These are their own classes just so logging their lifecycle methods is easier
+
+class WhoTextsFirstFragment :
+    StatPageFragment(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST) {
+    companion object {
+        const val TAG = "WhoTextsFirstFragment"
+    }
+}
+
+class TotalTextsFragment :
+    StatPageFragment(SocialRecordAdapter.SocialRecordAdapterType.TOTAL_TEXTS) {
+    companion object {
+        const val TAG = "TotalTextsFragment"
+    }
+}
+
+// TODO: Add a disclaimer somewhere explaining how emoji (and other chars?) can mess with this
+class AverageLengthFragment :
+    StatPageFragment(SocialRecordAdapter.SocialRecordAdapterType.AVERAGE_LENGTH) {
+    companion object {
+        const val TAG = "AverageLengthFragment"
     }
 }
