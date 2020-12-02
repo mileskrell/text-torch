@@ -168,7 +168,7 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
     }
 
     override fun onDestroyView() {
-        valueAnimator?.cancel()
         super.onDestroyView()
+        valueAnimator?.cancel()
     }
 }

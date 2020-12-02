@@ -105,7 +105,7 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
     }
 
     override fun onDestroyView() {
-        recycler_view.adapter = null
         super.onDestroyView()
+        recycler_view.adapter = null
     }
 }
