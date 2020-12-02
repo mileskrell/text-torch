@@ -27,10 +27,10 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.databinding.FragmentIntroPagePermissionsBinding
 import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.*
 import io.sentry.core.SentryLevel
-import kotlinx.android.synthetic.main.fragment_intro_page_permissions.*
 
 class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_page_permissions) {
 
@@ -38,9 +38,13 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
         const val TAG = "IntroPagePermissions"
     }
 
+    private var _binding: FragmentIntroPagePermissionsBinding? = null
+    private val b get() = _binding!!
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        intro_page_2_text_view_3.run {
+        _binding = FragmentIntroPagePermissionsBinding.bind(view)
+        b.introPage2TextView3.run {
             movementMethod = LinkMovementMethod.getInstance()
             setLinkTextColor(
                 ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
@@ -51,7 +55,7 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
             )
         }
 
-        intro_permissions_button.setOnClickListener {
+        b.introPermissionsButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"grant needed permissions\" button")
             requestPermissions(
                 arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS),
@@ -102,8 +106,13 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
     }
 
     private fun onPermissionsGranted() {
-        intro_permissions_button.visibility = View.INVISIBLE
-        intro_text_view_permissions_granted.visibility = View.VISIBLE
+        b.introPermissionsButton.visibility = View.INVISIBLE
+        b.introTextViewPermissionsGranted.visibility = View.VISIBLE
         (parentFragment as IntroFragment).introPagerAdapter.addEnterAppPage()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

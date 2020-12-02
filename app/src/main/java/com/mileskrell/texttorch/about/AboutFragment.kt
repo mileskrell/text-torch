@@ -26,9 +26,9 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.databinding.FragmentAboutBinding
 import com.mileskrell.texttorch.util.LifecycleLogggingFragment
 import com.mileskrell.texttorch.util.logToBoth
-import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment : LifecycleLogggingFragment(R.layout.fragment_about) {
 
@@ -38,22 +38,23 @@ class AboutFragment : LifecycleLogggingFragment(R.layout.fragment_about) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        about_version.text = getString(
+        val b = FragmentAboutBinding.bind(view)
+        b.aboutVersion.text = getString(
             R.string.version_x,
             BuildConfig.VERSION_NAME + if (BuildConfig.DEBUG) "-debug" else ""
         )
 
-        about_github_button.setOnClickListener {
+        b.aboutGithubButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"view code\" button")
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url))))
         }
 
-        about_licenses_button.setOnClickListener {
+        b.aboutLicensesButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"view licenses\" button")
             findNavController().navigate(R.id.about_to_licenses_action)
         }
 
-        about_donate_button.setOnClickListener {
+        b.aboutDonateButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"donate\" button")
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_url))))
         }

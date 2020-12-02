@@ -28,10 +28,10 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.databinding.FragmentRegainPermissionsBinding
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.util.*
 import io.sentry.core.SentryLevel
-import kotlinx.android.synthetic.main.fragment_regain_permissions.*
 
 /**
  * This page is opened if the user has completed the tutorial, but we don't have all the permissions
@@ -51,7 +51,8 @@ class RegainPermissionsFragment : LifecycleLogggingFragment(R.layout.fragment_re
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        regrant_explanation_text_view.run {
+        val b = FragmentRegainPermissionsBinding.bind(view)
+        b.regrantExplanationTextView.run {
             movementMethod = LinkMovementMethod.getInstance()
             setLinkTextColor(
                 ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
@@ -62,7 +63,7 @@ class RegainPermissionsFragment : LifecycleLogggingFragment(R.layout.fragment_re
             )
         }
 
-        regain_button.setOnClickListener {
+        b.regainButton.setOnClickListener {
             requestPermissions(
                 arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS),
                 PERMISSIONS_REQUEST_CODE

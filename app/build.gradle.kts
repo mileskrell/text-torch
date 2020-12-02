@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.config.KotlinCompilerVersion
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     id("io.sentry.android.gradle")
     id("com.mikepenz.aboutlibraries.plugin")
 }
@@ -21,6 +20,9 @@ android {
         versionCode = 2
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding = true
     }
     buildTypes {
         getByName("release") {

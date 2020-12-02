@@ -28,11 +28,11 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.PeriodDialogFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
 import com.mileskrell.texttorch.util.LifecycleLogggingFragment
-import kotlinx.android.synthetic.main.fragment_stat_page.*
 
 class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page) {
 
@@ -40,15 +40,19 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
         const val TAG = "WhoTextsFirstFragment"
     }
 
+    private var _binding: FragmentStatPageBinding? = null
+    private val b get() = _binding!!
+
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentStatPageBinding.bind(view)
         setHasOptionsMenu(true)
 
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
-            recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
+            b.recyclerView.layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.loadSocialRecords(it)
             } else {
@@ -56,12 +60,12 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
                     socialRecord.correspondentName != null
                 })
             }
-            recycler_view.scheduleLayoutAnimation()
+            b.recyclerView.scheduleLayoutAnimation()
         }
 
-        recycler_view.setHasFixedSize(true)
-        recycler_view.adapter = socialRecordAdapter
-        recycler_view.layoutManager = LinearLayoutManager(context)
+        b.recyclerView.setHasFixedSize(true)
+        b.recyclerView.adapter = socialRecordAdapter
+        b.recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -107,6 +111,7 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
 
     override fun onDestroyView() {
         super.onDestroyView()
-        recycler_view.adapter = null
+        b.recyclerView.adapter = null
+        _binding = null
     }
 }

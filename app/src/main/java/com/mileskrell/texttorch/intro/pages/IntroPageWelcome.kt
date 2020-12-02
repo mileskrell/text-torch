@@ -23,9 +23,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.databinding.FragmentIntroPageWelcomeBinding
 import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.LifecycleLogggingFragment
-import kotlinx.android.synthetic.main.fragment_intro_page_welcome.*
 
 class IntroPageWelcome : LifecycleLogggingFragment(R.layout.fragment_intro_page_welcome) {
     companion object {
@@ -34,9 +34,10 @@ class IntroPageWelcome : LifecycleLogggingFragment(R.layout.fragment_intro_page_
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val b = FragmentIntroPageWelcomeBinding.bind(view)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            intro_page_1_button_enter_app.visibility = View.VISIBLE
-            intro_page_1_button_enter_app.setOnClickListener {
+            b.introPage1ButtonEnterApp.visibility = View.VISIBLE
+            b.introPage1ButtonEnterApp.setOnClickListener {
                 (parentFragment as IntroFragment).onClickEnterAppButton()
             }
         }

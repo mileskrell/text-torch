@@ -37,6 +37,7 @@ import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.MainActivity
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.analyze.AnalyzeFragment
+import com.mileskrell.texttorch.databinding.FragmentIntroBinding
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
@@ -46,7 +47,6 @@ import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import io.sentry.core.Sentry
-import kotlinx.android.synthetic.main.fragment_intro.*
 
 // TODO: I'd like to have translucent status and navigation bars here
 
@@ -105,22 +105,23 @@ class IntroFragment : LifecycleLogggingFragment(R.layout.fragment_intro) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val b = FragmentIntroBinding.bind(view)
         // This check is needed because onViewCreated() is called even if we've already seen the
         // tutorial (since navigating to the next fragment takes a moment)
         if (hasSeenTutorial == false) {
             enterAlmostFullscreen()
         }
 
-        intro_view_pager.offscreenPageLimit = IntroViewModel.PAGE.values().size
-        intro_view_pager.adapter = IntroPagerAdapter(introViewModel, childFragmentManager).also {
+        b.introViewPager.offscreenPageLimit = IntroViewModel.PAGE.values().size
+        b.introViewPager.adapter = IntroPagerAdapter(introViewModel, childFragmentManager).also {
             introPagerAdapter = it
         }
-        val colorBackground = (intro_view_pager.background as LayerDrawable)
+        val colorBackground = (b.introViewPager.background as LayerDrawable)
             .getDrawable(0) as ColorDrawable
-        val logoBackground = (intro_view_pager.background as LayerDrawable)
+        val logoBackground = (b.introViewPager.background as LayerDrawable)
             .getDrawable(1) as BitmapDrawable
 
-        intro_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        b.introViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 // Thanks to https://kubaspatny.github.io/2014/09/18/viewpager-background-transition/
@@ -140,10 +141,10 @@ class IntroFragment : LifecycleLogggingFragment(R.layout.fragment_intro) {
 
                 // Since we don't add pages until the user is allowed to go to them, there's no
                 // danger in showing this button while the last page is partly visible.
-                if (position == (intro_view_pager.adapter as IntroPagerAdapter).count - 1) {
-                    intro_arrow_next.hide()
+                if (position == (b.introViewPager.adapter as IntroPagerAdapter).count - 1) {
+                    b.introArrowNext.hide()
                 } else {
-                    intro_arrow_next.show()
+                    b.introArrowNext.show()
                 }
             }
             override fun onPageSelected(position: Int) {
@@ -159,8 +160,8 @@ class IntroFragment : LifecycleLogggingFragment(R.layout.fragment_intro) {
         })
 
         // TODO: Can we make this button scroll more slowly?
-        intro_arrow_next.setOnClickListener {
-            intro_view_pager.arrowScroll(View.FOCUS_RIGHT)
+        b.introArrowNext.setOnClickListener {
+            b.introViewPager.arrowScroll(View.FOCUS_RIGHT)
         }
     }
 

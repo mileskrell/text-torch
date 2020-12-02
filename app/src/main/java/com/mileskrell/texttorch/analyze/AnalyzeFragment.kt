@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
+import com.mileskrell.texttorch.databinding.FragmentAnalyzeBinding
 import com.mileskrell.texttorch.stats.StatsFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.util.LifecycleLogggingFragment
@@ -33,7 +34,6 @@ import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
 import io.sentry.core.Sentry
-import kotlinx.android.synthetic.main.fragment_analyze.*
 import kotlin.math.roundToInt
 
 /**
@@ -51,12 +51,16 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
         const val TAG = "AnalyzeFragment"
     }
 
+    private var _binding: FragmentAnalyzeBinding? = null
+    private val b get() = _binding!!
+
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
     private val analyzeViewModel: AnalyzeViewModel by activityViewModels()
     var valueAnimator: ValueAnimator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentAnalyzeBinding.bind(view)
         // AnalyzeFragment is the only page where these permissions are used, so this is the only
         // page where we only need to check if permissions were lost while running.
 
@@ -82,7 +86,7 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
             enterProgressDetailsMode()
         }
 
-        analyze_button.setOnClickListener {
+        b.analyzeButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"analyze\" button")
             analyzeViewModel.clickedAnalyze = true
             enterProgressDisplayingMode()
@@ -91,17 +95,17 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
     }
 
     private fun enterProgressDisplayingMode() {
-        analyze_button.visibility = View.INVISIBLE
-        analyzing_message_threads_text_view.visibility = View.VISIBLE
-        threads_progress_bar.visibility = View.VISIBLE
-        threads_progress_fraction_text_view.visibility = View.VISIBLE
-        threads_progress_percentage_text_view.visibility = View.VISIBLE
-        threads_progress_fraction_text_view.text =
+        b.analyzeButton.visibility = View.INVISIBLE
+        b.analyzingMessageThreadsTextView.visibility = View.VISIBLE
+        b.threadsProgressBar.visibility = View.VISIBLE
+        b.threadsProgressFractionTextView.visibility = View.VISIBLE
+        b.threadsProgressPercentageTextView.visibility = View.VISIBLE
+        b.threadsProgressFractionTextView.text =
             getString(R.string.x_out_of_y_message_threads, 0, "?")
-        threads_progress_percentage_text_view.text = getString(R.string.x_percent, 0)
+        b.threadsProgressPercentageTextView.text = getString(R.string.x_percent, 0)
 
-        show_details_button.visibility = View.VISIBLE
-        show_details_button.setOnClickListener {
+        b.showDetailsButton.visibility = View.VISIBLE
+        b.showDetailsButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"show details\" button")
             analyzeViewModel.clickedShowDetails = true
             enterProgressDetailsMode()
@@ -112,7 +116,7 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
             addUpdateListener {
-                analyzing_message_threads_text_view.alpha = it.animatedValue as Float
+                b.analyzingMessageThreadsTextView.alpha = it.animatedValue as Float
             }
             start()
         }
@@ -120,30 +124,30 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
         var threadsTotal = -1
         analyzeViewModel.threadsTotal.observe({ lifecycle }) { newThreadsTotal ->
             threadsTotal = newThreadsTotal
-            threads_progress_bar.max = threadsTotal
+            b.threadsProgressBar.max = threadsTotal
         }
         analyzeViewModel.threadsCompleted.observe({ lifecycle }) { newThreadsCompleted ->
             if (threadsTotal != -1) {
-                threads_progress_bar.progress = newThreadsCompleted
-                threads_progress_fraction_text_view.text = getString(
+                b.threadsProgressBar.progress = newThreadsCompleted
+                b.threadsProgressFractionTextView.text = getString(
                     R.string.x_out_of_y_message_threads,
                     newThreadsCompleted,
                     threadsTotal.toString()
                 )
                 val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
-                threads_progress_percentage_text_view.text =
+                b.threadsProgressPercentageTextView.text =
                     getString(R.string.x_percent, percentDone)
             }
         }
         var messagesTotal = -1
         analyzeViewModel.messagesTotal.observe({ lifecycle }) { newMessagesTotal ->
             messagesTotal = newMessagesTotal
-            messages_progress_bar.max = newMessagesTotal
+            b.messagesProgressBar.max = newMessagesTotal
         }
         analyzeViewModel.messagesCompleted.observe({ lifecycle }) { newMessagesCompleted ->
             if (messagesTotal != -1) {
-                messages_progress_bar.progress = newMessagesCompleted
-                messages_progress_fraction_text_view.text = getString(
+                b.messagesProgressBar.progress = newMessagesCompleted
+                b.messagesProgressFractionTextView.text = getString(
                     R.string.x_out_of_y_messages,
                     newMessagesCompleted,
                     messagesTotal.toString()
@@ -151,25 +155,26 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
                 val percentDone =
                     if (messagesTotal == 0) 100
                     else (100.0 * newMessagesCompleted / messagesTotal).roundToInt()
-                messages_progress_percentage_text_view.text =
+                b.messagesProgressPercentageTextView.text =
                     getString(R.string.x_percent, percentDone)
             }
         }
     }
 
     private fun enterProgressDetailsMode() {
-        show_details_button.visibility = View.INVISIBLE
-        messages_progress_fraction_text_view.text =
+        b.showDetailsButton.visibility = View.INVISIBLE
+        b.messagesProgressFractionTextView.text =
             getString(R.string.x_out_of_y_messages, 0, "?")
-        messages_progress_percentage_text_view.text = getString(R.string.x_percent, 0)
-        for_current_message_thread_text_view.visibility = View.VISIBLE
-        messages_progress_bar.visibility = View.VISIBLE
-        messages_progress_percentage_text_view.visibility = View.VISIBLE
-        messages_progress_fraction_text_view.visibility = View.VISIBLE
+        b.messagesProgressPercentageTextView.text = getString(R.string.x_percent, 0)
+        b.forCurrentMessageThreadTextView.visibility = View.VISIBLE
+        b.messagesProgressBar.visibility = View.VISIBLE
+        b.messagesProgressPercentageTextView.visibility = View.VISIBLE
+        b.messagesProgressFractionTextView.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
         valueAnimator?.cancel()
     }
 }
