@@ -51,7 +51,6 @@ open class LifecycleLoggingFragment(@LayoutRes contentLayoutId: Int) : Fragment(
     override fun onResume() {
         super.onResume()
         Sentry.addBreadcrumb("${this::class.simpleName}#onResume", "ui.lifecycle")
-
     }
 
     override fun onPause() {
