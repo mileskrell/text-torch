@@ -39,6 +39,7 @@ class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_p
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         intro_page_2_text_view_3.run {
             movementMethod = LinkMovementMethod.getInstance()
             setLinkTextColor(

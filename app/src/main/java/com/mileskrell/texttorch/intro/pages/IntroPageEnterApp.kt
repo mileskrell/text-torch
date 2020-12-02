@@ -33,6 +33,7 @@ class IntroPageEnterApp : LifecycleLogggingFragment(R.layout.fragment_intro_page
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         intro_page_4_button_enter_app.setOnClickListener {
             (parentFragment as IntroFragment).onClickEnterAppButton()
         }

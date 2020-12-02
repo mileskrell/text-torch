@@ -56,6 +56,7 @@ class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
     var valueAnimator: ValueAnimator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // AnalyzeFragment is the only page where these permissions are used, so this is the only
         // page where we only need to check if permissions were lost while running.
 

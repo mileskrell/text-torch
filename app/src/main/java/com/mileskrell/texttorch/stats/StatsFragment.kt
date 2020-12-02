@@ -55,6 +55,7 @@ class StatsFragment : LifecycleLogggingFragment(R.layout.fragment_stats) {
     var lastPage = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (socialRecordsViewModel.socialRecords.value == null) {
             // This should only happen after process death. In any case,
             // it means that we have to go back to the "analyze" page.

@@ -104,6 +104,7 @@ class IntroFragment : LifecycleLogggingFragment(R.layout.fragment_intro) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // This check is needed because onViewCreated() is called even if we've already seen the
         // tutorial (since navigating to the next fragment takes a moment)
         if (hasSeenTutorial == false) {

@@ -33,6 +33,7 @@ class LicensesFragment : LifecycleLogggingFragment(R.layout.fragment_licenses) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         childFragmentManager.commitNow {
             // TODO: Include copyright year manually where needed
             //  see https://github.com/mikepenz/AboutLibraries/issues/469

@@ -50,6 +50,7 @@ class RegainPermissionsFragment : LifecycleLogggingFragment(R.layout.fragment_re
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         regrant_explanation_text_view.run {
             movementMethod = LinkMovementMethod.getInstance()
             setLinkTextColor(

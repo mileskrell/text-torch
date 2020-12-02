@@ -39,6 +39,7 @@ class TotalTextsFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.TOTAL_TEXTS)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
             recycler_view.layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {

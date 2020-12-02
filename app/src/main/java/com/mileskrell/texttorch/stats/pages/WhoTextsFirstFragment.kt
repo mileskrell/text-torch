@@ -44,6 +44,7 @@ class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_p
     private val socialRecordAdapter = SocialRecordAdapter(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
