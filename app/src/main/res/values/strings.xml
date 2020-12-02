@@ -11,6 +11,12 @@
     <string name="grant_needed_permissions">Grant needed permissions</string>
     <string name="permissions_granted">Permissions granted!</string>
 
+    <string name="would_you">One last thing…would you be willing to enable analytics?</string>
+    <string name="why_enable">This lets me know what features people are using, what devices they\'re running the app on, and if anything stops working.</string>
+    <string name="analytics_reassurance">Remember: whether or not you turn on analytics, none of your texts or contacts will be sent anywhere.</string>
+    <string name="enable_analytics">Enable analytics</string>
+    <string name="disable_analytics">Disable analytics</string>
+
     <string name="all_set">You\'re all set!</string>
     <string name="take_a_look">Take a look</string>
 

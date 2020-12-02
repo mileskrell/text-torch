@@ -10,12 +10,14 @@
     <string-array name="intro_background_colors">
         <item>#4db6ac</item>
         <item>#81c784</item>
+        <item>#8198c7</item>
         <item>#ffab00</item>
     </string-array>
 
     <string-array name="intro_logo_colors">
         <item>#48a9a0</item>
         <item>#79ba7b</item>
+        <item>#798eba</item>
         <item>#ffab00</item>
     </string-array>
 

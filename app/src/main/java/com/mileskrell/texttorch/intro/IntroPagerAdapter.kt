@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.ENTER_APP
+import com.mileskrell.texttorch.intro.pages.IntroPageAnalytics
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
@@ -41,6 +42,14 @@ class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager)
         }
         if (introViewModel.lastPageVisible.ordinal >= ENTER_APP.ordinal) {
             add(IntroPageEnterApp())
+        }
+    }
+
+    fun addAnalyticsPage() {
+        if (introViewModel.lastPageVisible.ordinal < IntroViewModel.PAGE.ANALYTICS.ordinal) {
+            introViewModel.lastPageVisible = IntroViewModel.PAGE.ANALYTICS
+            pages.add(IntroPageAnalytics())
+            notifyDataSetChanged()
         }
     }
 

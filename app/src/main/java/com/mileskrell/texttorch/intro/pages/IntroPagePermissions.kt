@@ -108,7 +108,7 @@ class IntroPagePermissions : LifecycleLoggingFragment(R.layout.fragment_intro_pa
     private fun onPermissionsGranted() {
         b.introPermissionsButton.visibility = View.INVISIBLE
         b.introTextViewPermissionsGranted.visibility = View.VISIBLE
-        (parentFragment as IntroFragment).introPagerAdapter.addEnterAppPage()
+        (parentFragment as IntroFragment).introPagerAdapter.addAnalyticsPage()
     }
 
     override fun onDestroyView() {
