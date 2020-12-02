@@ -26,7 +26,6 @@ I'm fairly busy with school at the moment, but here are some features I'd like t
   - Or maybe just how long each of the two people takes, on average, to respond to the other person's texts
 - CSV export
 - Doing…*something* when the cards that display data for each person are tapped (I'm not sure what yet 🤔)
-- Eventually, making analytics opt-in. Right now, the app automatically reports crashes and tracks things such as how many messages and addresses it's analyzed. Why? Well, really just because it gives me some neat-looking numbers to put on my resume. Once that's no longer a concern, I plan to make it opt-in. I feel fine about tracking these metadata-type things, but if you don't, feel free to build your own version of the app with analytics disabled! (The fastest way to do that is to just remove the call to `SentryAndroid.init` in [App.kt](app/src/main/java/com/mileskrell/texttorch/App.kt).)
 
 ## Donations
 
