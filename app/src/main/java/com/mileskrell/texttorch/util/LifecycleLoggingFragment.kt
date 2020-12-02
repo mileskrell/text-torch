@@ -22,10 +22,11 @@ package com.mileskrell.texttorch.util
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.DialogFragment
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 import io.sentry.core.Sentry
 
-open class LifecycleLogggingDialogFragment : DialogFragment() {
+open class LifecycleLoggingFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

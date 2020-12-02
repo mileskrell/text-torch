@@ -21,12 +21,12 @@ package com.mileskrell.texttorch.settings
 
 import android.os.Bundle
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLogggingPreferenceFragmentCompat
+import com.mileskrell.texttorch.util.LifecycleLoggingPreferenceFragmentCompat
 
 /**
  * The settings page
  */
-class SettingsFragment : LifecycleLogggingPreferenceFragmentCompat() {
+class SettingsFragment : LifecycleLoggingPreferenceFragmentCompat() {
 
     companion object {
         const val TAG = "SettingsFragment"

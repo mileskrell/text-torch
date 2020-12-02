@@ -32,9 +32,9 @@ import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.PeriodDialogFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel.Period.*
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
-class WhoTextsFirstFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page) {
+class WhoTextsFirstFragment : LifecycleLoggingFragment(R.layout.fragment_stat_page) {
 
     companion object {
         const val TAG = "WhoTextsFirstFragment"

@@ -32,7 +32,7 @@ import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.*
 import io.sentry.core.SentryLevel
 
-class IntroPagePermissions : LifecycleLogggingFragment(R.layout.fragment_intro_page_permissions) {
+class IntroPagePermissions : LifecycleLoggingFragment(R.layout.fragment_intro_page_permissions) {
 
     companion object {
         const val TAG = "IntroPagePermissions"

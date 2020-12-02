@@ -43,7 +43,7 @@ import io.sentry.core.SentryLevel
  * This page can be opened either on app start (by IntroFragment) or in AnalyzeFragment's
  * onCreateView.
  */
-class RegainPermissionsFragment : LifecycleLogggingFragment(R.layout.fragment_regain_permissions) {
+class RegainPermissionsFragment : LifecycleLoggingFragment(R.layout.fragment_regain_permissions) {
 
     companion object {
         const val TAG = "RegainPermissionsFragment"

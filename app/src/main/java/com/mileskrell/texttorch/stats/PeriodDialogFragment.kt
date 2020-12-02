@@ -23,10 +23,10 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLogggingDialogFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingDialogFragment
 import com.mileskrell.texttorch.util.logToBoth
 
-class PeriodDialogFragment : LifecycleLogggingDialogFragment() {
+class PeriodDialogFragment : LifecycleLoggingDialogFragment() {
 
     companion object {
         const val TAG = "PeriodDialogFragment"

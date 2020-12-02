@@ -42,7 +42,7 @@ import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
 import com.mileskrell.texttorch.regain.RegainPermissionsFragment
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
@@ -50,7 +50,7 @@ import io.sentry.core.Sentry
 
 // TODO: I'd like to have translucent status and navigation bars here
 
-class IntroFragment : LifecycleLogggingFragment(R.layout.fragment_intro) {
+class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
 
     companion object {
         const val TAG = "IntroFragment"

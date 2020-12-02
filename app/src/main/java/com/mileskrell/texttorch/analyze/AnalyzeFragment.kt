@@ -29,7 +29,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentAnalyzeBinding
 import com.mileskrell.texttorch.stats.StatsFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
@@ -45,7 +45,7 @@ import kotlin.math.roundToInt
  * This initially just used a simple callback, but I found that this crashed on configuration changes.
  * With ViewModel and LiveData, we can handle these events.
  */
-class AnalyzeFragment : LifecycleLogggingFragment(R.layout.fragment_analyze) {
+class AnalyzeFragment : LifecycleLoggingFragment(R.layout.fragment_analyze) {
 
     companion object {
         const val TAG = "AnalyzeFragment"

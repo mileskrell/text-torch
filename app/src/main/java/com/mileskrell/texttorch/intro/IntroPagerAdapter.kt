@@ -27,12 +27,12 @@ import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.ENTER_APP
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val pages = mutableListOf<LifecycleLogggingFragment>(
+    private val pages = mutableListOf<LifecycleLoggingFragment>(
         IntroPageWelcome(),
     ).apply {
         // On Lollipop, we only show the first page (with an "enter app" button)
@@ -64,7 +64,7 @@ class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager)
     // TODO: Hold on, I'm actually not sure if I need this. Figure out what's going on here.
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         return super.instantiateItem(container, position).also {
-            pages[position] = it as LifecycleLogggingFragment
+            pages[position] = it as LifecycleLoggingFragment
         }
     }
 }

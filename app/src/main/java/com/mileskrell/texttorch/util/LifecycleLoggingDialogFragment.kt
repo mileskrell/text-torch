@@ -22,12 +22,10 @@ package com.mileskrell.texttorch.util
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.preference.PreferenceFragmentCompat
+import androidx.fragment.app.DialogFragment
 import io.sentry.core.Sentry
 
-open class LifecycleLogggingPreferenceFragmentCompat : PreferenceFragmentCompat() {
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
+open class LifecycleLoggingDialogFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

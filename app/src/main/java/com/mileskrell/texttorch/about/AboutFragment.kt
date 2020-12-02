@@ -27,10 +27,10 @@ import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentAboutBinding
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
 
-class AboutFragment : LifecycleLogggingFragment(R.layout.fragment_about) {
+class AboutFragment : LifecycleLoggingFragment(R.layout.fragment_about) {
 
     companion object {
         const val TAG = "AboutFragment"

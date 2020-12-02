@@ -24,9 +24,9 @@ import android.view.View
 import androidx.fragment.app.commitNow
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
-class LicensesFragment : LifecycleLogggingFragment(R.layout.fragment_licenses) {
+class LicensesFragment : LifecycleLoggingFragment(R.layout.fragment_licenses) {
 
     companion object {
         const val TAG = "LicensesFragment"

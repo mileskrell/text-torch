@@ -22,11 +22,12 @@ package com.mileskrell.texttorch.util
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceFragmentCompat
 import io.sentry.core.Sentry
 
-open class LifecycleLogggingFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+open class LifecycleLoggingPreferenceFragmentCompat : PreferenceFragmentCompat() {
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

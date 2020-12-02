@@ -34,13 +34,13 @@ import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
 import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
 import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logEvent
 import com.mileskrell.texttorch.util.logToBoth
 import io.sentry.core.Sentry
 import io.sentry.core.SentryLevel
 
-class StatsFragment : LifecycleLogggingFragment(R.layout.fragment_stats) {
+class StatsFragment : LifecycleLoggingFragment(R.layout.fragment_stats) {
 
     companion object {
         const val TAG = "StatsFragment"

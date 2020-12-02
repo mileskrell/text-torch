@@ -24,9 +24,9 @@ import android.view.View
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentIntroPageEnterAppBinding
 import com.mileskrell.texttorch.intro.IntroFragment
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
-class IntroPageEnterApp : LifecycleLogggingFragment(R.layout.fragment_intro_page_enter_app) {
+class IntroPageEnterApp : LifecycleLoggingFragment(R.layout.fragment_intro_page_enter_app) {
 
     companion object {
         const val TAG = "IntroPageEnterApp"

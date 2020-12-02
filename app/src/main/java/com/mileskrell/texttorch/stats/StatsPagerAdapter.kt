@@ -28,7 +28,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
 import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
 import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -63,7 +63,7 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
      */
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         return super.instantiateItem(container, position).also {
-            pages[position] = it as LifecycleLogggingFragment
+            pages[position] = it as LifecycleLoggingFragment
         }
     }
 

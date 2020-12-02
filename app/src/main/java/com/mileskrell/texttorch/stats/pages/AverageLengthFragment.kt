@@ -27,12 +27,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
-import com.mileskrell.texttorch.util.LifecycleLogggingFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 /**
  * TODO: Add a disclaimer somewhere explaining how emoji (and other chars?) can mess with this
  */
-class AverageLengthFragment : LifecycleLogggingFragment(R.layout.fragment_stat_page) {
+class AverageLengthFragment : LifecycleLoggingFragment(R.layout.fragment_stat_page) {
 
     companion object {
         const val TAG = "AverageLengthFragment"

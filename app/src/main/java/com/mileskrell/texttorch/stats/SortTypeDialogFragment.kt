@@ -28,14 +28,14 @@ import android.widget.CheckBox
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLogggingDialogFragment
+import com.mileskrell.texttorch.util.LifecycleLoggingDialogFragment
 
 /**
  * The dialog that appears when the user attempts to change the sort order.
  *
  * TODO: Add descriptions to sort orders
  */
-class SortTypeDialogFragment : LifecycleLogggingDialogFragment() {
+class SortTypeDialogFragment : LifecycleLoggingDialogFragment() {
 
     companion object {
         const val TAG = "SortTypeDialogFragment"
