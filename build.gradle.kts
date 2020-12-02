@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.1")
-        classpath(kotlin("gradle-plugin", "1.4.0"))
+        classpath(kotlin("gradle-plugin", "1.4.20"))
 
         classpath("io.sentry:sentry-android-gradle-plugin:1.7.35")
         val aboutLibrariesVersion by rootProject.extra("8.3.1")
