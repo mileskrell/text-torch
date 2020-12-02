@@ -20,16 +20,21 @@
 package com.mileskrell.texttorch
 
 import android.app.Application
-import io.sentry.android.core.SentryAndroid
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
+import com.mileskrell.texttorch.util.initSentry
 
 class App : Application() {
+    private val analyticsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == getString(R.string.key_enable_analytics)) {
+            initSentry(applicationContext)
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
-        SentryAndroid.init(this) { options ->
-            options.isDebug = BuildConfig.DEBUG
-            options.environment = BuildConfig.BUILD_TYPE
-            options.isEnableSessionTracking = true // User adoption, etc. https://docs.sentry.io/platforms/android/#release-health
-            options.enableAllAutoBreadcrumbs(true)
-        }
+        initSentry(applicationContext)
+        PreferenceManager.getDefaultSharedPreferences(applicationContext)
+            .registerOnSharedPreferenceChangeListener(analyticsListener)
     }
 }

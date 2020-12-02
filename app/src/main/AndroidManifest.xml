@@ -31,11 +31,6 @@
         </activity>
 
         <meta-data
-            android:name="io.sentry.dsn"
-            android:value="https://b19179bf252d42149d7deda382a89af5@o403459.ingest.sentry.io/5405284" />
-
-        <!-- We're initializing Sentry in App.kt -->
-        <meta-data
             android:name="io.sentry.auto-init"
             android:value="false" />
 

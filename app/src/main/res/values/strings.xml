@@ -87,6 +87,8 @@
     <!--Settings fragment-->
     <string name="show_non_contacts_title">Also list non-contacts</string>
     <string name="show_non_contacts_summary">You probably won\'t be interested in this data</string>
+    <string name="enable_analytics_title">Analytics/crash reporting</string>
+    <string name="enable_analytics_summary">This lets me know what features people are using and if anything doesn\'t work!</string>
 
     <!--About fragment-->
     <string name="text_torch_app_icon">Text Torch app icon</string>
@@ -107,4 +109,5 @@
     <!-- Keys -->
     <string name="key_has_seen_tutorial" translatable="false">has_seen_tutorial</string>
     <string name="key_show_non_contacts" translatable="false">show_non_contacts</string>
+    <string name="key_enable_analytics" translatable="false">analytics_enabled</string>
 </resources>
