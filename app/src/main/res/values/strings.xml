@@ -32,9 +32,9 @@
     <string name="analyze_my_texts">Analyze my texts!</string>
     <string name="analyzing">Analyzing…</string>
     <string name="x_percent">%d%%</string>
-    <string name="x_out_of_y_message_threads">%d/%s message threads</string>
+    <string name="x_out_of_y_message_threads">%1$d/%2$s message threads</string>
     <string name="show_details">Show details</string>
-    <string name="x_out_of_y_messages">%d/%s messages</string>
+    <string name="x_out_of_y_messages">%1$d/%2$s messages</string>
     <string name="for_current_message_thread">For current message thread:</string>
 
     <string name="who_texts_first">Who texts first\?</string>
