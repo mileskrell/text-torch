@@ -39,8 +39,6 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.analyze.AnalyzeFragment
 import com.mileskrell.texttorch.databinding.FragmentIntroBinding
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
-import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
-import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
 import com.mileskrell.texttorch.regain.RegainPermissionsFragment
 import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
@@ -147,14 +145,11 @@ class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
                     b.introArrowNext.show()
                 }
             }
+
             override fun onPageSelected(position: Int) {
+                val adapter = b.introViewPager.adapter as IntroPagerAdapter
                 Sentry.addBreadcrumb(
-                    "[$TAG] Switched intro page to ${when (position) {
-                        0 -> IntroPageWelcome.TAG
-                        1 -> IntroPagePermissions.TAG
-                        2 -> IntroPageEnterApp.TAG
-                        else -> "invalid position $position"
-                    }}"
+                    "[$TAG] Switched intro page to " + adapter.getItem(position)::class.simpleName
                 )
             }
         })
