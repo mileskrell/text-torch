@@ -23,7 +23,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
