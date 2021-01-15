@@ -59,7 +59,6 @@ open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
 
         b.recyclerView.setHasFixedSize(true)
         b.recyclerView.adapter = socialRecordAdapter
-        b.recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onDestroyView() {
