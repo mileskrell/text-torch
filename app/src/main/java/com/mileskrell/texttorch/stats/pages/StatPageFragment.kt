@@ -20,11 +20,15 @@
 package com.mileskrell.texttorch.stats.pages
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.activityViewModels
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
+import com.mileskrell.texttorch.stats.PeriodDialogFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
@@ -37,7 +41,7 @@ open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
     private var _binding: FragmentStatPageBinding? = null
     private val b get() = _binding!!
 
-    private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
+    protected val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
     private val socialRecordAdapter = SocialRecordAdapter(type)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,6 +77,52 @@ class WhoTextsFirstFragment :
     StatPageFragment(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST) {
     companion object {
         const val TAG = "WhoTextsFirstFragment"
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.who_texts_first_menu, menu)
+
+        // Restore menu state
+        val period = socialRecordsViewModel.period.menuId
+        menu.findItem(period)?.isChecked = true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.groupId == R.id.menu_group_period) {
+            when (item.itemId) {
+                R.id.menu_item_period_6_hours -> {
+                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.SIX_HOURS)
+                }
+                R.id.menu_item_period_12_hours -> {
+                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.TWELVE_HOURS)
+                }
+                R.id.menu_item_period_1_day -> {
+                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.ONE_DAY)
+                }
+                R.id.menu_item_period_2_days -> {
+                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.TWO_DAYS)
+                }
+            }
+            item.isChecked = true
+            return true
+        }
+
+        return when (item.itemId) {
+            R.id.menu_item_period_explanation -> {
+                showTimeExplanation()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showTimeExplanation() {
+        PeriodDialogFragment().show(parentFragmentManager, null)
     }
 }
 
