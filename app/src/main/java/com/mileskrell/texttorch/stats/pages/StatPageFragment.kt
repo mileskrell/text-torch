@@ -51,11 +51,11 @@ open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
             b.recyclerView.layoutAnimation =
                 AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {
-                socialRecordAdapter.loadSocialRecords(it)
+                socialRecordAdapter.socialRecords = it
             } else {
-                socialRecordAdapter.loadSocialRecords(it.filter { socialRecord ->
+                socialRecordAdapter.socialRecords = it.filter { socialRecord ->
                     socialRecord.correspondentName != null
-                })
+                }
             }
             b.recyclerView.scheduleLayoutAnimation()
         }
