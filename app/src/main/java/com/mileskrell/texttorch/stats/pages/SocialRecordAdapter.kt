@@ -35,7 +35,11 @@ import com.mileskrell.texttorch.stats.model.SocialRecord
 
 class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
 
-    private var socialRecords = listOf<SocialRecord>()
+    var socialRecords = listOf<SocialRecord>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SocialRecordViewHolder {
         return SocialRecordViewHolder(
@@ -48,11 +52,6 @@ class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: SocialRecordViewHolder, position: Int) {
         holder.setupForSocialRecord(type, socialRecords[position])
-    }
-
-    fun loadSocialRecords(socialRecords: List<SocialRecord>) {
-        this.socialRecords = socialRecords
-        notifyDataSetChanged()
     }
 
     enum class SocialRecordAdapterType {
