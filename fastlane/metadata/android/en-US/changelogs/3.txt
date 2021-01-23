@@ -1,0 +1,1 @@
+Allow specifying how much time must pass before a new conversation is considered to have begun
