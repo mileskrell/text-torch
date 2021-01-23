@@ -1,8 +1,11 @@
-<p>Text Torch lets you shine a light on your texting behavior.</p>
+Text Torch analyzes your SMS and MMS messages and tells you how you compare to each person you message in several ways:
+• what percent of the time each of you starts conversations with the other
+• what percent of the texts each of you has sent
+• how the average length of your texts compares to theirs
 
-<p>After it analyzes your SMS and MMS messages, you'll be told how you compare to each person you message in several ways:</p>
-<ul>
-    <li>what percent of the time each of you starts conversations with the other</li>
-    <li>what percent of the texts each of you has sent</li>
-    <li>how the average length of your texts compares to theirs</li>
-</ul>
+Sentry is used (opt-in) for analytics and crash reporting.
+
+Permissions:
+• READ_SMS to get SMS and MMS message data
+• READ_CONTACTS to display contacts' names
+• INTERNET and ACCESS_NETWORK_STATE for Sentry
