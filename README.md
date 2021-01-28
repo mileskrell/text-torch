@@ -1,6 +1,6 @@
 # ![Text Torch logo](app/src/main/res/mipmap-mdpi/ic_launcher.png) Text Torch  
 
-[![License: GPLv3+](https://img.shields.io/badge/License-GPLv3%2B-blue)](COPYING)
+[![License: GPLv3+](https://img.shields.io/badge/License-GPLv3%2B-blue)](COPYING) [![Get it on F-Droid](https://img.shields.io/f-droid/v/com.mileskrell.texttorch)](https://f-droid.org/packages/com.mileskrell.texttorch/)
 
 Text Torch lets you shine a light on your texting behavior.
 
@@ -8,6 +8,8 @@ After it analyzes your SMS and MMS messages, you'll be told how you compare to e
 - what percent of the time each of you starts conversations with the other
 - what percent of the texts each of you has sent
 - how the average length of your texts compares to theirs
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.mileskrell.texttorch/)
 
 ## Screenshots
 
