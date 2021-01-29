@@ -2,6 +2,8 @@
     <string name="app_name" translatable="false">Text Torch</string>
 
     <!-- Intro -->
+    <string name="next_page">Next page</string>
+
     <string name="welcome_to_text_torch">Welcome to Text Torch!</string>
     <string name="a_world_of_texting_insight_awaits">A world of texting insight awaits.</string>
 

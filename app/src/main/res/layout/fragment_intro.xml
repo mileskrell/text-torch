@@ -38,12 +38,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/next_page"
         android:src="@drawable/ic_navigate_next_black_24dp"
         app:elevation="0dp"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="@id/intro_page_indicator"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/intro_page_indicator"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="@id/intro_page_indicator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
