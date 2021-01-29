@@ -125,10 +125,10 @@ class ThreadGetter(val context: Context) {
                 }
 
                 val recipients = threadsCursor.getString(Telephony.Threads.RECIPIENT_IDS)
-                if (recipients == null) {
+                if (recipients.isNullOrEmpty()) {
                     addProgressBreadcrumbs()
                     Sentry.captureMessage(
-                        "[$TAG] Couldn't get recipient IDs",
+                        "[$TAG] Couldn't get recipient IDs (${if (recipients == null) "null" else "empty"})",
                         SentryLevel.ERROR
                     )
                     threadsCompleted.run { postValue(value!! + 1) }
