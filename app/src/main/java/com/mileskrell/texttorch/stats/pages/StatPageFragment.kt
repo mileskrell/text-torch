@@ -24,7 +24,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.activityViewModels
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
@@ -48,8 +47,6 @@ open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStatPageBinding.bind(view)
         socialRecordsViewModel.socialRecords.observe({ lifecycle }) {
-            b.recyclerView.layoutAnimation =
-                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_up)
             if (socialRecordsViewModel.showNonContacts) {
                 socialRecordAdapter.socialRecords = it
             } else {
