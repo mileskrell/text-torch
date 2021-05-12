@@ -43,7 +43,7 @@ class Repository(val context: Context) {
     // Used to sort by name, followed by address (phone number/email address)
     private val getNameAddressString = { socialRecord: SocialRecord ->
         ((socialRecord.correspondentName ?: "") + socialRecord.correspondentAddress)
-            .toLowerCase(Locale.getDefault())
+            .lowercase(Locale.getDefault())
     }
 
     lateinit var threads: List<MessageThread>

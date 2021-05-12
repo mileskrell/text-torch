@@ -9,10 +9,6 @@ plugins {
 
 android {
     compileSdkVersion(28)
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
     defaultConfig {
         applicationId = "com.mileskrell.texttorch"
         minSdkVersion(21)
@@ -30,9 +26,6 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 
