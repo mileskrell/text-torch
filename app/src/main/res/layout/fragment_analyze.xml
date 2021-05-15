@@ -51,16 +51,17 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.9" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/threads_progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="invisible"
+            app:indicatorColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
             app:layout_constraintTop_toTopOf="parent"
+            app:trackCornerRadius="2dp"
             tools:progress="19"
             tools:visibility="visible" />
 
@@ -100,18 +101,18 @@
             app:layout_constraintTop_toBottomOf="@+id/threads_progress_percentage_text_view"
             tools:visibility="visible" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/messages_progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="8dp"
             android:visibility="invisible"
+            app:indicatorColor="@color/colorAccent"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
             app:layout_constraintTop_toBottomOf="@id/for_current_message_thread_text_view"
-            tools:layout_editor_absoluteY="491dp"
+            app:trackCornerRadius="2dp"
             tools:progress="60"
             tools:visibility="visible" />
 
