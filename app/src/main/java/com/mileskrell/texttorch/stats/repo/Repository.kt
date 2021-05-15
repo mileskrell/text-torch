@@ -136,18 +136,20 @@ class Repository(val context: Context) {
                 (1.0 * theirTotalChars / theirTextsWithBody).roundToInt()
             }
 
-            socialRecords.add(SocialRecord(
-                thread.otherPartyName,
-                thread.otherPartyAddress,
-                thread.messages.last().date,
-                thread.nonUniqueName,
-                ownInits,
-                theirInits,
-                ownTexts,
-                theirTexts,
-                ownAvgChars,
-                theirAvgChars
-            ))
+            socialRecords.add(
+                SocialRecord(
+                    thread.otherPartyName,
+                    thread.otherPartyAddress,
+                    thread.messages.last().date,
+                    thread.nonUniqueName,
+                    ownInits,
+                    theirInits,
+                    ownTexts,
+                    theirTexts,
+                    ownAvgChars,
+                    theirAvgChars
+                )
+            )
         }
 
         return socialRecords
