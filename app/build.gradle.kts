@@ -47,7 +47,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.0")
 
     val aboutLibrariesVersion: String by rootProject.extra
-    implementation("com.google.android.material:material:1.2.1")
+    implementation("com.google.android.material:material:1.3.0")
     implementation("com.mikepenz:aboutlibraries:$aboutLibrariesVersion")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("io.sentry:sentry-android:3.2.0")
