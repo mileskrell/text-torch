@@ -28,9 +28,6 @@ import androidx.preference.PreferenceManager
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.repo.Repository
 import com.mileskrell.texttorch.util.logToBoth
-import io.sentry.android.core.SentryAndroid
-import io.sentry.Sentry
-import io.sentry.SentryEvent
 import io.sentry.SentryLevel
 
 /**

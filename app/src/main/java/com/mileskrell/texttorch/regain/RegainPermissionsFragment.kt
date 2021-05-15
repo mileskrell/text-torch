@@ -74,7 +74,7 @@ class RegainPermissionsFragment : LifecycleLoggingFragment(R.layout.fragment_reg
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
-                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED } ) {
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     logToBoth(IntroPagePermissions.TAG, "User regranted all permissions")
                     findNavController().navigate(R.id.regain_to_analyze_action)
                 } else {
