@@ -115,9 +115,9 @@ class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
             introPagerAdapter = it
         }
         val colorBackground = (b.introViewPager.background as LayerDrawable)
-            .getDrawable(0) as ColorDrawable
+            .getDrawable(0).mutate() as ColorDrawable
         val logoBackground = (b.introViewPager.background as LayerDrawable)
-            .getDrawable(1) as BitmapDrawable
+            .getDrawable(1).mutate() as BitmapDrawable
 
         b.introViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
