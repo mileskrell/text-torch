@@ -28,15 +28,15 @@ import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 class IntroPageEnterApp : LifecycleLoggingFragment(R.layout.fragment_intro_page_enter_app) {
 
-    companion object {
-        const val TAG = "IntroPageEnterApp"
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val b = FragmentIntroPageEnterAppBinding.bind(view)
         b.introPage4ButtonEnterApp.setOnClickListener {
             (parentFragment as IntroFragment).onClickEnterAppButton()
         }
+    }
+
+    companion object {
+        const val TAG = "IntroPageEnterApp"
     }
 }

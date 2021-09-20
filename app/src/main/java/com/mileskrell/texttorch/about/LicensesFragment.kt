@@ -28,10 +28,6 @@ import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 class LicensesFragment : LifecycleLoggingFragment(R.layout.fragment_licenses) {
 
-    companion object {
-        const val TAG = "LicensesFragment"
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         childFragmentManager.commitNow {
@@ -46,5 +42,9 @@ class LicensesFragment : LifecycleLoggingFragment(R.layout.fragment_licenses) {
                 }
             )
         }
+    }
+
+    companion object {
+        const val TAG = "LicensesFragment"
     }
 }

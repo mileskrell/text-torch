@@ -50,10 +50,6 @@ import io.sentry.Sentry
 
 class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
 
-    companion object {
-        const val TAG = "IntroFragment"
-    }
-
     lateinit var introPagerAdapter: IntroPagerAdapter
 
     private val introViewModel: IntroViewModel by activityViewModels()
@@ -186,5 +182,9 @@ class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
                 inclusive = true
             }
         })
+    }
+
+    companion object {
+        const val TAG = "IntroFragment"
     }
 }

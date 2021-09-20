@@ -35,10 +35,6 @@ import io.sentry.SentryLevel
  */
 class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
 
-    companion object {
-        const val TAG = "SocialRecordViewModel"
-    }
-
     private val _socialRecords = MutableLiveData<List<SocialRecord>>()
     val socialRecords = _socialRecords as LiveData<List<SocialRecord>>
 
@@ -130,5 +126,9 @@ class SocialRecordsViewModel(val app: Application) : AndroidViewModel(app) {
         PEOPLE_YOU_TEXT_FIRST(R.id.radio_button_sort_type_percentage_of_the_time_youve_texted_first),
         PEOPLE_YOU_TEXT_MORE(R.id.radio_button_sort_type_percentage_of_the_texts_youve_sent),
         PEOPLE_YOU_SEND_LONGER_TEXTS(R.id.radio_button_sort_type_percentage_of_total_characters_youve_sent)
+    }
+
+    companion object {
+        const val TAG = "SocialRecordViewModel"
     }
 }

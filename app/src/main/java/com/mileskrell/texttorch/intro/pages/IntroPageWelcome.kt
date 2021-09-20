@@ -28,9 +28,6 @@ import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 class IntroPageWelcome : LifecycleLoggingFragment(R.layout.fragment_intro_page_welcome) {
-    companion object {
-        const val TAG = "IntroPageWelcome"
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,5 +38,9 @@ class IntroPageWelcome : LifecycleLoggingFragment(R.layout.fragment_intro_page_w
                 (parentFragment as IntroFragment).onClickEnterAppButton()
             }
         }
+    }
+
+    companion object {
+        const val TAG = "IntroPageWelcome"
     }
 }

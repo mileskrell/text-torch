@@ -32,10 +32,6 @@ import com.mileskrell.texttorch.util.logToBoth
 
 class AboutFragment : LifecycleLoggingFragment(R.layout.fragment_about) {
 
-    companion object {
-        const val TAG = "AboutFragment"
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val b = FragmentAboutBinding.bind(view)
@@ -58,5 +54,9 @@ class AboutFragment : LifecycleLoggingFragment(R.layout.fragment_about) {
             logToBoth(TAG, "Clicked \"donate\" button")
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_url))))
         }
+    }
+
+    companion object {
+        const val TAG = "AboutFragment"
     }
 }

@@ -28,10 +28,6 @@ import com.mileskrell.texttorch.util.logToBoth
 
 class PeriodDialogFragment : LifecycleLoggingDialogFragment() {
 
-    companion object {
-        const val TAG = "PeriodDialogFragment"
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialog?.window?.attributes?.windowAnimations = R.style.PeriodDialogTheme
@@ -50,5 +46,9 @@ class PeriodDialogFragment : LifecycleLoggingDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logToBoth(TAG, "Viewed period explanation")
+    }
+
+    companion object {
+        const val TAG = "PeriodDialogFragment"
     }
 }

@@ -45,10 +45,6 @@ import io.sentry.SentryLevel
  */
 class RegainPermissionsFragment : LifecycleLoggingFragment(R.layout.fragment_regain_permissions) {
 
-    companion object {
-        const val TAG = "RegainPermissionsFragment"
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val b = FragmentRegainPermissionsBinding.bind(view)
@@ -111,5 +107,9 @@ class RegainPermissionsFragment : LifecycleLoggingFragment(R.layout.fragment_reg
             // The user finally granted the permissions! Continue to AnalyzeFragment.
             findNavController().navigate(R.id.regain_to_analyze_action)
         }
+    }
+
+    companion object {
+        const val TAG = "RegainPermissionsFragment"
     }
 }

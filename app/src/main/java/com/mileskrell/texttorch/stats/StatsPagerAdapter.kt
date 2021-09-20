@@ -33,10 +33,6 @@ import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
 class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    companion object {
-        const val TAG = "StatsPagerAdapter"
-    }
-
     private val pages = mutableListOf(
         WhoTextsFirstFragment(),
         TotalTextsFragment(),
@@ -85,5 +81,9 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
             it.view?.findViewById<RecyclerView>(R.id.recycler_view)
                 ?.layoutManager?.onRestoreInstanceState(latestState)
         }
+    }
+
+    companion object {
+        const val TAG = "StatsPagerAdapter"
     }
 }

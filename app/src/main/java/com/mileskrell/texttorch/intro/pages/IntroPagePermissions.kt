@@ -34,10 +34,6 @@ import io.sentry.SentryLevel
 
 class IntroPagePermissions : LifecycleLoggingFragment(R.layout.fragment_intro_page_permissions) {
 
-    companion object {
-        const val TAG = "IntroPagePermissions"
-    }
-
     private var _binding: FragmentIntroPagePermissionsBinding? = null
     private val b get() = _binding!!
 
@@ -114,5 +110,9 @@ class IntroPagePermissions : LifecycleLoggingFragment(R.layout.fragment_intro_pa
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val TAG = "IntroPagePermissions"
     }
 }

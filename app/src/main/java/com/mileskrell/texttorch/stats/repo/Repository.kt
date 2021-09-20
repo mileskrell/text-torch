@@ -36,10 +36,6 @@ import kotlin.math.roundToInt
  */
 class Repository(val context: Context) {
 
-    companion object {
-        const val TAG = "Repository"
-    }
-
     // Used to sort by name, followed by address (phone number/email address)
     private val getNameAddressString = { socialRecord: SocialRecord ->
         ((socialRecord.correspondentName ?: "") + socialRecord.correspondentAddress)
@@ -227,5 +223,9 @@ class Repository(val context: Context) {
                 )
             }
         }
+    }
+
+    companion object {
+        const val TAG = "Repository"
     }
 }

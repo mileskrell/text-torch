@@ -43,28 +43,6 @@ import kotlin.math.roundToInt
  */
 class ThreadGetter(val context: Context) {
 
-    companion object {
-        const val TAG = "ThreadGetter"
-
-        val threadsUri: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
-        val threadsProjection = arrayOf(
-            Telephony.Threads._ID,
-            Telephony.Threads.RECIPIENT_IDS
-        )
-
-        val singleThreadUri: Uri = Uri.parse("content://mms-sms/complete-conversations")
-        val singleThreadProjection = arrayOf(
-            Telephony.MmsSms._ID,
-            Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN,
-            Telephony.Mms.DATE,
-
-            Telephony.Sms.BODY,
-            Telephony.Sms.TYPE, // indicates whether message was sent or received
-
-            Telephony.Mms.MESSAGE_BOX // indicates whether message was sent or received
-        )
-    }
-
     fun getThreads(
         threadsTotal: MutableLiveData<Int>,
         threadsCompleted: MutableLiveData<Int>,
@@ -385,5 +363,27 @@ class ThreadGetter(val context: Context) {
         } catch (e: IllegalStateException) {
             null
         }
+    }
+
+    companion object {
+        const val TAG = "ThreadGetter"
+
+        val threadsUri: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
+        val threadsProjection = arrayOf(
+            Telephony.Threads._ID,
+            Telephony.Threads.RECIPIENT_IDS
+        )
+
+        val singleThreadUri: Uri = Uri.parse("content://mms-sms/complete-conversations")
+        val singleThreadProjection = arrayOf(
+            Telephony.MmsSms._ID,
+            Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN,
+            Telephony.Mms.DATE,
+
+            Telephony.Sms.BODY,
+            Telephony.Sms.TYPE, // indicates whether message was sent or received
+
+            Telephony.Mms.MESSAGE_BOX // indicates whether message was sent or received
+        )
     }
 }

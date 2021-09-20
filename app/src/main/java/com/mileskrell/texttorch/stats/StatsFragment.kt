@@ -42,10 +42,6 @@ import io.sentry.SentryLevel
 
 class StatsFragment : LifecycleLoggingFragment(R.layout.fragment_stats) {
 
-    companion object {
-        const val TAG = "StatsFragment"
-    }
-
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
 
     /**
@@ -170,5 +166,9 @@ class StatsFragment : LifecycleLoggingFragment(R.layout.fragment_stats) {
             )
             socialRecordsViewModel.changeSortTypeAndReversed(newSortType, reversed)
         }
+    }
+
+    companion object {
+        const val TAG = "StatsFragment"
     }
 }

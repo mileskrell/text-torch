@@ -72,9 +72,6 @@ open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
 
 class WhoTextsFirstFragment :
     StatPageFragment(SocialRecordAdapter.SocialRecordAdapterType.WHO_TEXTS_FIRST) {
-    companion object {
-        const val TAG = "WhoTextsFirstFragment"
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,6 +117,10 @@ class WhoTextsFirstFragment :
 
     private fun showTimeExplanation() {
         PeriodDialogFragment().show(parentFragmentManager, null)
+    }
+
+    companion object {
+        const val TAG = "WhoTextsFirstFragment"
     }
 }
 

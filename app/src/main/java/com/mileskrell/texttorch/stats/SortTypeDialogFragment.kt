@@ -37,26 +37,6 @@ import com.mileskrell.texttorch.util.LifecycleLoggingDialogFragment
  */
 class SortTypeDialogFragment : LifecycleLoggingDialogFragment() {
 
-    companion object {
-        const val TAG = "SortTypeDialogFragment"
-
-        // Used for both fragment arguments and extras
-        const val SORT_TYPE_ID = "sort type ID"
-        const val REVERSED = "reversed"
-
-        const val REQUEST_CODE = 0
-        const val RESULT_CODE = 0
-
-        @JvmStatic
-        fun newInstance(checkedRadioButtonId: Int, reversed: Boolean) =
-            SortTypeDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(SORT_TYPE_ID, checkedRadioButtonId)
-                    putBoolean(REVERSED, reversed)
-                }
-            }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialog?.window?.attributes?.windowAnimations = R.style.PeriodDialogTheme
@@ -104,5 +84,25 @@ class SortTypeDialogFragment : LifecycleLoggingDialogFragment() {
                 )
             }
             .create()
+    }
+
+    companion object {
+        const val TAG = "SortTypeDialogFragment"
+
+        // Used for both fragment arguments and extras
+        const val SORT_TYPE_ID = "sort type ID"
+        const val REVERSED = "reversed"
+
+        const val REQUEST_CODE = 0
+        const val RESULT_CODE = 0
+
+        @JvmStatic
+        fun newInstance(checkedRadioButtonId: Int, reversed: Boolean) =
+            SortTypeDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(SORT_TYPE_ID, checkedRadioButtonId)
+                    putBoolean(REVERSED, reversed)
+                }
+            }
     }
 }

@@ -28,11 +28,11 @@ import com.mileskrell.texttorch.util.LifecycleLoggingPreferenceFragmentCompat
  */
 class SettingsFragment : LifecycleLoggingPreferenceFragmentCompat() {
 
-    companion object {
-        const val TAG = "SettingsFragment"
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
+    }
+
+    companion object {
+        const val TAG = "SettingsFragment"
     }
 }

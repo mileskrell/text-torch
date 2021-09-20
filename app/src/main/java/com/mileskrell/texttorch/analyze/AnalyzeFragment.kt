@@ -47,10 +47,6 @@ import kotlin.math.roundToInt
  */
 class AnalyzeFragment : LifecycleLoggingFragment(R.layout.fragment_analyze) {
 
-    companion object {
-        const val TAG = "AnalyzeFragment"
-    }
-
     private var _binding: FragmentAnalyzeBinding? = null
     private val b get() = _binding!!
 
@@ -176,5 +172,9 @@ class AnalyzeFragment : LifecycleLoggingFragment(R.layout.fragment_analyze) {
         super.onDestroyView()
         _binding = null
         valueAnimator?.cancel()
+    }
+
+    companion object {
+        const val TAG = "AnalyzeFragment"
     }
 }
