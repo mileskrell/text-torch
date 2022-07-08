@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(32)
     defaultConfig {
         applicationId = "com.mileskrell.texttorch"
         minSdkVersion(21)
-        targetSdkVersion(28)
+        targetSdkVersion(32)
         versionCode = 4
         versionName = "1.1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
