@@ -15,7 +15,6 @@ android {
         targetSdk = 32
         versionCode = 4
         versionName = "1.1.1"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
         viewBinding = true
@@ -57,8 +56,4 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-
-    testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test:runner:1.3.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }
