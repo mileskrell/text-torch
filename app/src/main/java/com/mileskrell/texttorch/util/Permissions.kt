@@ -33,8 +33,6 @@ import com.mileskrell.texttorch.R
  * Permissions-related functions and resources used in multiple places
  */
 
-const val PERMISSIONS_REQUEST_CODE = 1
-
 fun Fragment.readSmsGranted() =
     ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
 

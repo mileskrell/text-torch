@@ -20,11 +20,11 @@
 package com.mileskrell.texttorch.regain
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
@@ -59,41 +59,43 @@ class RegainPermissionsFragment : LifecycleLoggingFragment(R.layout.fragment_reg
             )
         }
 
-        b.regainButton.setOnClickListener {
-            requestPermissions(
-                arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS),
-                PERMISSIONS_REQUEST_CODE
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            PERMISSIONS_REQUEST_CODE -> {
-                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    logToBoth(IntroPagePermissions.TAG, "User regranted all permissions")
-                    findNavController().navigate(R.id.regain_to_analyze_action)
-                } else {
-                    // Not all permissions were granted
-                    logEvent(
-                        TAG,
-                        "User only regranted some permissions",
-                        SentryLevel.INFO,
-                        true,
-                        mapOf(
-                            "READ_SMS" to readSmsGranted(),
-                            "READ_CONTACTS" to readContactsGranted()
-                        )
+        val requestPermissionsLaucher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            if (result.values.all { it }) {
+                logToBoth(IntroPagePermissions.TAG, "User regranted all permissions")
+                findNavController().navigate(R.id.regain_to_analyze_action)
+            } else {
+                // Not all permissions were granted
+                logEvent(
+                    TAG,
+                    "User only regranted some permissions",
+                    SentryLevel.INFO,
+                    true,
+                    mapOf(
+                        "READ_SMS" to readSmsGranted(),
+                        "READ_CONTACTS" to readContactsGranted()
                     )
-                    val canAskAgain = (readSmsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS))
-                            && (readContactsGranted() || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
-                    if (!canAskAgain) {
-                        // User checked "Never ask again", so open app settings page
-                        logToBoth(TAG, "Showed app settings dialog")
-                        showAppSettingsDialog(TAG)
-                    }
+                )
+                val canAskAgain = (readSmsGranted()
+                        || shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS))
+                        && (readContactsGranted()
+                        || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS))
+                if (!canAskAgain) {
+                    // User checked "Never ask again", so open app settings page
+                    logToBoth(TAG, "Showed app settings dialog")
+                    showAppSettingsDialog(TAG)
                 }
             }
+        }
+
+        b.regainButton.setOnClickListener {
+            requestPermissionsLaucher.launch(
+                arrayOf(
+                    Manifest.permission.READ_SMS,
+                    Manifest.permission.READ_CONTACTS
+                )
+            )
         }
     }
 
