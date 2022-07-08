@@ -42,7 +42,7 @@ class Repository(val context: Context) {
             .lowercase(Locale.getDefault())
     }
 
-    lateinit var threads: List<MessageThread>
+    private lateinit var threads: List<MessageThread>
 
     /**
      * Returns a list of [SocialRecord], based on the provided [period]

@@ -33,7 +33,7 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.SocialRecordViewHolderBinding
 import com.mileskrell.texttorch.stats.model.SocialRecord
 
-class SocialRecordAdapter(val type: SocialRecordAdapterType) : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
+class SocialRecordAdapter(private val type: SocialRecordAdapterType) : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
 
     var socialRecords = listOf<SocialRecord>()
         set(value) {

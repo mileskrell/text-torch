@@ -62,7 +62,7 @@ data class SocialRecord(
     val correspondentTextPercent = (100.0 * correspondentTexts / numTexts).roundToInt()
 
     // For average length
-    val combinedAverageChars = ownAvgChars + correspondentAvgChars
+    private val combinedAverageChars = ownAvgChars + correspondentAvgChars
     val correspondentAvgCharsPercent = if (combinedAverageChars == 0) {
         // This means that no messages with a body have ever been sent by either person.
         50

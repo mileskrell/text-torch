@@ -30,7 +30,7 @@ import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
 import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
-class IntroPagerAdapter(val introViewModel: IntroViewModel, fm: FragmentManager) :
+class IntroPagerAdapter(private val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val pages = mutableListOf<LifecycleLoggingFragment>(

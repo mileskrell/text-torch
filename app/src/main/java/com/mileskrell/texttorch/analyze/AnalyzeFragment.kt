@@ -52,7 +52,7 @@ class AnalyzeFragment : LifecycleLoggingFragment(R.layout.fragment_analyze) {
 
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
     private val analyzeViewModel: AnalyzeViewModel by activityViewModels()
-    var valueAnimator: ValueAnimator? = null
+    private var valueAnimator: ValueAnimator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
