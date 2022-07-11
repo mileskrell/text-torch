@@ -37,11 +37,6 @@ import com.mileskrell.texttorch.util.LifecycleLoggingDialogFragment
  */
 class SortTypeDialogFragment : LifecycleLoggingDialogFragment() {
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        dialog?.window?.attributes?.windowAnimations = R.style.PeriodDialogTheme
-    }
-
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         /**
@@ -83,7 +78,9 @@ class SortTypeDialogFragment : LifecycleLoggingDialogFragment() {
                         )
                 )
             }
-            .create()
+            .create().apply {
+                window?.attributes?.windowAnimations = R.style.SlidingDialogStyle
+            }
     }
 
     companion object {

@@ -28,11 +28,6 @@ import com.mileskrell.texttorch.util.logToBoth
 
 class PeriodDialogFragment : LifecycleLoggingDialogFragment() {
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        dialog?.window?.attributes?.windowAnimations = R.style.PeriodDialogTheme
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
             .setTitle(R.string.whats_this)
@@ -40,7 +35,9 @@ class PeriodDialogFragment : LifecycleLoggingDialogFragment() {
             .setNeutralButton(getString(R.string.close)) { dialog, _ ->
                 dialog.cancel()
             }
-            .create()
+            .create().apply {
+                window?.attributes?.windowAnimations = R.style.SlidingDialogStyle
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
