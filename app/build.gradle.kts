@@ -32,7 +32,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
 
-    val lifecycleVersion = "2.3.1"
+    val lifecycleVersion = "2.5.0"
     val navigationVersion = "2.3.5"
     implementation("androidx.activity:activity-ktx:1.5.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
