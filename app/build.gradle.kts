@@ -33,7 +33,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
 
     val lifecycleVersion = "2.5.0"
-    val navigationVersion = "2.3.5"
+    val navigationVersion = "2.5.0"
     implementation("androidx.activity:activity-ktx:1.5.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.cardview:cardview:1.0.0")
