@@ -163,7 +163,7 @@ class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
         exitAlmostFullscreen()
 
         // Save that tutorial has been seen
-        PreferenceManager.getDefaultSharedPreferences(context).edit {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
             putBoolean(getString(R.string.key_has_seen_tutorial), true)
         }
         logToBoth(TAG, "Clicked \"finish tutorial\" button")
