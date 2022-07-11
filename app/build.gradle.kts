@@ -45,7 +45,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
     val aboutLibrariesVersion: String by rootProject.extra
     implementation("com.google.android.material:material:1.3.0")
