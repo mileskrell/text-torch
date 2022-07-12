@@ -25,10 +25,15 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import io.sentry.android.navigation.SentryNavigationListener
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var navController: NavController
+    private val sentryNavListener = SentryNavigationListener(
+        enableNavigationBreadcrumbs = true,
+        enableNavigationTracing = true
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             // These are considered "top level destinations"
             R.id.intro_dest, R.id.regain_dest, R.id.analyze_dest, R.id.stats_dest
         )))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navController.addOnDestinationChangedListener(sentryNavListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        navController.removeOnDestinationChangedListener(sentryNavListener)
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp() || super.onSupportNavigateUp()

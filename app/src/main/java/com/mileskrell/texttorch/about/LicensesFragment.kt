@@ -21,12 +21,12 @@ package com.mileskrell.texttorch.about
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
-class LicensesFragment : LifecycleLoggingFragment(R.layout.fragment_licenses) {
+class LicensesFragment : Fragment(R.layout.fragment_licenses) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

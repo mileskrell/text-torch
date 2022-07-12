@@ -25,6 +25,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
@@ -34,13 +35,12 @@ import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
 import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
 import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
 import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
-import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logEvent
 import com.mileskrell.texttorch.util.logToBoth
 import io.sentry.Sentry
 import io.sentry.SentryLevel
 
-class StatsFragment : LifecycleLoggingFragment(R.layout.fragment_stats) {
+class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
 

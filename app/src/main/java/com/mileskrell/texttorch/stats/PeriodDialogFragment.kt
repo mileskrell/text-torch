@@ -22,11 +22,11 @@ package com.mileskrell.texttorch.stats
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLoggingDialogFragment
 import com.mileskrell.texttorch.util.logToBoth
 
-class PeriodDialogFragment : LifecycleLoggingDialogFragment() {
+class PeriodDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())

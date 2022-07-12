@@ -26,6 +26,7 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentRegainPermissionsBinding
@@ -43,7 +44,7 @@ import io.sentry.SentryLevel
  * This page can be opened either on app start (by IntroFragment) or in AnalyzeFragment's
  * onCreateView.
  */
-class RegainPermissionsFragment : LifecycleLoggingFragment(R.layout.fragment_regain_permissions) {
+class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

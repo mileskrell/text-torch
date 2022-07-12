@@ -24,18 +24,18 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.PeriodDialogFragment
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
-import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 
 /**
  * Used for the fragments shown in [com.mileskrell.texttorch.stats.StatsFragment]
  */
 open class StatPageFragment(type: SocialRecordAdapter.SocialRecordAdapterType) :
-    LifecycleLoggingFragment(R.layout.fragment_stat_page) {
+    Fragment(R.layout.fragment_stat_page) {
 
     private var _binding: FragmentStatPageBinding? = null
     private val b get() = _binding!!

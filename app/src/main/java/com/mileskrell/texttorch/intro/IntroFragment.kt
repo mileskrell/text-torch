@@ -29,6 +29,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
@@ -40,7 +41,6 @@ import com.mileskrell.texttorch.analyze.AnalyzeFragment
 import com.mileskrell.texttorch.databinding.FragmentIntroBinding
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.regain.RegainPermissionsFragment
-import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
 import com.mileskrell.texttorch.util.readContactsGranted
 import com.mileskrell.texttorch.util.readSmsGranted
@@ -48,7 +48,7 @@ import io.sentry.Sentry
 
 // TODO: I'd like to have translucent status and navigation bars here
 
-class IntroFragment : LifecycleLoggingFragment(R.layout.fragment_intro) {
+class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     lateinit var introPagerAdapter: IntroPagerAdapter
 

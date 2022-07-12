@@ -26,13 +26,14 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentIntroPagePermissionsBinding
 import com.mileskrell.texttorch.intro.IntroFragment
 import com.mileskrell.texttorch.util.*
 import io.sentry.SentryLevel
 
-class IntroPagePermissions : LifecycleLoggingFragment(R.layout.fragment_intro_page_permissions) {
+class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) {
 
     private var _binding: FragmentIntroPagePermissionsBinding? = null
     private val b get() = _binding!!

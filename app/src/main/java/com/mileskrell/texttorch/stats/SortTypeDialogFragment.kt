@@ -27,15 +27,15 @@ import android.view.LayoutInflater
 import android.widget.CheckBox
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.util.LifecycleLoggingDialogFragment
 
 /**
  * The dialog that appears when the user attempts to change the sort order.
  *
  * TODO: Add descriptions to sort orders
  */
-class SortTypeDialogFragment : LifecycleLoggingDialogFragment() {
+class SortTypeDialogFragment : DialogFragment() {
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

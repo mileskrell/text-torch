@@ -23,14 +23,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentAboutBinding
-import com.mileskrell.texttorch.util.LifecycleLoggingFragment
 import com.mileskrell.texttorch.util.logToBoth
 
-class AboutFragment : LifecycleLoggingFragment(R.layout.fragment_about) {
+class AboutFragment : Fragment(R.layout.fragment_about) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
