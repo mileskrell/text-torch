@@ -48,7 +48,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.viewpager:viewpager:1.0.0")
 
-    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.google.android.material:material:1.6.1")
     implementation("com.mikepenz:aboutlibraries:10.3.1")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("io.sentry:sentry-android:6.2.1")
