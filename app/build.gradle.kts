@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("io.sentry.android.gradle")
-    id("com.mikepenz.aboutlibraries.plugin")
+    id("com.mikepenz.aboutlibraries.plugin") version "10.3.1"
 }
 
 android {
@@ -47,9 +47,8 @@ dependencies {
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
 
-    val aboutLibrariesVersion: String by rootProject.extra
     implementation("com.google.android.material:material:1.3.0")
-    implementation("com.mikepenz:aboutlibraries:$aboutLibrariesVersion")
+    implementation("com.mikepenz:aboutlibraries:10.3.1")
     implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("io.sentry:sentry-android:3.2.0")
 
