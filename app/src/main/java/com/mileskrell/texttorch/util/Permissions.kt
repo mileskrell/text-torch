@@ -40,15 +40,17 @@ fun Fragment.readContactsGranted() =
     ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
 
 fun Fragment.showAppSettingsDialog(logTag: String) {
-    MaterialAlertDialogBuilder(requireContext()).apply {
-        setMessage(R.string.app_settings_explanation)
-        setPositiveButton(R.string.open_app_settings) { _, _ ->
+    MaterialAlertDialogBuilder(requireContext())
+        .setMessage(R.string.app_settings_explanation)
+        .setPositiveButton(R.string.open_app_settings) { _, _ ->
             logToBoth(logTag, "User opened system app info page")
             val appSettingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.fromParts("package", context.packageName, null)
+                data = Uri.fromParts("package", requireContext().packageName, null)
             }
             startActivity(appSettingsIntent)
         }
-        show()
-    }
+        .create().apply {
+            window?.attributes?.windowAnimations = R.style.SlidingDialogStyle
+        }
+        .show()
 }
