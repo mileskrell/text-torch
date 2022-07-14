@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_3_text_view_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,13 +22,13 @@
             android:paddingEnd="16dp"
             android:text="@string/would_you"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintBottom_toTopOf="@id/intro_page_3_text_view_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_3_text_view_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,13 +39,13 @@
             android:paddingEnd="8dp"
             android:text="@string/why_enable"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintBottom_toTopOf="@id/intro_page_3_text_view_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro_page_3_text_view_1" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_3_text_view_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:paddingEnd="16dp"
             android:text="@string/analytics_reassurance"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintBottom_toTopOf="@id/intro_analytics_radio_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,19 +75,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro_page_3_text_view_3">
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/intro_radio_button_enable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enable_analytics"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/intro_radio_button_disable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disable_analytics"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
         </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

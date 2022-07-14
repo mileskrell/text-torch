@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/stats_no_records_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/no_texts_found"
         android:textAlignment="center"
-        android:textSize="22sp"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

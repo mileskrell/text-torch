@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".intro.pages.IntroPageWelcome">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/intro_page_1_text_view_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,14 +17,14 @@
         android:paddingEnd="16dp"
         android:text="@string/welcome_to_text_torch"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         app:layout_constraintBottom_toTopOf="@id/intro_page_1_text_view_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.86" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/intro_page_1_text_view_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,13 +35,13 @@
         android:paddingEnd="16dp"
         android:text="@string/a_world_of_texting_insight_awaits"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/intro_page_1_button_enter_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -24,10 +24,10 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.CheckBox
 import android.widget.RadioGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mileskrell.texttorch.R
 
 /**
@@ -54,12 +54,12 @@ class SortTypeDialogFragment : DialogFragment() {
             .run {
                 check(requireArguments().getInt(SORT_TYPE_ID))
             }
-        dialogView.findViewById<CheckBox>(R.id.check_box_reversed)!!
+        dialogView.findViewById<MaterialCheckBox>(R.id.check_box_reversed)!!
             .run {
                 isChecked = requireArguments().getBoolean(REVERSED)
             }
 
-        return AlertDialog.Builder(requireContext())
+        return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.order_by)
             .setView(dialogView)
             .setNegativeButton(getString(R.string.cancel)) { _, _ -> }
@@ -74,7 +74,7 @@ class SortTypeDialogFragment : DialogFragment() {
                         )
                         .putExtra(
                             REVERSED,
-                            dialogView.findViewById<CheckBox>(R.id.check_box_reversed)!!.isChecked
+                            dialogView.findViewById<MaterialCheckBox>(R.id.check_box_reversed)!!.isChecked
                         )
                 )
             }

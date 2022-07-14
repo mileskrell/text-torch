@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -20,21 +21,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.25">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/regrant_explanation_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Text Torch needs access to your texts and contacts to work, but it looks like one or both of those permissions was revoked at some point. To continue, you\'ll have to…" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/regain_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
-                android:text="@string/regrant_needed_permissions"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:text="@string/regrant_needed_permissions" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

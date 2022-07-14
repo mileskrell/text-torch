@@ -21,15 +21,15 @@ package com.mileskrell.texttorch.stats
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.util.logToBoth
 
 class PeriodDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(requireContext())
+        return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.whats_this)
             .setMessage(getString(R.string.time_explanation))
             .setNeutralButton(getString(R.string.close)) { dialog, _ ->

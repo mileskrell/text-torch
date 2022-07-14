@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_2_text_view_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,13 +22,13 @@
             android:paddingEnd="16dp"
             android:text="@string/before_we_can_get_started"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintBottom_toTopOf="@id/intro_page_2_text_view_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_2_text_view_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,13 +39,13 @@
             android:paddingEnd="16dp"
             android:text="@string/dont_worry"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintBottom_toTopOf="@id/intro_page_2_text_view_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro_page_2_text_view_1" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_2_text_view_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,14 +55,14 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintBottom_toTopOf="@id/intro_permissions_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro_page_2_text_view_2"
             tools:text="Text Torch is open-source…and URL" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/intro_permissions_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,12 +77,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro_page_2_text_view_3" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_text_view_permissions_granted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/permissions_granted"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/intro_permissions_button"
             app:layout_constraintEnd_toEndOf="parent"

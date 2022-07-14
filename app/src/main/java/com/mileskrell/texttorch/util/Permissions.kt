@@ -24,9 +24,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mileskrell.texttorch.R
 
 /**
@@ -40,7 +40,7 @@ fun Fragment.readContactsGranted() =
     ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
 
 fun Fragment.showAppSettingsDialog(logTag: String) {
-    AlertDialog.Builder(requireContext()).apply {
+    MaterialAlertDialogBuilder(requireContext()).apply {
         setMessage(R.string.app_settings_explanation)
         setPositiveButton(R.string.open_app_settings) { _, _ ->
             logToBoth(logTag, "User opened system app info page")

@@ -19,24 +19,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_most_recent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/most_recent"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/most_recent" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_alphabetical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/alphabetical"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/alphabetical" />
 
             <View
                 android:id="@+id/divider1"
@@ -45,25 +42,22 @@
                 android:layout_marginTop="8dp"
                 android:background="?android:attr/listDivider" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_number_of_conversations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/number_of_conversations"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/number_of_conversations" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_number_of_total_texts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/number_of_total_texts"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/number_of_total_texts" />
 
             <View
                 android:id="@+id/divider2"
@@ -72,35 +66,30 @@
                 android:layout_marginTop="8dp"
                 android:background="?android:attr/listDivider" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_percentage_of_the_time_youve_texted_first"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/percentage_of_the_time_youve_texted_first"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/percentage_of_the_time_youve_texted_first" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_percentage_of_the_texts_youve_sent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/percentage_of_the_texts_youve_sent"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/percentage_of_the_texts_youve_sent" />
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_button_sort_type_percentage_of_total_characters_youve_sent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/percentage_of_total_characters_youve_sent"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/percentage_of_total_characters_youve_sent" />
         </RadioGroup>
 
         <View
@@ -113,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/radio_group_sort_type" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/check_box_reversed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -121,7 +110,6 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/reversed"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="@id/radio_group_sort_type"
             app:layout_constraintStart_toStartOf="@id/radio_group_sort_type"
             app:layout_constraintTop_toBottomOf="@id/divider3" />

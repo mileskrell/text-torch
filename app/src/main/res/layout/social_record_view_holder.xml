@@ -11,28 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/center_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Based on 15 conversations" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/correspondent_name_address_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/center_text_view"
             tools:text="@tools:sample/full_names" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/you_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/center_text_view" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/correspondent_data_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/divider"
             tools:text="texted first\n20% of the time" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/you_data_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
