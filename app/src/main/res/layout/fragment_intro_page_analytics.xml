@@ -20,13 +20,13 @@
             android:breakStrategy="balanced"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/would_you"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintBottom_toTopOf="@id/intro_page_3_text_view_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/would_you" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/intro_page_3_text_view_2"

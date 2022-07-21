@@ -19,12 +19,10 @@
 
 package com.mileskrell.texttorch.intro
 
-import android.os.Build
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.mileskrell.texttorch.intro.IntroViewModel.PAGE.ENTER_APP
 import com.mileskrell.texttorch.intro.pages.IntroPageAnalytics
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
@@ -33,29 +31,29 @@ import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
 class IntroPagerAdapter(private val introViewModel: IntroViewModel, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val pages = mutableListOf<Fragment>(
-        IntroPageWelcome(),
-    ).apply {
-        // On Lollipop, we only show the first page (with an "enter app" button)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    private val pages = mutableListOf<Fragment>(IntroPageWelcome()).apply {
+        if (introViewModel.permissionsPageAdded) {
             add(IntroPagePermissions())
         }
-        if (introViewModel.lastPageVisible.ordinal >= ENTER_APP.ordinal) {
+        if (introViewModel.analyticsPageAdded) {
+            add(IntroPageAnalytics())
+        }
+        if (introViewModel.enterAppPageAdded) {
             add(IntroPageEnterApp())
         }
     }
 
-    fun addAnalyticsPage() {
-        if (introViewModel.lastPageVisible.ordinal < IntroViewModel.PAGE.ANALYTICS.ordinal) {
-            introViewModel.lastPageVisible = IntroViewModel.PAGE.ANALYTICS
+    fun ensureAnalyticsPageAdded() {
+        if (pages.none { it::class == IntroPageAnalytics::class }) {
+            introViewModel.analyticsPageAdded = true
             pages.add(IntroPageAnalytics())
             notifyDataSetChanged()
         }
     }
 
-    fun addEnterAppPage() {
-        if (introViewModel.lastPageVisible.ordinal < ENTER_APP.ordinal) {
-            introViewModel.lastPageVisible = ENTER_APP
+    fun ensureEnterAppPageAdded() {
+        if (pages.none { it::class == IntroPageEnterApp::class }) {
+            introViewModel.enterAppPageAdded = true
             pages.add(IntroPageEnterApp())
             notifyDataSetChanged()
         }

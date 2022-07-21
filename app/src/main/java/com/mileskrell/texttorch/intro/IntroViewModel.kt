@@ -19,6 +19,7 @@
 
 package com.mileskrell.texttorch.intro
 
+import android.os.Build
 import androidx.lifecycle.ViewModel
 
 class IntroViewModel : ViewModel() {
@@ -26,5 +27,7 @@ class IntroViewModel : ViewModel() {
         WELCOME, PERMISSIONS, ANALYTICS, ENTER_APP
     }
 
-    var lastPageVisible = PAGE.PERMISSIONS
+    val permissionsPageAdded = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+    var analyticsPageAdded = !permissionsPageAdded
+    var enterAppPageAdded = false
 }

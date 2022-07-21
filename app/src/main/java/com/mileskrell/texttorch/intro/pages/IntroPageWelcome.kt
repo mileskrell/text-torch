@@ -19,26 +19,10 @@
 
 package com.mileskrell.texttorch.intro.pages
 
-import android.os.Build
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
-import com.mileskrell.texttorch.databinding.FragmentIntroPageWelcomeBinding
-import com.mileskrell.texttorch.intro.IntroFragment
 
 class IntroPageWelcome : Fragment(R.layout.fragment_intro_page_welcome) {
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val b = FragmentIntroPageWelcomeBinding.bind(view)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            b.introPage1ButtonEnterApp.visibility = View.VISIBLE
-            b.introPage1ButtonEnterApp.setOnClickListener {
-                (parentFragment as IntroFragment).onClickEnterAppButton()
-            }
-        }
-    }
 
     companion object {
         const val TAG = "IntroPageWelcome"

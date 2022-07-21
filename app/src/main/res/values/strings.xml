@@ -14,6 +14,7 @@
     <string name="permissions_granted">Permissions granted!</string>
 
     <string name="would_you">One last thing…would you be willing to enable analytics?</string>
+    <string name="would_you_pre_marshmallow">Quick question…would you be willing to enable analytics?</string>
     <string name="why_enable">This lets me know what features people are using, what devices they\'re running the app on, and if anything stops working.</string>
     <string name="analytics_reassurance">Remember: whether or not you turn on analytics, none of your texts or contacts will be sent anywhere.</string>
     <string name="enable_analytics">Enable analytics</string>

@@ -25,6 +25,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -50,7 +51,7 @@ import io.sentry.Sentry
 
 class IntroFragment : Fragment(R.layout.fragment_intro) {
 
-    lateinit var introPagerAdapter: IntroPagerAdapter
+    private lateinit var introPagerAdapter: IntroPagerAdapter
 
     private val introViewModel: IntroViewModel by activityViewModels()
     private var hasSeenTutorial: Boolean? = null // Because primitives can't be lateinit
@@ -86,6 +87,14 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
             .map { Color.parseColor(it) }
         logoColors = resources.getStringArray(R.array.intro_logo_colors)
             .map { Color.parseColor(it) }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            backgroundColors = backgroundColors.filterIndexed { index, _ ->
+                index != IntroViewModel.PAGE.PERMISSIONS.ordinal
+            }
+            logoColors = logoColors.filterIndexed { index, _ ->
+                index != IntroViewModel.PAGE.PERMISSIONS.ordinal
+            }
+        }
     }
 
     private fun enterAlmostFullscreen() {
@@ -154,6 +163,14 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
         b.introArrowNext.setOnClickListener {
             b.introViewPager.arrowScroll(View.FOCUS_RIGHT)
         }
+    }
+
+    fun ensureAnalyticsPageAdded() {
+        introPagerAdapter.ensureAnalyticsPageAdded()
+    }
+
+    fun ensureEnterAppPageAdded() {
+        introPagerAdapter.ensureEnterAppPageAdded()
     }
 
     /**

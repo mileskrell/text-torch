@@ -19,6 +19,7 @@
 
 package com.mileskrell.texttorch.intro.pages
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.edit
@@ -32,6 +33,10 @@ class IntroPageAnalytics : Fragment(R.layout.fragment_intro_page_analytics) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val b = FragmentIntroPageAnalyticsBinding.bind(view)
+        b.introPage3TextView1.text = getString(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) R.string.would_you
+            else R.string.would_you_pre_marshmallow
+        )
         b.introAnalyticsRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.intro_radio_button_enable -> {
@@ -45,7 +50,7 @@ class IntroPageAnalytics : Fragment(R.layout.fragment_intro_page_analytics) {
                     }
                 }
             }
-            (parentFragment as IntroFragment).introPagerAdapter.addEnterAppPage()
+            (parentFragment as IntroFragment).ensureEnterAppPageAdded()
         }
     }
 }
