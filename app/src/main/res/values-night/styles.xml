@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
+    <style name="AppTheme" parent="Theme.Material3.DayNight">
         <item name="colorPrimary">@color/deep_orange_300</item>
-        <item name="colorPrimaryVariant">@color/deep_orange_700</item>
         <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/light_blue_200</item>
-        <item name="colorSecondaryVariant">@color/light_blue_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="colorPrimaryContainer">@color/light_blue_200</item>
+        <item name="colorOnPrimaryContainer">@color/black</item>
+
         <item name="android:textColorLink">@color/light_blue_200</item>
         <item name="welcomePageBackgroundColor">@color/blue_900</item>
         <item name="welcomePageLogoColor">@color/blue_900_darkened_by_10_percent</item>

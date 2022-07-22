@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="deep_orange_500">#ff5722</color>
-    <color name="deep_orange_700">#e64a19</color>
     <color name="deep_orange_300">#ff8a65</color>
     <color name="light_blue_200">#81d4fa</color>
-    <color name="light_blue_700">#0288d1</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 
@@ -23,6 +21,8 @@
     <color name="green_900">#1b5e20</color>
     <color name="green_900_darkened_by_10_percent">#18551d</color>
     <color name="deep_orange_900">#bf360c</color>
+
+    <color name="light_blue_700">#0288d1</color>
 
     <color name="red_a200">#ff5252</color>
     <color name="blue_a200">#448aff</color>
