@@ -22,7 +22,7 @@ package com.mileskrell.texttorch
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import io.sentry.android.navigation.SentryNavigationListener
@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navController = findNavController(R.id.nav_host_fragment)
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
         setupActionBarWithNavController(
             navController, AppBarConfiguration(
                 // These are considered "top level destinations"
