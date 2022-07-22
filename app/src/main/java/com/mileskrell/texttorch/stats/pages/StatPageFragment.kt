@@ -24,8 +24,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatPageBinding
 import com.mileskrell.texttorch.stats.PeriodDialogFragment
@@ -75,44 +77,44 @@ class WhoTextsFirstFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.who_texts_first_menu, menu)
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.who_texts_first_menu, menu)
+                // Restore menu state
+                val period = socialRecordsViewModel.period.menuId
+                menu.findItem(period)?.isChecked = true
+            }
 
-        // Restore menu state
-        val period = socialRecordsViewModel.period.menuId
-        menu.findItem(period)?.isChecked = true
-    }
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (menuItem.groupId == R.id.menu_group_period) {
+                    when (menuItem.itemId) {
+                        R.id.menu_item_period_6_hours -> {
+                            socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.SIX_HOURS)
+                        }
+                        R.id.menu_item_period_12_hours -> {
+                            socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.TWELVE_HOURS)
+                        }
+                        R.id.menu_item_period_1_day -> {
+                            socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.ONE_DAY)
+                        }
+                        R.id.menu_item_period_2_days -> {
+                            socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.TWO_DAYS)
+                        }
+                    }
+                    menuItem.isChecked = true
+                    return true
+                }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.groupId == R.id.menu_group_period) {
-            when (item.itemId) {
-                R.id.menu_item_period_6_hours -> {
-                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.SIX_HOURS)
-                }
-                R.id.menu_item_period_12_hours -> {
-                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.TWELVE_HOURS)
-                }
-                R.id.menu_item_period_1_day -> {
-                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.ONE_DAY)
-                }
-                R.id.menu_item_period_2_days -> {
-                    socialRecordsViewModel.changePeriod(SocialRecordsViewModel.Period.TWO_DAYS)
+                return when (menuItem.itemId) {
+                    R.id.menu_item_period_explanation -> {
+                        showTimeExplanation()
+                        true
+                    }
+                    else -> false
                 }
             }
-            item.isChecked = true
-            return true
-        }
-
-        return when (item.itemId) {
-            R.id.menu_item_period_explanation -> {
-                showTimeExplanation()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun showTimeExplanation() {

@@ -25,8 +25,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.mileskrell.texttorch.R
@@ -58,7 +60,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             // it means that we have to go back to the "analyze" page.
             findNavController().navigateUp()
         }
-        setHasOptionsMenu(true)
 
         socialRecordsViewModel.run {
             // If list is totally empty
@@ -105,45 +106,46 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 )
             }
         })
-    }
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.stats_menu, menu)
+                if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
+                    menu.findItem(R.id.menu_item_sorting)?.isVisible = false
+                    // The alternative would be splitting the stats menu into 2 files and only inflating
+                    // the one with the sorting action if the list isn't empty.
+                    // But I don't think there's any real advantage to doing that.
+                }
+            }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.stats_menu, menu)
-        if (socialRecordsViewModel.socialRecords.value?.isEmpty() == true) {
-            menu.findItem(R.id.menu_item_sorting)?.isVisible = false
-            // The alternative would be splitting the stats menu into 2 files and only inflating
-            // the one with the sorting action if the list isn't empty.
-            // But I don't think there's any real advantage to doing that.
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        logToBoth(TAG, "Selected menu item with title \"${item.title}\"")
-        return when (item.itemId) {
-            R.id.menu_item_sorting -> {
-                val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(
-                    socialRecordsViewModel.sortType.radioButtonId,
-                    socialRecordsViewModel.reversed
-                )
-                    .apply {
-                        setTargetFragment(
-                            this@StatsFragment,
-                            SortTypeDialogFragment.REQUEST_CODE
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                logToBoth(TAG, "Selected menu item with title \"${menuItem.title}\"")
+                return when (menuItem.itemId) {
+                    R.id.menu_item_sorting -> {
+                        val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(
+                                socialRecordsViewModel.sortType.radioButtonId,
+                                socialRecordsViewModel.reversed
                         )
+                                .apply {
+                                    setTargetFragment(
+                                            this@StatsFragment,
+                                            SortTypeDialogFragment.REQUEST_CODE
+                                    )
+                                }
+                        sortTypeDialogFragment.show(parentFragmentManager, null)
+                        true
                     }
-                sortTypeDialogFragment.show(parentFragmentManager, null)
-                true
+                    R.id.menu_item_settings -> {
+                        findNavController().navigate(R.id.stats_to_settings_action)
+                        true
+                    }
+                    R.id.menu_item_about -> {
+                        findNavController().navigate(R.id.stats_to_about_action)
+                        true
+                    }
+                    else -> false
+                }
             }
-            R.id.menu_item_settings -> {
-                findNavController().navigate(R.id.stats_to_settings_action)
-                true
-            }
-            R.id.menu_item_about -> {
-                findNavController().navigate(R.id.stats_to_about_action)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     /**
