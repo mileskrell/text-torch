@@ -21,15 +21,14 @@ package com.mileskrell.texttorch.intro
 
 import android.animation.ArgbEvaluator
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.content.withStyledAttributes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -82,11 +81,22 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
         } else {
             logToBoth(TAG, "Showing tutorial for first time")
         }
-
-        backgroundColors = resources.getStringArray(R.array.intro_background_colors)
-            .map { Color.parseColor(it) }
-        logoColors = resources.getStringArray(R.array.intro_logo_colors)
-            .map { Color.parseColor(it) }
+        requireActivity().withStyledAttributes(
+            null, intArrayOf(
+                R.attr.welcomePageBackgroundColor,
+                R.attr.permissionsPageBackgroundColor,
+                R.attr.analyticsPageBackgroundColor,
+                R.attr.enterAppPageBackgroundColor,
+            )
+        ) { backgroundColors = List(length()) { getColor(it, 0) } }
+        requireActivity().withStyledAttributes(
+            null, intArrayOf(
+                R.attr.welcomePageLogoColor,
+                R.attr.permissionsPageLogoColor,
+                R.attr.analyticsPageLogoColor,
+                R.attr.enterAppPageLogoColor,
+            )
+        ) { logoColors = List(length()) { getColor(it, 0) } }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             backgroundColors = backgroundColors.filterIndexed { index, _ ->
                 index != IntroViewModel.PAGE.PERMISSIONS.ordinal
@@ -103,7 +113,9 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     private fun exitAlmostFullscreen() {
         (activity as? MainActivity)?.supportActionBar?.show()
-        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
+        requireActivity().withStyledAttributes(null, intArrayOf(R.attr.colorPrimaryVariant)) {
+            activity?.window?.statusBarColor = getColor(0, 0)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

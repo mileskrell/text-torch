@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_item_sorting"
-        android:icon="@drawable/ic_sort_white_24dp"
+        android:icon="@drawable/ic_sort_24dp"
         android:orderInCategory="1"
         android:title="@string/sort_order"
         app:showAsAction="always">

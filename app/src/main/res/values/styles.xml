@@ -1,11 +1,28 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/deep_orange_500</item>
+        <item name="colorPrimaryVariant">@color/deep_orange_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/light_blue_200</item>
+        <item name="colorSecondaryVariant">@color/light_blue_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorLink">@color/light_blue_700</item>
+        <item name="welcomePageBackgroundColor">@color/blue_200</item>
+        <item name="welcomePageLogoColor">@color/blue_200_darkened_by_10_percent</item>
+        <item name="permissionsPageBackgroundColor">@color/teal_200</item>
+        <item name="permissionsPageLogoColor">@color/teal_200_darkened_by_10_percent</item>
+        <item name="analyticsPageBackgroundColor">@color/green_200</item>
+        <item name="analyticsPageLogoColor">@color/green_200_darkened_by_10_percent</item>
+        <item name="enterAppPageBackgroundColor">@color/deep_orange_200</item>
+        <item name="enterAppPageLogoColor">@color/deep_orange_200</item>
+        <item name="leftBarColor">@color/red_a200</item>
+        <item name="rightBarColor">@color/blue_a200</item>
     </style>
 
     <style name="SlidingDialogStyle">

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- deep orange 900 -->
-    <color name="colorPrimary">#bf360c</color>
-    <!-- deep orange 900 dark -->
-    <color name="colorPrimaryDark">#870000</color>
-    <!-- amber a700 -->
-    <color name="colorAccent">#ffab00</color>
+    <color name="deep_orange_500">#ff5722</color>
+    <color name="deep_orange_700">#e64a19</color>
+    <color name="deep_orange_300">#ff8a65</color>
+    <color name="light_blue_200">#81d4fa</color>
+    <color name="light_blue_700">#0288d1</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 
-    <string-array name="intro_background_colors">
-        <item>#4db6ac</item>
-        <item>#81c784</item>
-        <item>#8198c7</item>
-        <item>#ffab00</item>
-    </string-array>
+    <color name="blue_200">#90caf9</color>
+    <color name="blue_200_darkened_by_10_percent">#6bb8f7</color>
+    <color name="teal_200">#80cbc4</color>
+    <color name="teal_200_darkened_by_10_percent">#69c1b9</color>
+    <color name="green_200">#a5d6a7</color>
+    <color name="green_200_darkened_by_10_percent">#8bca8e</color>
+    <color name="deep_orange_200">#ffab91</color>
 
-    <string-array name="intro_logo_colors">
-        <item>#48a9a0</item>
-        <item>#79ba7b</item>
-        <item>#798eba</item>
-        <item>#ffab00</item>
-    </string-array>
+    <color name="blue_900">#0d47a1</color>
+    <color name="blue_900_darkened_by_10_percent">#0c4091</color>
+    <color name="teal_900">#004d40</color>
+    <color name="teal_900_darkened_by_10_percent">#00453a</color>
+    <color name="green_900">#1b5e20</color>
+    <color name="green_900_darkened_by_10_percent">#18551d</color>
+    <color name="deep_orange_900">#bf360c</color>
 
-    <color name="light_blue_link_color">#0988c9</color>
-
-    <color name="colorLeftBar">#ff5252</color>
-    <color name="colorRightBar">#2196f3</color>
-
-    <!-- Must be set explicitly for TabLayout shadow to appear; see https://stackoverflow.com/a/31777078 -->
-    <color name="grey_50">#fafafa</color>
+    <color name="red_a200">#ff5252</color>
+    <color name="blue_a200">#448aff</color>
+    <color name="red_a100">#ff8a80</color>
+    <color name="blue_a100">#82b1ff</color>
 
     <!-- This color is used so that intro_view_pager_background contains a ColorDrawable.
          We then change the color as the ViewPager scrolls, so the initial value doesn't matter. -->

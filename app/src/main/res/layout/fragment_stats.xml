@@ -32,7 +32,6 @@
             android:id="@+id/stats_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/grey_50"
             android:elevation="4dp"
             app:tabMode="scrollable" />
     </androidx.viewpager.widget.ViewPager>

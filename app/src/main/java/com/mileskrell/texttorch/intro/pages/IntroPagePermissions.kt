@@ -25,7 +25,6 @@ import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentIntroPagePermissionsBinding
@@ -43,9 +42,6 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
         _binding = FragmentIntroPagePermissionsBinding.bind(view)
         b.introPage2TextView3.run {
             movementMethod = LinkMovementMethod.getInstance()
-            setLinkTextColor(
-                ContextCompat.getColor(requireContext(), R.color.light_blue_link_color)
-            )
             @Suppress("DEPRECATION")
             text = Html.fromHtml(
                 getString(R.string.intro_you_can_see_the_code, getString(R.string.github_url))

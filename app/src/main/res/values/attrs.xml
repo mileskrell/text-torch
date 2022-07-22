@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="welcomePageBackgroundColor" format="color" />
+    <attr name="welcomePageLogoColor" format="color" />
+    <attr name="permissionsPageBackgroundColor" format="color" />
+    <attr name="permissionsPageLogoColor" format="color" />
+    <attr name="analyticsPageBackgroundColor" format="color" />
+    <attr name="analyticsPageLogoColor" format="color" />
+    <attr name="enterAppPageBackgroundColor" format="color" />
+    <attr name="enterAppPageLogoColor" format="color" />
+    <attr name="leftBarColor" format="color" />
+    <attr name="rightBarColor" format="color" />
+</resources>
