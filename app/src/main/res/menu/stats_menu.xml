@@ -7,8 +7,7 @@
         android:icon="@drawable/ic_sort_24dp"
         android:orderInCategory="1"
         android:title="@string/sort_order"
-        app:showAsAction="always">
-    </item>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_item_settings"
