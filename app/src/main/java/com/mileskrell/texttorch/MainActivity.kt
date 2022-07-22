@@ -37,12 +37,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         navController = findNavController(R.id.nav_host_fragment)
-        setupActionBarWithNavController(navController, AppBarConfiguration(setOf(
-            // These are considered "top level destinations"
-            R.id.intro_dest, R.id.regain_dest, R.id.analyze_dest, R.id.stats_dest
-        )))
+        setupActionBarWithNavController(
+            navController, AppBarConfiguration(
+                // These are considered "top level destinations"
+                setOf(R.id.intro_dest, R.id.regain_dest, R.id.analyze_dest, R.id.stats_dest)
+            )
+        )
     }
 
     override fun onResume() {

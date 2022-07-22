@@ -33,11 +33,15 @@ import com.mileskrell.texttorch.R
  * Permissions-related functions and resources used in multiple places
  */
 
-fun Fragment.readSmsGranted() =
-    ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+fun Fragment.readSmsGranted() = ContextCompat.checkSelfPermission(
+    requireContext(),
+    Manifest.permission.READ_SMS
+) == PackageManager.PERMISSION_GRANTED
 
-fun Fragment.readContactsGranted() =
-    ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
+fun Fragment.readContactsGranted() = ContextCompat.checkSelfPermission(
+    requireContext(),
+    Manifest.permission.READ_CONTACTS
+) == PackageManager.PERMISSION_GRANTED
 
 fun Fragment.showAppSettingsDialog(logTag: String) {
     MaterialAlertDialogBuilder(requireContext())

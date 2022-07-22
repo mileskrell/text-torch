@@ -50,21 +50,6 @@ class ThreadGetter(val context: Context) {
         messagesCompleted: MutableLiveData<Int>
     ): List<MessageThread> {
         val startTime = SystemClock.elapsedRealtime()
-        /**
-         * This might take a while - it seems that different devices require using different content URIs.
-         * See https://seap.samsung.com/faq/why-does-sdk-return-nullpointerexception-when-i-access-smsmms-content-uri-0
-         *
-         * On my Motorola G6:
-         * ☒ Telephony.MmsSms.CONTENT_URI | unrecognized URI
-         * ☒ Telephony.MmsSms.CONTENT_FILTER_BYPHONE_URI | unrecognized URI
-         * ☒ Telephony.MmsSms.CONTENT_CONVERSATIONS_URI | null object reference
-         * ☑ content://mms-sms/conversations?simple=true
-         * ☑ content://mms-sms/complete-conversations
-         *
-         * ☒☑
-         *
-         * TODO: Lots of testing with different devices
-         */
         var numFailedNameLookups = 0
         var numSuccessfulNameLookups = 0
         var numMessages = 0

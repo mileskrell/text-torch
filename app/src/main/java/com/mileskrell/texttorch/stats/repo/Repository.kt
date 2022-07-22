@@ -24,7 +24,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mileskrell.texttorch.stats.model.MessageThread
 import com.mileskrell.texttorch.stats.model.SocialRecord
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
-import java.util.Locale
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -159,7 +159,11 @@ class Repository(val context: Context) {
        But that would only matter if there were multiple people with the same name, which is rather
        unlikely, so I don't think we need to bother.
      */
-    fun sortSocialRecords(socialRecords: List<SocialRecord>, sortType: SocialRecordsViewModel.SortType, reversed: Boolean = false): List<SocialRecord> {
+    fun sortSocialRecords(
+        socialRecords: List<SocialRecord>,
+        sortType: SocialRecordsViewModel.SortType,
+        reversed: Boolean = false
+    ): List<SocialRecord> {
         return when (sortType) {
             SocialRecordsViewModel.SortType.MOST_RECENT -> {
                 // These dates are ms since epoch, so it's almost impossible that any two will be

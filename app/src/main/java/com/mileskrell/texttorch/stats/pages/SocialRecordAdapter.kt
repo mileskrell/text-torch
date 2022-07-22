@@ -33,7 +33,8 @@ import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.SocialRecordViewHolderBinding
 import com.mileskrell.texttorch.stats.model.SocialRecord
 
-class SocialRecordAdapter(private val type: SocialRecordAdapterType) : RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
+class SocialRecordAdapter(private val type: SocialRecordAdapterType) :
+    RecyclerView.Adapter<SocialRecordAdapter.SocialRecordViewHolder>() {
 
     var socialRecords = listOf<SocialRecord>()
         set(value) {
@@ -60,71 +61,82 @@ class SocialRecordAdapter(private val type: SocialRecordAdapterType) : RecyclerV
         AVERAGE_LENGTH
     }
 
-    inner class SocialRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SocialRecordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val b = SocialRecordViewHolderBinding.bind(itemView)
         fun setupForSocialRecord(type: SocialRecordAdapterType, record: SocialRecord) {
             // Make the whole TextView bold in case part of it is still italicized
             b.correspondentNameAddressTextView.setTypeface(null, Typeface.BOLD)
             if (record.nonUniqueName) {
                 // The name is guaranteed to be non-null here
-                b.correspondentNameAddressTextView.text = SpannableStringBuilder("${record.correspondentName} (${record.correspondentAddress})")
-                    .apply {
-                        // Make the number and surrounding parentheses also italic
-                        setSpan(
-                            StyleSpan(Typeface.BOLD_ITALIC),
-                            record.correspondentName!!.length,
-                            length,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
-                    }
+                b.correspondentNameAddressTextView.text =
+                    SpannableStringBuilder("${record.correspondentName} (${record.correspondentAddress})")
+                        .apply {
+                            // Make the number and surrounding parentheses also italic
+                            setSpan(
+                                StyleSpan(Typeface.BOLD_ITALIC),
+                                record.correspondentName!!.length,
+                                length,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                        }
             } else {
-                b.correspondentNameAddressTextView.text = record.correspondentName ?: record.correspondentAddress
+                b.correspondentNameAddressTextView.text =
+                    record.correspondentName ?: record.correspondentAddress
             }
 
             when (type) {
                 SocialRecordAdapterType.WHO_TEXTS_FIRST -> {
-                    b.centerTextView.text =
-                        itemView.resources.getQuantityString(
-                            R.plurals.based_on_x_conversations,
-                            record.numConversations,
-                            record.numConversations
-                        )
-                    b.correspondentDataTextView.text =
-                        itemView.context.getString(R.string.texted_first_x_percent_of_the_time, record.correspondentInitPercent)
-                    b.youDataTextView.text =
-                        itemView.context.getString(R.string.texted_first_x_percent_of_the_time, 100 - record.correspondentInitPercent)
+                    b.centerTextView.text = itemView.resources.getQuantityString(
+                        R.plurals.based_on_x_conversations,
+                        record.numConversations,
+                        record.numConversations
+                    )
+                    b.correspondentDataTextView.text = itemView.context.getString(
+                        R.string.texted_first_x_percent_of_the_time,
+                        record.correspondentInitPercent
+                    )
+                    b.youDataTextView.text = itemView.context.getString(
+                        R.string.texted_first_x_percent_of_the_time,
+                        100 - record.correspondentInitPercent
+                    )
 
                     b.divider.updateLayoutParams<ConstraintLayout.LayoutParams> {
                         horizontalBias = record.correspondentInitPercent / 100f
                     }
                 }
                 SocialRecordAdapterType.TOTAL_TEXTS -> {
-                    b.centerTextView.text =
-                        itemView.resources.getQuantityString(
-                            R.plurals.based_on_x_texts,
-                            record.numTexts,
-                            record.numTexts
-                        )
-                    b.correspondentDataTextView.text =
-                        itemView.context.getString(R.string.sent_x_percent_of_texts, record.correspondentTextPercent)
-                    b.youDataTextView.text =
-                        itemView.context.getString(R.string.sent_x_percent_of_texts, 100 - record.correspondentTextPercent)
+                    b.centerTextView.text = itemView.resources.getQuantityString(
+                        R.plurals.based_on_x_texts,
+                        record.numTexts,
+                        record.numTexts
+                    )
+                    b.correspondentDataTextView.text = itemView.context.getString(
+                        R.string.sent_x_percent_of_texts,
+                        record.correspondentTextPercent
+                    )
+                    b.youDataTextView.text = itemView.context.getString(
+                        R.string.sent_x_percent_of_texts,
+                        100 - record.correspondentTextPercent
+                    )
 
                     b.divider.updateLayoutParams<ConstraintLayout.LayoutParams> {
                         horizontalBias = record.correspondentTextPercent / 100f
                     }
                 }
                 SocialRecordAdapterType.AVERAGE_LENGTH -> {
-                    b.centerTextView.text =
-                        itemView.resources.getQuantityString(
-                            R.plurals.based_on_x_texts,
-                            record.numTexts,
-                            record.numTexts
-                        )
-                    b.correspondentDataTextView.text =
-                        itemView.context.getString(R.string.x_characters_on_average, record.correspondentAvgChars)
-                    b.youDataTextView.text =
-                        itemView.context.getString(R.string.x_characters_on_average, record.ownAvgChars)
+                    b.centerTextView.text = itemView.resources.getQuantityString(
+                        R.plurals.based_on_x_texts,
+                        record.numTexts,
+                        record.numTexts
+                    )
+                    b.correspondentDataTextView.text = itemView.context.getString(
+                        R.string.x_characters_on_average,
+                        record.correspondentAvgChars
+                    )
+                    b.youDataTextView.text = itemView.context.getString(
+                        R.string.x_characters_on_average,
+                        record.ownAvgChars
+                    )
 
                     b.divider.updateLayoutParams<ConstraintLayout.LayoutParams> {
                         horizontalBias = record.correspondentAvgCharsPercent / 100f

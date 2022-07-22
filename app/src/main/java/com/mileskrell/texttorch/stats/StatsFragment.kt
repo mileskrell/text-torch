@@ -97,12 +97,14 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 // we know which page's state is most recent.
                 lastPage = position
                 Sentry.addBreadcrumb(
-                    "[$TAG] Switched stats page to ${when (position) {
-                        0 -> WhoTextsFirstFragment.TAG
-                        1 -> TotalTextsFragment.TAG
-                        2 -> AverageLengthFragment.TAG
-                        else -> "invalid position $position"
-                    }}"
+                    "[$TAG] Switched stats page to ${
+                        when (position) {
+                            0 -> WhoTextsFirstFragment.TAG
+                            1 -> TotalTextsFragment.TAG
+                            2 -> AverageLengthFragment.TAG
+                            else -> "invalid position $position"
+                        }
+                    }"
                 )
             }
         })
@@ -122,15 +124,14 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 return when (menuItem.itemId) {
                     R.id.menu_item_sorting -> {
                         val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(
-                                socialRecordsViewModel.sortType.radioButtonId,
-                                socialRecordsViewModel.reversed
-                        )
-                                .apply {
-                                    setTargetFragment(
-                                            this@StatsFragment,
-                                            SortTypeDialogFragment.REQUEST_CODE
-                                    )
-                                }
+                            socialRecordsViewModel.sortType.radioButtonId,
+                            socialRecordsViewModel.reversed
+                        ).apply {
+                            setTargetFragment(
+                                this@StatsFragment,
+                                SortTypeDialogFragment.REQUEST_CODE
+                            )
+                        }
                         sortTypeDialogFragment.show(parentFragmentManager, null)
                         true
                     }

@@ -75,7 +75,10 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
             } else {
                 // Permissions were granted (because tutorial was completed), but the user went in
                 // and manually denied them later on. Prompt the user to grant them again.
-                logToBoth(TAG, "Go to ${RegainPermissionsFragment.TAG} (user has already seen tutorial)")
+                logToBoth(
+                    TAG,
+                    "Go to ${RegainPermissionsFragment.TAG} (user has already seen tutorial)"
+                )
                 findNavController().navigate(R.id.intro_to_regain_action)
             }
         } else {
@@ -138,7 +141,11 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
         b.introViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 // Thanks to https://kubaspatny.github.io/2014/09/18/viewpager-background-transition/
                 colorBackground.color = ArgbEvaluator().evaluate(
                     positionOffset,
