@@ -108,13 +108,13 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
     }
 
     private fun enterAlmostFullscreen() {
-        (activity as? MainActivity)?.supportActionBar?.hide()
+        (requireActivity() as MainActivity).supportActionBar?.hide()
     }
 
     private fun exitAlmostFullscreen() {
-        (activity as? MainActivity)?.supportActionBar?.show()
+        (requireActivity() as MainActivity).supportActionBar?.show()
         requireActivity().withStyledAttributes(null, intArrayOf(R.attr.colorPrimaryVariant)) {
-            activity?.window?.statusBarColor = getColor(0, 0)
+            requireActivity().window.statusBarColor = getColor(0, 0)
         }
     }
 
@@ -151,7 +151,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
                     logoColors.getOrNull(position + 1) ?: logoColors[position]
                 ) as Int).let { darkColor ->
                     logoBackground.setTint(darkColor)
-                    activity?.window?.statusBarColor = darkColor
+                    requireActivity().window.statusBarColor = darkColor
                 }
 
                 // Since we don't add pages until the user is allowed to go to them, there's no
