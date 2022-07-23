@@ -116,7 +116,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     private fun exitAlmostFullscreen() {
         (requireActivity() as MainActivity).supportActionBar?.show()
-        requireActivity().withStyledAttributes(null, intArrayOf(R.attr.colorPrimaryVariant)) {
+        requireActivity().withStyledAttributes(null, intArrayOf(android.R.attr.statusBarColor)) {
             requireActivity().window.statusBarColor = getColor(0, 0)
         }
     }
