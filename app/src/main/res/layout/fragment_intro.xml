@@ -18,20 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- This can't be constrained relative to the FAB because the FAB can be hidden -->
-    <com.rd.PageIndicatorView
-        android:id="@+id/intro_page_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:piv_animationType="worm"
-        app:piv_dynamicCount="true"
-        app:piv_interactiveAnimation="true"
-        app:piv_viewPager="@id/intro_view_pager" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/intro_arrow_next"
         android:layout_width="wrap_content"

@@ -50,7 +50,6 @@ dependencies {
 
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.mikepenz:aboutlibraries:10.3.1")
-    implementation("com.romandanylyk:pageindicatorview:1.0.3")
     implementation("io.sentry:sentry-android:6.2.1")
     implementation("io.sentry:sentry-android-navigation:6.2.1")
 
