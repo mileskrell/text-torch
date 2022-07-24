@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -16,22 +14,22 @@ android {
         versionCode = 4
         versionName = "1.1.1"
     }
-    buildFeatures {
-        viewBinding = true
-    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-
     val lifecycleVersion = "2.5.0"
     val navigationVersion = "2.5.0"
     implementation("androidx.activity:activity-ktx:1.5.0")
