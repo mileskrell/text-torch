@@ -30,8 +30,8 @@
                 <item
                     android:id="@+id/menu_item_period_explanation"
                     android:icon="@drawable/ic_help_24dp"
-                    app:iconTint="?attr/colorOnSurface"
-                    android:title="@string/whats_this" />
+                    android:title="@string/whats_this"
+                    app:iconTint="?attr/colorOnSurface" />
             </group>
         </menu>
     </item>
