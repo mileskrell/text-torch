@@ -87,17 +87,6 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
                 )
             )
         }
-
-        // I think storing permission statuses in a ViewModel would just introduce more complexity,
-        // so after configuration changes, we need to check them again.
-        if (readSmsGranted() && readContactsGranted()) {
-            // TODO: Move this check to onStart() or onResume(). Then we can detect if
-            //  the user is returning after granting the permissions in the app's settings.
-            // I haven't done this yet because it results in a "FragmentManager is already
-            // executing transactions" error. Related: see BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
-            // at the moment, fragments in the ViewPager are capped at STARTED.
-            onPermissionsGranted()
-        }
     }
 
     private fun onPermissionsGranted() {

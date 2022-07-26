@@ -34,7 +34,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.mileskrell.texttorch.MainActivity
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.analyze.AnalyzeFragment
@@ -50,7 +50,8 @@ import io.sentry.Sentry
 
 class IntroFragment : Fragment(R.layout.fragment_intro) {
 
-    private lateinit var introPagerAdapter: IntroPagerAdapter
+    private var _binding: FragmentIntroBinding? = null
+    private val b get() = _binding!!
 
     private val introViewModel: IntroViewModel by activityViewModels()
     private var hasSeenTutorial: Boolean? = null // Because primitives can't be lateinit
@@ -123,7 +124,7 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val b = FragmentIntroBinding.bind(view)
+        _binding = FragmentIntroBinding.bind(view)
         // This check is needed because onViewCreated() is called even if we've already seen the
         // tutorial (since navigating to the next fragment takes a moment)
         if (hasSeenTutorial == false) {
@@ -131,16 +132,13 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
         }
 
         b.introViewPager.offscreenPageLimit = IntroViewModel.PAGE.values().size
-        b.introViewPager.adapter = IntroPagerAdapter(introViewModel, childFragmentManager).also {
-            introPagerAdapter = it
-        }
+        b.introViewPager.adapter = IntroPagerAdapter(introViewModel, this)
         val colorBackground = (b.introViewPager.background as LayerDrawable)
             .getDrawable(0).mutate() as ColorDrawable
         val logoBackground = (b.introViewPager.background as LayerDrawable)
             .getDrawable(1).mutate() as BitmapDrawable
 
-        b.introViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
+        b.introViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -163,33 +161,37 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
 
                 // Since we don't add pages until the user is allowed to go to them, there's no
                 // danger in showing this button while the last page is partly visible.
-                if (position == (b.introViewPager.adapter as IntroPagerAdapter).count - 1) {
-                    b.introArrowNext.hide()
-                } else {
-                    b.introArrowNext.show()
-                }
+                refreshFabVisibility()
             }
 
             override fun onPageSelected(position: Int) {
-                val adapter = b.introViewPager.adapter as IntroPagerAdapter
                 Sentry.addBreadcrumb(
-                    "[$TAG] Switched intro page to " + adapter.getItem(position)::class.simpleName
+                    "[$TAG] Switched to intro page at index ${b.introViewPager.currentItem}"
                 )
             }
         })
 
-        // TODO: Can we make this button scroll more slowly?
         b.introArrowNext.setOnClickListener {
-            b.introViewPager.arrowScroll(View.FOCUS_RIGHT)
+            b.introViewPager.currentItem = b.introViewPager.currentItem + 1
+        }
+    }
+
+    fun refreshFabVisibility() {
+        if (b.introViewPager.currentItem == b.introViewPager.adapter!!.itemCount - 1) {
+            b.introArrowNext.hide()
+        } else {
+            b.introArrowNext.show()
         }
     }
 
     fun ensureAnalyticsPageAdded() {
-        introPagerAdapter.ensureAnalyticsPageAdded()
+        (b.introViewPager.adapter as IntroPagerAdapter).ensureAnalyticsPageAdded()
+        refreshFabVisibility()
     }
 
     fun ensureEnterAppPageAdded() {
-        introPagerAdapter.ensureEnterAppPageAdded()
+        (b.introViewPager.adapter as IntroPagerAdapter).ensureEnterAppPageAdded()
+        refreshFabVisibility()
     }
 
     /**
@@ -218,6 +220,12 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
                 inclusive = true
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        b.introViewPager.adapter = null
+        _binding = null
     }
 
     companion object {

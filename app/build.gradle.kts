@@ -44,7 +44,6 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.viewpager:viewpager:1.0.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     implementation("com.google.android.material:material:1.6.1")

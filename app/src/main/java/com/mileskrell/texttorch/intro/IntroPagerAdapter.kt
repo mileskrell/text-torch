@@ -19,59 +19,49 @@
 
 package com.mileskrell.texttorch.intro
 
-import android.view.ViewGroup
+import android.os.Build
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.mileskrell.texttorch.intro.pages.IntroPageAnalytics
 import com.mileskrell.texttorch.intro.pages.IntroPageEnterApp
 import com.mileskrell.texttorch.intro.pages.IntroPagePermissions
 import com.mileskrell.texttorch.intro.pages.IntroPageWelcome
 
-class IntroPagerAdapter(private val introViewModel: IntroViewModel, fm: FragmentManager) :
-    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-    private val pages = mutableListOf<Fragment>(IntroPageWelcome()).apply {
-        if (introViewModel.permissionsPageAdded) {
-            add(IntroPagePermissions())
-        }
-        if (introViewModel.analyticsPageAdded) {
-            add(IntroPageAnalytics())
-        }
-        if (introViewModel.enterAppPageAdded) {
-            add(IntroPageEnterApp())
-        }
-    }
+class IntroPagerAdapter(private val introViewModel: IntroViewModel, fragment: Fragment) :
+    FragmentStateAdapter(fragment) {
 
     fun ensureAnalyticsPageAdded() {
-        if (pages.none { it::class == IntroPageAnalytics::class }) {
+        if (!introViewModel.analyticsPageAdded) {
             introViewModel.analyticsPageAdded = true
-            pages.add(IntroPageAnalytics())
-            notifyDataSetChanged()
+            notifyItemInserted(itemCount)
         }
     }
 
     fun ensureEnterAppPageAdded() {
-        if (pages.none { it::class == IntroPageEnterApp::class }) {
+        if (!introViewModel.enterAppPageAdded) {
             introViewModel.enterAppPageAdded = true
-            pages.add(IntroPageEnterApp())
-            notifyDataSetChanged()
+            notifyItemInserted(itemCount)
         }
     }
 
-    override fun getItem(position: Int) = pages[position]
-
-    override fun getCount() = pages.size
-
-    /**
-     * Fix intro fragment references after configuration changes.
-     *
-     * See https://stackoverflow.com/a/17629575
-     */
-    // TODO: Hold on, I'm actually not sure if I need this. Figure out what's going on here.
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        return super.instantiateItem(container, position).also {
-            pages[position] = it as Fragment
-        }
+    override fun getItemCount(): Int {
+        return 1 +
+                (if (introViewModel.permissionsPageAdded) 1 else 0) +
+                (if (introViewModel.analyticsPageAdded) 1 else 0) +
+                (if (introViewModel.enterAppPageAdded) 1 else 0)
     }
+
+    override fun createFragment(position: Int) =
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) when (position) {
+            0 -> IntroPageWelcome()
+            1 -> IntroPageAnalytics()
+            2 -> IntroPageEnterApp()
+            else -> throw RuntimeException()
+        } else when (position) {
+            0 -> IntroPageWelcome()
+            1 -> IntroPagePermissions()
+            2 -> IntroPageAnalytics()
+            3 -> IntroPageEnterApp()
+            else -> throw RuntimeException()
+        }
 }
