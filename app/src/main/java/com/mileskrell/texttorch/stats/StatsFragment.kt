@@ -30,7 +30,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentStatsBinding
 import com.mileskrell.texttorch.stats.model.SocialRecordsViewModel
@@ -44,6 +45,9 @@ import io.sentry.SentryLevel
 
 class StatsFragment : Fragment(R.layout.fragment_stats) {
 
+    private var _binding: FragmentStatsBinding? = null
+    private val b get() = _binding!!
+
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
 
     /**
@@ -54,7 +58,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val b = FragmentStatsBinding.bind(view)
+        _binding = FragmentStatsBinding.bind(view)
         if (socialRecordsViewModel.socialRecords.value == null) {
             // This should only happen after process death. In any case,
             // it means that we have to go back to the "analyze" page.
@@ -73,12 +77,18 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             }
         }
         b.statsViewPager.offscreenPageLimit = 2
-        b.statsTabLayout.setupWithViewPager(b.statsViewPager)
-        b.statsViewPager.adapter = StatsPagerAdapter(requireContext(), childFragmentManager)
-        b.statsViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
+        b.statsViewPager.adapter = StatsPagerAdapter(this)
+        TabLayoutMediator(b.statsTabLayout, b.statsViewPager) { tab, position ->
+            tab.text = requireContext().getString(
+                when (position) {
+                    0 -> R.string.who_texts_first
+                    1 -> R.string.total_texts
+                    2 -> R.string.average_length
+                    else -> throw RuntimeException("invalid position $position")
+                }
+            )
+        }.attach()
+        b.statsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -169,6 +179,12 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             )
             socialRecordsViewModel.changeSortTypeAndReversed(newSortType, reversed)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        b.statsViewPager.adapter = null
+        _binding = null
     }
 
     companion object {

@@ -19,49 +19,26 @@
 
 package com.mileskrell.texttorch.stats
 
-import android.content.Context
-import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.stats.pages.AverageLengthFragment
-import com.mileskrell.texttorch.stats.pages.StatPageFragment
 import com.mileskrell.texttorch.stats.pages.TotalTextsFragment
 import com.mileskrell.texttorch.stats.pages.WhoTextsFirstFragment
 
-class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
-    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class StatsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    private val pages = mutableListOf(
-        WhoTextsFirstFragment(),
-        TotalTextsFragment(),
-        AverageLengthFragment()
-    )
+    private val pages = arrayOfNulls<Fragment>(3)
 
-    override fun getCount() = pages.size
+    override fun getItemCount() = 3
 
-    override fun getItem(position: Int) = pages[position]
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when (position) {
-            0 -> context.getString(R.string.who_texts_first)
-            1 -> context.getString(R.string.total_texts)
-            2 -> context.getString(R.string.average_length)
-            else -> null
-        }
-    }
-
-    /**
-     * Fix stats fragment references after configuration changes.
-     *
-     * See https://stackoverflow.com/a/17629575
-     */
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        return super.instantiateItem(container, position).also {
-            pages[position] = it as StatPageFragment
-        }
-    }
+    override fun createFragment(position: Int) = when (position) {
+        0 -> WhoTextsFirstFragment()
+        1 -> TotalTextsFragment()
+        2 -> AverageLengthFragment()
+        else -> throw RuntimeException("invalid position $position")
+    }.also { pages[position] = it }
 
     /**
      * Sync latest scroll position. Called by [StatsFragment].
@@ -74,11 +51,11 @@ class StatsPagerAdapter(val context: Context, fm: FragmentManager) :
         //  is considered to have the latest state.
         //  (This is a very low-priority bug.)
 
-        val latestState = pages[oldPosition].view?.findViewById<RecyclerView>(R.id.recycler_view)
+        val latestState = pages[oldPosition]?.view?.findViewById<RecyclerView>(R.id.recycler_view)
             ?.layoutManager?.onSaveInstanceState()
 
         pages.forEach {
-            it.view?.findViewById<RecyclerView>(R.id.recycler_view)
+            it?.view?.findViewById<RecyclerView>(R.id.recycler_view)
                 ?.layoutManager?.onRestoreInstanceState(latestState)
         }
     }
