@@ -19,7 +19,6 @@
 
 package com.mileskrell.texttorch.stats
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,6 +27,7 @@ import android.view.View
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -138,12 +138,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                         val sortTypeDialogFragment = SortTypeDialogFragment.newInstance(
                             socialRecordsViewModel.sortType.radioButtonId,
                             socialRecordsViewModel.reversed
-                        ).apply {
-                            setTargetFragment(
-                                this@StatsFragment,
-                                SortTypeDialogFragment.REQUEST_CODE
-                            )
-                        }
+                        )
                         sortTypeDialogFragment.show(parentFragmentManager, null)
                         true
                     }
@@ -159,15 +154,13 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
 
-    /**
-     * Called by [SortTypeDialogFragment] when user presses the "update" button
-     */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SortTypeDialogFragment.REQUEST_CODE && resultCode == SortTypeDialogFragment.RESULT_CODE) {
-            val checkedRadioButtonId = data?.getIntExtra(SortTypeDialogFragment.SORT_TYPE_ID, -1)
-            val reversed = data?.getBooleanExtra(SortTypeDialogFragment.REVERSED, false)!!
+        /**
+         * Called by [SortTypeDialogFragment] when user presses the "update" button
+         */
+        setFragmentResultListener(SortTypeDialogFragment.REQUEST_CODE) { _, bundle ->
+            val checkedRadioButtonId = bundle.getInt(SortTypeDialogFragment.SORT_TYPE_ID)
+            val reversed = bundle.getBoolean(SortTypeDialogFragment.REVERSED)
 
             val newSortType = SocialRecordsViewModel.SortType.values()
                 .first { it.radioButtonId == checkedRadioButtonId }
