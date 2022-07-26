@@ -63,8 +63,8 @@ class SortTypeDialogFragment : DialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.order_by)
             .setView(dialogView)
-            .setNegativeButton(getString(R.string.cancel)) { _, _ -> }
-            .setPositiveButton(getString(R.string.update)) { _, _ ->
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .setPositiveButton(R.string.update) { _, _ ->
                 setFragmentResult(
                     REQUEST_CODE,
                     bundleOf(

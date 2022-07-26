@@ -31,8 +31,8 @@ class PeriodDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.whats_this)
-            .setMessage(getString(R.string.time_explanation))
-            .setNeutralButton(getString(R.string.close)) { dialog, _ ->
+            .setMessage(R.string.time_explanation)
+            .setNeutralButton(R.string.close) { dialog, _ ->
                 dialog.cancel()
             }
             .create().apply {

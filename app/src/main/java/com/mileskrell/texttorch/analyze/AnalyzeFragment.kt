@@ -158,8 +158,7 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
 
     private fun enterProgressDetailsMode() {
         b.showDetailsButton.visibility = View.INVISIBLE
-        b.messagesProgressFractionTextView.text =
-            getString(R.string.x_out_of_y_messages, 0, "?")
+        b.messagesProgressFractionTextView.text = getString(R.string.x_out_of_y_messages, 0, "?")
         b.messagesProgressPercentageTextView.text = getString(R.string.x_percent, 0)
         b.forCurrentMessageThreadTextView.visibility = View.VISIBLE
         b.messagesProgressBar.visibility = View.VISIBLE
