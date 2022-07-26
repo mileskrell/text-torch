@@ -49,6 +49,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     private val b get() = _binding!!
 
     private val socialRecordsViewModel: SocialRecordsViewModel by activityViewModels()
+    private var tabLayoutMediator: TabLayoutMediator? = null
 
     /**
      * Position of the most-recently-viewed page. When the user navigates to another page,
@@ -78,7 +79,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
         b.statsViewPager.offscreenPageLimit = 2
         b.statsViewPager.adapter = StatsPagerAdapter(this)
-        TabLayoutMediator(b.statsTabLayout, b.statsViewPager) { tab, position ->
+        tabLayoutMediator = TabLayoutMediator(b.statsTabLayout, b.statsViewPager) { tab, position ->
             tab.text = requireContext().getString(
                 when (position) {
                     0 -> R.string.who_texts_first
@@ -87,7 +88,8 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                     else -> throw RuntimeException("invalid position $position")
                 }
             )
-        }.attach()
+        }
+        tabLayoutMediator!!.attach()
         b.statsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
@@ -183,6 +185,8 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
         b.statsViewPager.adapter = null
         _binding = null
     }
