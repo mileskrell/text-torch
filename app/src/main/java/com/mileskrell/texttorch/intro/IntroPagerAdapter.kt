@@ -56,12 +56,12 @@ class IntroPagerAdapter(private val introViewModel: IntroViewModel, fragment: Fr
             0 -> IntroPageWelcome()
             1 -> IntroPageAnalytics()
             2 -> IntroPageEnterApp()
-            else -> throw RuntimeException()
+            else -> throw RuntimeException("invalid position $position")
         } else when (position) {
             0 -> IntroPageWelcome()
             1 -> IntroPagePermissions()
             2 -> IntroPageAnalytics()
             3 -> IntroPageEnterApp()
-            else -> throw RuntimeException()
+            else -> throw RuntimeException("invalid position $position")
         }
 }
