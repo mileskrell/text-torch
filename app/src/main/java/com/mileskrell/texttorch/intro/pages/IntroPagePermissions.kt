@@ -26,9 +26,11 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentIntroPagePermissionsBinding
 import com.mileskrell.texttorch.intro.IntroFragment
+import com.mileskrell.texttorch.intro.IntroViewModel
 import com.mileskrell.texttorch.util.*
 import io.sentry.SentryLevel
 
@@ -36,6 +38,8 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
 
     private var _binding: FragmentIntroPagePermissionsBinding? = null
     private val b get() = _binding!!
+
+    private val introViewModel: IntroViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,6 +82,12 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
             }
         }
 
+        // TODO: Also adding the analytics page here on app startup would be nice, but
+        //  it results in a "FragmentManager is already executing transactions" error.
+        if (readSmsGranted() && readContactsGranted() && introViewModel.analyticsPageAdded) {
+            indicatePermissionsGranted()
+        }
+
         b.introPermissionsButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"grant needed permissions\" button")
             requestPermissionsLaucher.launch(
@@ -90,9 +100,13 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
     }
 
     private fun onPermissionsGranted() {
+        indicatePermissionsGranted()
+        (parentFragment as IntroFragment).ensureAnalyticsPageAdded()
+    }
+
+    private fun indicatePermissionsGranted() {
         b.introPermissionsButton.visibility = View.INVISIBLE
         b.introTextViewPermissionsGranted.visibility = View.VISIBLE
-        (parentFragment as IntroFragment).ensureAnalyticsPageAdded()
     }
 
     override fun onDestroyView() {
