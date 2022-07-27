@@ -42,9 +42,9 @@ class IntroPagePermissions : Fragment(R.layout.fragment_intro_page_permissions) 
         _binding = FragmentIntroPagePermissionsBinding.bind(view)
         b.introPage2TextView3.run {
             movementMethod = LinkMovementMethod.getInstance()
-            @Suppress("DEPRECATION")
             text = Html.fromHtml(
-                getString(R.string.intro_you_can_see_the_code, getString(R.string.github_url))
+                getString(R.string.intro_you_can_see_the_code, getString(R.string.github_url)),
+                Html.FROM_HTML_MODE_LEGACY
             )
         }
 

@@ -50,9 +50,9 @@ class RegainPermissionsFragment : Fragment(R.layout.fragment_regain_permissions)
         val b = FragmentRegainPermissionsBinding.bind(view)
         b.regrantExplanationTextView.run {
             movementMethod = LinkMovementMethod.getInstance()
-            @Suppress("DEPRECATION")
             text = Html.fromHtml(
-                getString(R.string.regrant_explanation, getString(R.string.github_url))
+                getString(R.string.regrant_explanation, getString(R.string.github_url)),
+                Html.FROM_HTML_MODE_LEGACY
             )
         }
 
