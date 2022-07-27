@@ -18,7 +18,9 @@
         <item name="analyticsPageLogoColor">@color/grey_900</item>
         <item name="enterAppPageBackgroundColor">@color/black</item>
         <item name="enterAppPageLogoColor">@color/black</item>
+
         <item name="leftBarColor">@color/red_a100</item>
         <item name="rightBarColor">@color/blue_a100</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 </resources>

@@ -18,6 +18,7 @@
         <item name="analyticsPageLogoColor">@color/green_200_darkened_by_10_percent</item>
         <item name="enterAppPageBackgroundColor">@color/deep_orange_200</item>
         <item name="enterAppPageLogoColor">@color/deep_orange_200</item>
+
         <item name="leftBarColor">@color/red_a200</item>
         <item name="rightBarColor">@color/blue_a200</item>
     </style>
