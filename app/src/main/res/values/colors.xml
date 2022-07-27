@@ -14,13 +14,7 @@
     <color name="green_200_darkened_by_10_percent">#8bca8e</color>
     <color name="deep_orange_200">#ffab91</color>
 
-    <color name="blue_900">#0d47a1</color>
-    <color name="blue_900_darkened_by_10_percent">#0c4091</color>
-    <color name="teal_900">#004d40</color>
-    <color name="teal_900_darkened_by_10_percent">#00453a</color>
-    <color name="green_900">#1b5e20</color>
-    <color name="green_900_darkened_by_10_percent">#18551d</color>
-    <color name="deep_orange_900">#bf360c</color>
+    <color name="grey_900">#212121</color>
 
     <color name="light_blue_700">#0288d1</color>
 
