@@ -154,9 +154,9 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
                     positionOffset,
                     logoColors[position],
                     logoColors.getOrNull(position + 1) ?: logoColors[position]
-                ) as Int).let { darkColor ->
-                    logoBackground.setTint(darkColor)
-                    requireActivity().window.statusBarColor = darkColor
+                ) as Int).let { logoColor ->
+                    logoBackground.setTint(logoColor)
+                    requireActivity().window.statusBarColor = logoColor
                 }
 
                 // Since we don't add pages until the user is allowed to go to them, there's no
