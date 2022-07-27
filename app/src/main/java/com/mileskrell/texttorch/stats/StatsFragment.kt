@@ -72,6 +72,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 // OR if only showing contacts, but the list contains no contacts
                 || !showNonContacts && socialRecords.value!!.none { it.correspondentName != null }
             ) {
+                b.statsTabLayout.visibility = View.GONE
                 b.statsViewPager.visibility = View.GONE
                 b.statsNoRecordsTextView.visibility = View.VISIBLE
                 return
