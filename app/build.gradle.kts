@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("io.sentry.android.gradle") version "3.1.2"
-    id("com.mikepenz.aboutlibraries.plugin") version "10.3.1"
+    id("com.mikepenz.aboutlibraries.plugin")
 }
 
 android {
@@ -47,7 +47,7 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     implementation("com.google.android.material:material:1.6.1")
-    implementation("com.mikepenz:aboutlibraries:10.3.1")
+    implementation("com.mikepenz:aboutlibraries:8.9.4")
     implementation("io.sentry:sentry-android:6.2.1")
     implementation("io.sentry:sentry-android-navigation:6.2.1")
 
