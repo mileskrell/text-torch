@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("io.sentry.android.gradle") version "3.1.2"
+    id("io.sentry.android.gradle") version "3.1.3"
     id("com.mikepenz.aboutlibraries.plugin")
 }
 
