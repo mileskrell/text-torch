@@ -23,8 +23,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mileskrell.texttorch.BuildConfig
 import com.mileskrell.texttorch.R
 import com.mileskrell.texttorch.databinding.FragmentAboutBinding
@@ -47,7 +49,12 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
 
         b.aboutLicensesButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"view licenses\" button")
-            findNavController().navigate(R.id.about_to_licenses_action)
+            // TODO: Include copyright year manually where needed;
+            //  see https://github.com/mikepenz/AboutLibraries/issues/469
+            findNavController().navigate(
+                R.id.about_to_licenses_action,
+                bundleOf("data" to LibsBuilder().withLicenseShown(true))
+            )
         }
 
         b.aboutDonateButton.setOnClickListener {

@@ -113,9 +113,6 @@
     <string name="donate">Send me a buck if you\'re feeling generous ❤</string>
     <string name="donate_url" translatable="false">https://paypal.me/mileskrell</string>
 
-    <!-- Licenses fragment -->
-    <string name="licenses">Licenses</string>
-
     <!-- Keys -->
     <string name="key_has_seen_tutorial" translatable="false">has_seen_tutorial</string>
     <string name="key_show_non_contacts" translatable="false">show_non_contacts</string>
