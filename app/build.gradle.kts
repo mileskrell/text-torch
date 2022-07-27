@@ -48,8 +48,10 @@ dependencies {
 
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.mikepenz:aboutlibraries:8.9.4")
-    implementation("io.sentry:sentry-android:6.2.1")
-    implementation("io.sentry:sentry-android-navigation:6.2.1")
+
+    val sentryVersion = "6.3.0"
+    implementation("io.sentry:sentry-android:$sentryVersion")
+    implementation("io.sentry:sentry-android-navigation:$sentryVersion")
 
     val coroutinesVersion = "1.6.3"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
