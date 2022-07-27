@@ -53,7 +53,7 @@ dependencies {
     implementation("io.sentry:sentry-android:$sentryVersion")
     implementation("io.sentry:sentry-android-navigation:$sentryVersion")
 
-    val coroutinesVersion = "1.6.3"
+    val coroutinesVersion = "1.6.4"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
