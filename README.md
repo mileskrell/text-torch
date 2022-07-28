@@ -13,9 +13,9 @@ After it analyzes your SMS and MMS messages, you'll be told how you compare to e
 
 ## Screenshots
 
-| Intro | Analysis | Who texts first? | Total texts | Average text length
-|:-:|:-:|:-:|:-:|:-:|
-![Intro](framed_screenshots/intro.png) | ![Analysis](framed_screenshots/analysis.png) | ![Who texts first?](framed_screenshots/who_texts_first.png) | ![Total texts](framed_screenshots/total_texts.png) | ![Average text length](framed_screenshots/average_text_length.png)
+| Intro | Analysis | Who texts first? | Total texts | Intro (dark mode) |
+| :---: | :---: | :---: | :---: | :---: |
+| ![Intro](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Analysis](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Who texts first?](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![Total texts](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | ![Intro (dark mode)](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) |
 
 ## Why isn't Text Torch on Google Play?
 

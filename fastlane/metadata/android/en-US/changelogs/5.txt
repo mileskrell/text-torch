@@ -1,0 +1,4 @@
+- Added dark theme, used automatically when dark mode is enabled on your phone
+- Updated to Material Design 3 components and styles
+- Refreshed app colors
+- Bug fixes
