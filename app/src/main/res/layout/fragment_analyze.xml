@@ -31,9 +31,12 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
             android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@id/analyze_button"
+            app:layout_constraintBottom_toTopOf="@id/threads_progress_bar"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -55,10 +58,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/threads_progress_percentage_text_view"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/analyzing_message_threads_text_view"
             app:trackCornerRadius="2dp"
             tools:progress="19"
             tools:visibility="visible" />
@@ -70,6 +73,7 @@
             android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/for_current_message_thread_text_view"
             app:layout_constraintStart_toStartOf="@id/threads_progress_bar"
             app:layout_constraintTop_toBottomOf="@id/threads_progress_bar"
             tools:text="19%"
@@ -90,10 +94,11 @@
             android:id="@+id/for_current_message_thread_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="32dp"
             android:text="@string/for_current_message_thread"
             android:textAlignment="center"
             android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/messages_progress_bar"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/threads_progress_percentage_text_view"
@@ -106,6 +111,7 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="8dp"
             android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/messages_progress_percentage_text_view"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toEndOf="@id/guideline_left"
             app:layout_constraintTop_toBottomOf="@id/for_current_message_thread_text_view"
@@ -118,13 +124,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
             android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/messages_progress_bar"
             app:layout_constraintTop_toBottomOf="@id/messages_progress_bar"
-            app:layout_constraintVertical_bias="0.0"
             tools:text="60%"
             tools:visibility="visible" />
 
@@ -138,18 +142,5 @@
             app:layout_constraintTop_toBottomOf="@id/messages_progress_bar"
             tools:text="228/380 messages"
             tools:visibility="visible" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/show_details_button"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/show_details"
-            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/messages_progress_bar"
-            app:layout_constraintEnd_toStartOf="@id/guideline_right"
-            app:layout_constraintStart_toEndOf="@id/guideline_left"
-            app:layout_constraintTop_toTopOf="@id/messages_progress_bar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -156,7 +156,6 @@ class ThreadGetter(val context: Context) {
                     Telephony.Sms.DATE
                 )?.use { messagesCursor ->
                     messagesTotal.postValue(messagesCursor.count)
-                    messagesCompleted.postValue(0)
 
                     messagesCursorLoop@ while (messagesCursor.moveToNext()) {
                         val messageId = messagesCursor.getLong(Telephony.MmsSms._ID)

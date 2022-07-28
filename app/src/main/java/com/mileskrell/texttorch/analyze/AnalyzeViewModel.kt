@@ -36,7 +36,6 @@ class AnalyzeViewModel : ViewModel() {
     val messagesCompleted = MutableLiveData(0)
 
     var clickedAnalyze = false
-    var clickedShowDetails = false
 
     fun initializeSocialRecordList(socialRecordsViewModel: SocialRecordsViewModel) {
         viewModelScope.launch(Dispatchers.IO) {

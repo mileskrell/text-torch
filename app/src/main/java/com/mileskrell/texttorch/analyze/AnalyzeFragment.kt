@@ -77,10 +77,6 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
             enterProgressDisplayingMode()
         }
 
-        if (analyzeViewModel.clickedShowDetails) {
-            enterProgressDetailsMode()
-        }
-
         b.analyzeButton.setOnClickListener {
             logToBoth(TAG, "Clicked \"analyze\" button")
             analyzeViewModel.clickedAnalyze = true
@@ -91,21 +87,8 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
 
     private fun enterProgressDisplayingMode() {
         b.analyzeButton.visibility = View.INVISIBLE
+
         b.analyzingMessageThreadsTextView.visibility = View.VISIBLE
-        b.threadsProgressBar.visibility = View.VISIBLE
-        b.threadsProgressFractionTextView.visibility = View.VISIBLE
-        b.threadsProgressPercentageTextView.visibility = View.VISIBLE
-        b.threadsProgressFractionTextView.text =
-            getString(R.string.x_out_of_y_message_threads, 0, "?")
-        b.threadsProgressPercentageTextView.text = getString(R.string.x_percent, 0)
-
-        b.showDetailsButton.visibility = View.VISIBLE
-        b.showDetailsButton.setOnClickListener {
-            logToBoth(TAG, "Clicked \"show details\" button")
-            analyzeViewModel.clickedShowDetails = true
-            enterProgressDetailsMode()
-        }
-
         valueAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 1000
             repeatCount = ValueAnimator.INFINITE
@@ -116,54 +99,60 @@ class AnalyzeFragment : Fragment(R.layout.fragment_analyze) {
             start()
         }
 
-        var threadsTotal = -1
-        analyzeViewModel.threadsTotal.observe({ lifecycle }) { newThreadsTotal ->
-            threadsTotal = newThreadsTotal
+        b.threadsProgressBar.visibility = View.VISIBLE
+        b.threadsProgressPercentageTextView.text = getString(R.string.x_percent, 0)
+        b.threadsProgressPercentageTextView.visibility = View.VISIBLE
+        b.threadsProgressFractionTextView.visibility = View.VISIBLE
+        analyzeViewModel.threadsTotal.observe({ lifecycle }) { threadsTotal ->
             b.threadsProgressBar.max = threadsTotal
+            b.threadsProgressFractionTextView.text = getString(
+                R.string.x_out_of_y_message_threads,
+                analyzeViewModel.threadsCompleted.value ?: 0,
+                threadsTotal
+            )
         }
-        analyzeViewModel.threadsCompleted.observe({ lifecycle }) { newThreadsCompleted ->
-            if (threadsTotal != -1) {
-                b.threadsProgressBar.progress = newThreadsCompleted
+        analyzeViewModel.threadsCompleted.observe({ lifecycle }) { threadsCompleted ->
+            analyzeViewModel.threadsTotal.value?.let { threadsTotal ->
+                b.threadsProgressBar.progress = threadsCompleted
+                b.threadsProgressPercentageTextView.text = getString(
+                    R.string.x_percent,
+                    (100.0 * threadsCompleted / threadsTotal).roundToInt()
+                )
                 b.threadsProgressFractionTextView.text = getString(
                     R.string.x_out_of_y_message_threads,
-                    newThreadsCompleted,
-                    threadsTotal.toString()
+                    threadsCompleted,
+                    threadsTotal
                 )
-                val percentDone = (100.0 * newThreadsCompleted / threadsTotal).roundToInt()
-                b.threadsProgressPercentageTextView.text =
-                    getString(R.string.x_percent, percentDone)
             }
         }
-        var messagesTotal = -1
-        analyzeViewModel.messagesTotal.observe({ lifecycle }) { newMessagesTotal ->
-            messagesTotal = newMessagesTotal
-            b.messagesProgressBar.max = newMessagesTotal
-        }
-        analyzeViewModel.messagesCompleted.observe({ lifecycle }) { newMessagesCompleted ->
-            if (messagesTotal != -1) {
-                b.messagesProgressBar.progress = newMessagesCompleted
-                b.messagesProgressFractionTextView.text = getString(
-                    R.string.x_out_of_y_messages,
-                    newMessagesCompleted,
-                    messagesTotal.toString()
-                )
-                val percentDone =
-                    if (messagesTotal == 0) 100
-                    else (100.0 * newMessagesCompleted / messagesTotal).roundToInt()
-                b.messagesProgressPercentageTextView.text =
-                    getString(R.string.x_percent, percentDone)
-            }
-        }
-    }
 
-    private fun enterProgressDetailsMode() {
-        b.showDetailsButton.visibility = View.INVISIBLE
-        b.messagesProgressFractionTextView.text = getString(R.string.x_out_of_y_messages, 0, "?")
-        b.messagesProgressPercentageTextView.text = getString(R.string.x_percent, 0)
         b.forCurrentMessageThreadTextView.visibility = View.VISIBLE
         b.messagesProgressBar.visibility = View.VISIBLE
+        b.messagesProgressPercentageTextView.text = getString(R.string.x_percent, 0)
         b.messagesProgressPercentageTextView.visibility = View.VISIBLE
         b.messagesProgressFractionTextView.visibility = View.VISIBLE
+        analyzeViewModel.messagesTotal.observe({ lifecycle }) { messagesTotal ->
+            b.messagesProgressBar.max = messagesTotal
+            b.messagesProgressFractionTextView.text = getString(
+                R.string.x_out_of_y_messages,
+                analyzeViewModel.messagesCompleted.value ?: 0,
+                messagesTotal
+            )
+        }
+        analyzeViewModel.messagesCompleted.observe({ lifecycle }) { messagesCompleted ->
+            analyzeViewModel.messagesTotal.value?.let { messagesTotal ->
+                b.messagesProgressBar.progress = messagesCompleted
+                b.messagesProgressPercentageTextView.text = getString(
+                    R.string.x_percent,
+                    (100.0 * messagesCompleted / messagesTotal).roundToInt()
+                )
+                b.messagesProgressFractionTextView.text = getString(
+                    R.string.x_out_of_y_messages,
+                    messagesCompleted,
+                    messagesTotal
+                )
+            }
+        }
     }
 
     override fun onDestroyView() {
