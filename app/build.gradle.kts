@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    val lifecycleVersion = "2.5.0"
     val navigationVersion = "2.5.0"
     implementation("androidx.activity:activity-ktx:1.5.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
@@ -38,6 +37,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.fragment:fragment-ktx:1.5.0")
+    val lifecycleVersion = "2.5.1"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
