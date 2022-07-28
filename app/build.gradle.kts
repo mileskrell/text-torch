@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    val navigationVersion = "2.5.0"
     implementation("androidx.activity:activity-ktx:1.5.1")
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -40,6 +39,7 @@ dependencies {
     val lifecycleVersion = "2.5.1"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    val navigationVersion = "2.5.1"
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.preference:preference-ktx:1.2.0")
