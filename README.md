@@ -23,7 +23,7 @@ Because as best as I can tell, it violates [Google Play policy](https://support.
 
 ## What's next for Text Torch?
 
-I'm fairly busy with school at the moment, but here are some features I'd like to add when I get the chance:
+Here are some features I'd like to add at some point:
 - Displaying how long each of the two people in a conversation takes, on average, to respond when the other person starts a conversation
   - Or maybe just how long each of the two people takes, on average, to respond to the other person's texts
 - CSV export
