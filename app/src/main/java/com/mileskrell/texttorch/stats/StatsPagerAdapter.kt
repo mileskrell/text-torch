@@ -43,20 +43,15 @@ class StatsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     /**
      * Sync latest scroll position. Called by [StatsFragment].
      */
-    fun onPageChanged(oldPosition: Int) {
-        // TODO Can we set the old RecyclerView's velocity to zero right here?
-        //  If the user makes the RecyclerView scroll and then taps another tab while it's still scrolling,
-        //  they go to a page with a still RecyclerView.
-        //  But if they quickly return to the first page, the old RecyclerView is still scrolling, and now that one
-        //  is considered to have the latest state.
-        //  (This is a very low-priority bug.)
-
-        val latestState = pages[oldPosition]?.view?.findViewById<RecyclerView>(R.id.recycler_view)
-            ?.layoutManager?.onSaveInstanceState()
+    fun onPageChanged(lastPage: Int) {
+        val lastRecyclerView =
+            pages[lastPage]?.view?.findViewById<RecyclerView>(R.id.recycler_view) ?: return
+        lastRecyclerView.stopScroll()
+        val lastState = lastRecyclerView.layoutManager?.onSaveInstanceState()
 
         pages.forEach {
             it?.view?.findViewById<RecyclerView>(R.id.recycler_view)
-                ?.layoutManager?.onRestoreInstanceState(latestState)
+                ?.layoutManager?.onRestoreInstanceState(lastState)
         }
     }
 
