@@ -98,14 +98,19 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 positionOffsetPixels: Int
             ) {
                 // Sync RecyclerView scroll position immediately when user drags another page into view.
-                // Otherwise, the scroll position wouldn't be updated until the page had settled.
-                (b.statsViewPager.adapter as StatsPagerAdapter).onPageChanged(lastPage)
+                if (position == 2) return // ignore call to onPageScrolled(2, 0.0, 0) when landing on last page
+                (b.statsViewPager.adapter as StatsPagerAdapter).onPageChanged(
+                    lastPage,
+                    // "position" is the index of the first visible page, not necessarily the new page
+                    if (position == lastPage) position + 1 else position
+                )
             }
 
             override fun onPageSelected(position: Int) {
-                // The previous callback is only called on drags, so this one is needed for tapping on tabs.
-                (b.statsViewPager.adapter as StatsPagerAdapter).onPageChanged(lastPage)
-
+                // When the user taps on a tab, onPageScrolled() IS called a bunch of times as the
+                // page scrolls over, but onPageSelected() is called first. As a result, we need to
+                // copy over the old scroll position here prior to setting lastPage = position.
+                (b.statsViewPager.adapter as StatsPagerAdapter).onPageChanged(lastPage, position)
                 // Save the new position, so that when the user moves somewhere else,
                 // we know which page's state is most recent.
                 lastPage = position

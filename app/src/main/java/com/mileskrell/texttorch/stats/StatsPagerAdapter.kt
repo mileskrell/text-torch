@@ -43,16 +43,14 @@ class StatsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     /**
      * Sync latest scroll position. Called by [StatsFragment].
      */
-    fun onPageChanged(lastPage: Int) {
+    fun onPageChanged(lastPage: Int, currentPage: Int) {
         val lastRecyclerView =
             pages[lastPage]?.view?.findViewById<RecyclerView>(R.id.recycler_view) ?: return
         lastRecyclerView.stopScroll()
+        val currentRecyclerView =
+            pages[currentPage]?.view?.findViewById<RecyclerView>(R.id.recycler_view) ?: return
         val lastState = lastRecyclerView.layoutManager?.onSaveInstanceState()
-
-        pages.forEach {
-            it?.view?.findViewById<RecyclerView>(R.id.recycler_view)
-                ?.layoutManager?.onRestoreInstanceState(lastState)
-        }
+        currentRecyclerView.layoutManager?.onRestoreInstanceState(lastState)
     }
 
     companion object {
