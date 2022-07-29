@@ -89,8 +89,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                     else -> throw RuntimeException("invalid position $position")
                 }
             )
-        }
-        tabLayoutMediator!!.attach()
+        }.apply { attach() }
         b.statsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
