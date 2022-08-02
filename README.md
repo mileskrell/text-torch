@@ -13,9 +13,26 @@ After it analyzes your SMS and MMS messages, you'll be told how you compare to e
 
 ## Screenshots
 
-| Intro | Analysis | Who texts first? | Total texts | Intro (dark mode) |
-| :---: | :---: | :---: | :---: | :---: |
-| ![Intro](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Analysis](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Who texts first?](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![Total texts](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | ![Intro (dark mode)](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) |
+<table style="width: 100%">
+<thead>
+<tr>
+<th>Intro</th>
+<th>Analysis</th>
+<th>Who texts first?</th>
+<th>Total texts</th>
+<th>Intro (dark mode)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="20%"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" /></td>
+<td width="20%"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" /></td>
+<td width="20%"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" /></td>
+<td width="20%"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" /></td>
+<td width="20%"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" /></td>
+</tr>
+</tbody>
+</table>
 
 ## Why isn't Text Torch on Google Play?
 
